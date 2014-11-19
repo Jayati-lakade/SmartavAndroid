@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    
+    android:orientation="horizontal"
+    android:paddingTop="0dip"
+    android:weightSum="1.0"
+   >
+
+    <EditText
+        android:id="@+id/accountNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:textColor="#000000"
+        android:textSize="12sp" 
+     />
+    
+
+    <EditText
+        android:id="@+id/mobileNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:textColor="#000000"
+        android:textSize="12sp" 
+        android:maxWidth="10dp"
+
+        />
+
+    <EditText
+        android:id="@+id/fullName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:maxWidth="10dp"
+   
+         />
+
+    <EditText
+        android:id="@+id/designation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:textColor="#000000"
+        android:textSize="12sp" 
+        android:maxWidth="10dp" 
+    
+        />
+
+
+    <Button
+        android:id="@+id/btnsave"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+   
+        android:layout_marginLeft="5dp"
+       android:onClick="SaveUpdate"
+        android:layout_weight="0.01"
+        android:background="@drawable/save1"
+        android:gravity="left"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+      
+        android:layout_marginLeft="5dp"
+  
+        android:layout_weight="0.01"
+        android:background="@drawable/cancel"
+        android:gravity="left"
+      
+        android:scaleType="centerCrop" />
+    
+ 
+</LinearLayout>

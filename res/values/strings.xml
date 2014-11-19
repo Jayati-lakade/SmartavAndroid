@@ -1,0 +1,187 @@
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <string name="app_name">SmartAV</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+
+    <string name="customerVerficationSystem">SmartAV</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Sign In</string>
+    <!-- <string name="copyright">\u00A9 2014, All Rights Reserved, version 1.3</string> -->
+    <string name="copyright">Developed By WOXI, Ver 1.6</string>
+    <string name="ofr_name">Welcome, Bharat Makwana</string>
+    <string name="cancel">Cancel</string>
+    <string name="attend">Attend</string>
+    <string name="taskDetail">Task Detail</string>
+    <string name="action_search">Search</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="taskCaptured">Task Captured Successfully!!!</string>
+    <string name="internetUnavailable">Internet Unavailable.Please check data settings.</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="errorDB">Error fetching data from Database</string>
+
+    <string-array name="nav_drawer_items">
+        <item>Task List</item>
+<!--         <item>Settings</item>
+        <item>About</item> -->
+        <item>Logout</item>
+    </string-array>
+    <string-array name="nav_drawer_child_items">
+        <item>Fresh List</item>
+        <item>WL List</item>
+        <item>Bulk List</item>
+    </string-array>
+
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_communities</item>
+        <item>@drawable/ic_whats_hot</item>
+        <item>@drawable/ic_pages</item>
+    </array>
+    <array name="relationship_Residential">
+        <item>Self</item>
+        <item>Spouse</item>
+        <item>Father</item>
+        <item>Mother</item>
+        <item>Father In Law</item>
+        <item>Mother In Law</item>
+        <item>Grand Father</item>
+        <item>Grand Mother</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Son</item>
+        <item>Daughter</item>
+        <item>Brother In Law</item>
+        <item>Sister In Law</item>
+        <item>Roommate</item>
+        <item>NONE OF THE ABOVE</item>
+    </array>
+    <array name="relationship_Office">
+        <item>Receptionist</item>
+        <item>Colleague</item>
+        <item>Supervisor</item>
+        <item>Secretary</item>
+        <item>HR Department</item>
+        <item>Director</item>
+        <item>Manager</item>
+        <item>Admin</item>
+        <item>Proprietor</item>
+        <item>Partner</item>
+        <item>NONE OF THE ABOVE</item>
+    </array>
+    <array name="serviceType">
+        <item>Post Paid</item>
+        <item>Pre Paid</item>
+    </array>
+    <array name="visitAt">
+        <item>Residential</item>
+        <item>Office</item>
+    </array>
+    <array name="avreason">
+        <item>Address does not exist</item>
+        <item>Choice number not given</item>
+        <item>Customer denies the connection</item>
+        <item>Customer does stay at the address</item>
+        <item>Customer shifted (changed residence or office)</item>
+        <item>Entry not allowed in the office</item>
+        <item>House locked</item>
+        <item>Incomplete address</item>
+        <item>Negative area</item>
+        <item>Network issue</item>
+        <item>Out of service area</item>
+        <item>Refused receiving</item>
+        <item>Wrong commitment</item>
+        <item>Not Applicable</item>
+        
+    </array>
+    <array name="occupancy">
+        <item>Self</item>
+        <item>Tenant</item>
+        <item>Not Applicable</item>
+    </array>
+    <array name="area">
+        <item>Negative</item>
+        <item>Slum</item>
+        <item>Moderate</item>
+        <item>Posh</item>
+        <item>Lower Middle</item>
+        <item>Not Applicable</item>
+    </array>
+    <array name="accomodation">
+        <item>With Family</item>
+        <item>Shared</item>
+        <item>Single</item>
+        <item>Office Space</item>
+        <item>Not Applicable</item>
+    </array>
+    <array name="houseType">
+        <item>Chawl</item>
+        <item>Hut</item>
+        <item>Tin Shade</item>
+        <item>Flat</item>
+        <item>Independent House</item>
+        <item>Office</item>
+        <item>Shop</item>
+        <item>Not Applicable</item>
+    </array>
+    <array name="businessType">
+        <item>Self Employed</item>
+        <item>Service</item>
+        <item>Student</item>
+        <item>Unemployed</item>
+        <item>House wife</item>
+        <item>Retired</item>
+        <item>Not Applicable</item>
+    </array>
+    <array name="avOutcome">
+        <item>Positive</item>
+        <item>To be referred</item>
+        <item>Negative</item>
+        <item>Pending</item>
+    </array>
+    
+     <array name="avOutcomeWithoutPending">
+        <item>Positive</item>
+        <item>To be referred</item>
+        <item>Negative</item>
+    </array>
+
+    <!-- %%%%%%%%%%%%%%%DecisionActivity Resources%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <string name="customer_Status_Address_YES">YES</string>
+    <string name="customer_Status_Address_NO">NO</string>
+    <string name="customer_Status_Address_SHIFTED">SHIFTED</string>
+
+    <!-- %%%%%%%%%%%%%%%Capture Visit Activity Resources%%%%%%%%%%%%%%%%%%%%%%%%% -->
+    <string name="welcomeLetterStatus_YES">YES</string>
+    <string name="welcomeLetterStatus_MNP">MNP</string>
+    <string name="welcomeLetterStatus_P2P">P2P</string>
+    <string name="welcomeLetterStatus_FRESH">BULK</string>
+    <string name="welcomeLetterStatus_NO">NO</string>
+
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%Color Schema%%%%%%%%%%%%%%%%%%%%%%% -->
+    <string name="form_element_title"></string>
+
+    <!-- %%%%%%%%%%%%%%%%%%%%%%%Characters Allowed%%%%%%%%%%%%%%%%%%%%%%% -->
+    <string name="allowedCharacters">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+</resources>

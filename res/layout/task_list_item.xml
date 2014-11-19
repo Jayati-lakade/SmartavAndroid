@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parentLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/table_row_background"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/table_row_background"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvSrNo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="187807269209270"
+            android:textColor="@color/cafvaluecolor"
+            android:textSize="@dimen/mediumText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCustomerName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="Bharat Makhwana"
+            android:textColor="@color/custvaluecolor" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCustomerAddress"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.3"
+        android:background="@drawable/table_row_background"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="26, Om Gurudutta Soc. Chavannagar, Dhankawadi, Pune"
+        android:textColor="@color/value" />
+
+    <TextView
+        android:id="@+id/tvCafType"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.6"
+        android:background="@drawable/table_row_background"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="9881062613"
+        android:textColor="@color/value" />
+
+    <!--
+         <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.3"
+        android:background="@drawable/table_row_background"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/value"
+        android:text="New" />
+    -->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.4"
+        android:background="@drawable/table_row_background"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="New"
+            android:textColor="@color/value" />
+
+        <ImageView
+            android:id="@+id/imgPriority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="2dp"
+            android:scaleType="fitCenter"
+            android:background="@drawable/red" />
+    </LinearLayout>
+
+</LinearLayout>

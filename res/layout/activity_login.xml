@@ -1,0 +1,120 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res/woxi.cvs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bk_image" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:ignore="UselessLeaf,NestedWeights" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/logo"
+                    android:scaleType="fitCenter" />
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="3dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/margin" />
+
+                <woxi.cvs.customwidgets.TextView_Roboto
+                    android:id="@+id/loginPageTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Welcome"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/largeText"
+                    android:textStyle="bold"
+                    custom:tvfontName="RobotoCondensed-Regular" />
+
+                <woxi.cvs.customwidgets.EditText_Roboto
+                    android:id="@+id/etUsername"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/username"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textColor="@color/editext_color"
+                    android:textSize="@dimen/mediumText"
+                    custom:etfontName="Roboto-Light" />
+
+                <woxi.cvs.customwidgets.EditText_Roboto
+                    android:id="@+id/etPassword"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/bg_edittext"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:padding="5dp"
+                    android:text=""
+                    android:textColor="@color/editext_color"
+                    android:textSize="@dimen/mediumText"
+                    custom:etfontName="Roboto-Light" />
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_selector"
+                    android:padding="5dp"
+                    android:text="@string/login"
+                    android:textColor="#686868" />
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="3dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/margin" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                tools:ignore="UselessLeaf" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:padding="5dp"
+            android:text="@string/copyright" />
+    </LinearLayout>
+
+</ScrollView>

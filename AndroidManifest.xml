@@ -1,0 +1,117 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="woxi.cvs"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/docomo"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.MainActivityNew"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".activities.TaskDetailActivity"
+            android:label="@string/taskDetail"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".activities.VisitActivityNew"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.TaskDetailActivity" />
+        </activity>
+        <activity
+            android:name=".activities.CaptureVisitActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.VisitActivityNew" />
+        </activity>
+        
+        <activity
+            android:name=".activities.VisitHistoryActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.VisitActivityNew" />
+        </activity>
+        <activity
+            android:name=".activities.DecisionActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".activities.CaptureSignatureActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity android:name="eu.janmuller.android.simplecropimage.CropImage" >
+        </activity>
+        <receiver android:name=".receivers.AlarmReceiver"></receiver>
+        <receiver android:name=".receivers.ReBootReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receivers.MediaMountedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
+            </intent-filter>
+        </receiver>
+                <activity
+            android:name=".activities.CaptureVisitActivityBulk"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".activities.DecisionActivityBulk"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".activities.TaskDetailActivityBulk"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".activities.VisitHistoryActivityBulk"
+            android:screenOrientation="landscape" >
+        </activity>
+                <activity
+            android:name=".activities.VisitActivityNewBulk"
+            android:screenOrientation="landscape" >
+        </activity>
+               <activity
+            android:name=".bulk.BulkCustomerAddDetailActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity 
+            android:name=".bulk.BulkCustomerViewDetailActivity"
+            ></activity>
+
+     
+
+    </application>
+
+</manifest>

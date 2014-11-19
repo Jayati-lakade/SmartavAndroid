@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+       
+                android:gravity="left"
+                android:text="CAF NO : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"/>
+
+            <TextView
+                android:id="@+id/cafNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+             
+                 android:layout_weight="70"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               
+                android:text="CUSTOMER NAME : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold"
+                 android:layout_weight="30"
+                 />
+
+            <TextView
+                android:id="@+id/customerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               
+                 android:layout_weight="70" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" 
+           android:weightSum="100" 
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+              
+                android:text="ADDRESS : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               
+                android:minLines="5"
+                android:scrollbars="vertical" 
+             android:layout_weight="70"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               
+                android:text="LANDMARK : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/landmark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+             
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+        
+                android:text="TELEPHONE_NO : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/telephoneNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+             
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+           
+                android:text="ALTERNATE NUMBER : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/altNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                
+                android:text="STATUS AV : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold"
+                 android:layout_weight="30"
+                 />
+
+            <TextView
+                android:id="@+id/statusAv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+       
+                android:text="PRIORITY : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/priority"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+     
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+        
+                android:text="BILL PLAN : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold"
+                 android:layout_weight="30"
+                 />
+
+            <TextView
+                android:id="@+id/billPlan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+         
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+        <!--
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SERVICE_TYPE"
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/serviceType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+
+        -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+       
+                android:text="DEALER_NAME : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/dealerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+            
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <!--
+             <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ACCT_DESC : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/acctDesc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+
+        -->
+
+
+        <!--
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="NO_OF_DELS_UNDER_ACCOUNT : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/delsAccount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+
+        -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+         
+                android:text="CAF TYPE : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/cafType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+            android:layout_weight="30"
+                android:text="DEALER CODE : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dealerCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+     
+                 android:layout_weight="70"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+ 
+                android:text="PRODUCT TYPE : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/productType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+               
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+         
+                android:text="CSM"
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/csm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:weightSum="100" 
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+             
+                android:text="NO OF LINES : "
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" 
+                 android:layout_weight="30"
+                />
+
+            <TextView
+                android:id="@+id/noOfLines"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+         
+                 android:layout_weight="70"
+                 />
+        </LinearLayout>
+        <!--
+             <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ASSIGNED AT"
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/assignedAt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PRINTED_AT"
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/printedAt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DEALER_RE-AV_COMMENT1"
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dealerComment1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DEALER_RE-AV_COMMENT2"
+                android:textColor="@color/taskDetailElementsHeader"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dealerComment2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+
+        -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <Button
+                android:id="@+id/btnHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_selector"
+                android:text="History" />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/button_selector"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/btnAttend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/button_selector"
+                android:text="Attend" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

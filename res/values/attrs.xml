@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="editTextViewOptions">
+        <!-- <attr name="etfontColor" format="color" /> -->
+        <attr name="etfontName" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="textViewOptions">
+        <!-- <attr name="tvfontColor" format="color" /> -->
+        <attr name="tvfontName" format="string" />
+    </declare-styleable>
+
+</resources>

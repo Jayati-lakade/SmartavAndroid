@@ -1,0 +1,32 @@
+<resources>
+
+    <color name="opaque_red">#f00</color>
+    <color name="taskDetailElementsHeader">#76B8E7</color>
+    <!-- <color name="taskDetailElementsHeader">#CC6699</color> -->
+    
+    <color name="maroon_bright">#A60000</color>
+    <color name="maroon_light">#770202</color>
+    <color name="maroon_dark">#5D0202</color>
+    
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+    
+    <!-- Login Screen Colors -->
+    <color name="editext_color">#2b2b2b</color>
+    <color name="buttontext_color">#686868</color>
+    
+    <!-- Task List Fragment Colors -->
+    <color name="border">#00677C</color>
+    <color name="header">#636363</color>
+    
+    <color name="cafvaluecolor">#1e8cb2</color>
+    <color name="custvaluecolor">#131313</color>
+    <color name="value">#636363</color>
+    
+    <color name="orange">#F08430</color>
+    <color name="red">#DA3333</color>
+    <color name="green">#7FB13C</color>
+
+    
+    
+</resources>

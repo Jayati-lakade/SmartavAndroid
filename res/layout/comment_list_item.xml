@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    tools:ignore="HardcodedText" >
+
+ <!--    <TextView
+        android:id="@+id/commentBy"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.7"
+        android:text="Visit 1"
+        android:textStyle="bold" /> -->
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:lines="3"
+        android:text="Comment" />
+
+</LinearLayout>

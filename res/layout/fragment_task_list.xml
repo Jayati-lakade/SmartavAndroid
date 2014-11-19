@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <!-- Header Starts -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/table_row_background"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/table_row_background"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="CAF and Customer Name"
+            android:textColor="@color/header"
+            android:textSize="@dimen/mediumText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.3"
+            android:background="@drawable/table_row_background"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="Address"
+            android:textColor="@color/header"
+            android:textSize="@dimen/mediumText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.6"
+            android:background="@drawable/table_row_background"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="Contact"
+            android:textColor="@color/header"
+            android:textSize="@dimen/mediumText"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.4"
+            android:background="@drawable/table_row_background"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Status"
+            android:textColor="@color/header"
+            android:textSize="@dimen/mediumText"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Header Ends -->
+
+    <ListView
+        android:id="@+id/taskList"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </ListView>
+    
+    <!-- Footer for Pagination : START -->
+    
+     <HorizontalScrollView
+        android:id="@+id/scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/paginantion_linear_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+        </LinearLayout>
+    </HorizontalScrollView>
+    
+       <!-- Footer for Pagination : END -->
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:padding="5dp"
+        android:text="@string/copyright" />
+
+</LinearLayout>
