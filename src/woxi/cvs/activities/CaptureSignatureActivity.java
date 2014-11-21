@@ -1,5 +1,5 @@
 package woxi.cvs.activities;
-//hello
+
 import java.io.ByteArrayOutputStream;
 
 import woxi.cvs.R;

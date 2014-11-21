@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Date;
 
-import eu.janmuller.android.simplecropimage.CropImage;
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.gpstracking.GPSTracker;
 import woxi.cvs.model.DataLoader;
@@ -16,7 +16,7 @@ import woxi.cvs.model.FreshTask;
 import woxi.cvs.model.Visit;
 import woxi.cvs.model.WLTask;
 import woxi.cvs.util.Util;
-import woxi.cvs.util.Util.PHOTO_TYPE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +45,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import eu.janmuller.android.simplecropimage.CropImage;
 
 public class CaptureVisitActivity extends Activity implements OnClickListener,
 		OnItemSelectedListener {
@@ -75,11 +76,11 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 
 		SharedPreferences preferences = this.getSharedPreferences(
-				Util.PREFERENCES, Context.MODE_PRIVATE);
+				ConstantSmartAV.PREFERENCES, Context.MODE_PRIVATE);
 		editor = preferences.edit();
 
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-		getActionBar().setTitle("SmartAV - " + Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - " + ConstantSmartAV.CURRENTCUSTOMER);
 		getActionBar().setLogo(null);
 
 		visit = (Visit) getIntent().getExtras().get("visit");
@@ -167,10 +168,10 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		 */
 
 		verifierName.setText("Verifier Name : "
-				+ preferences.getString(Util.USERNAME_STR, Util.ERROR_STRING));
+				+ preferences.getString(ConstantSmartAV.USERNAME_STR, ConstantSmartAV.ERROR_STRING));
 		agencyName.setText(visit.getAgencyName());
 		message.setText(message.getText().toString()
-				.concat(Util.CURRENTCUSTOMER));
+				.concat(ConstantSmartAV.CURRENTCUSTOMER));
 		btnSubmit = (Button) this.findViewById(R.id.submitVisit);
 		ArrayAdapter<CharSequence> adapter;
 		if (visit.getVisitAt().equalsIgnoreCase("1")) {
@@ -216,7 +217,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		selectedId = welcomeLetterStatus.getCheckedRadioButtonId();
 		welcomeStatusButton = (RadioButton) findViewById(selectedId);
 		visit.setWelcomeLetterStatus(welcomeStatusButton.getTag().toString());
-		visit.setVerification_timestamp(Util.sdf.format(new Date()));
+		visit.setVerification_timestamp(ConstantSmartAV.sdf.format(new Date()));
 		if (visit.getOfr_visit().equals("3")
 				|| visit.getOfr_visit().equals("6")) {
 			statusAVOutcomeId = avOutcomeWithoutPending
@@ -254,20 +255,20 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		case R.id.signature:
 			Intent intent = new Intent(getApplicationContext(),
 					CaptureSignatureActivity.class);
-			startActivityForResult(intent, Util.SIGNATURE_REQUEST_CODE);
+			startActivityForResult(intent, ConstantSmartAV.SIGNATURE_REQUEST_CODE);
 			break;
 		case R.id.imgProofId:
-			capturePhoto(PHOTO_TYPE.PROOF_ID_PHOTO);
+			capturePhoto(ConstantSmartAV.PHOTO_TYPE.PROOF_ID_PHOTO);
 			break;
 		case R.id.imgAddressId:
-			capturePhoto(PHOTO_TYPE.ADDRESS_PHOTO);
+			capturePhoto(ConstantSmartAV.PHOTO_TYPE.ADDRESS_PHOTO);
 
 			break;
 		case R.id.imgHousePhoto:
-			capturePhoto(PHOTO_TYPE.HOUSE_PHOTO);
+			capturePhoto(ConstantSmartAV.PHOTO_TYPE.HOUSE_PHOTO);
 			break;
 		case R.id.imgDocId:
-			capturePhoto(PHOTO_TYPE.DOCUMENT_ID_PHOTO);
+			capturePhoto(ConstantSmartAV.PHOTO_TYPE.DOCUMENT_ID_PHOTO);
 			break;
 		case R.id.submitVisit:
 			Object obj = getIntent().getExtras().get("task");
@@ -320,14 +321,14 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 				visit.setUser_fname(freshTask.getUser_fname());
 				visit.setUser_lname(freshTask.getUser_lname());
 				visit.setActivity_type(freshTask.getActivity_type());
-				visit.setVersion_id(Util.VERSION_ID);
+				visit.setVersion_id(ConstantSmartAV.VERSION_ID);
 				visit.setCluster_name(freshTask.getCluster_name());
 
 				setVisitPOJO(visit);
 				// String visitJson = getVisistJSON(visit);
 				long retVal = dbUtil.insertVisitIntoDB(visit);
 				Log.i(TAG, "insert visit into o/p table retVal: " + retVal);
-				if (retVal != Util.ERROR_RETURN_VAL) {
+				if (retVal != ConstantSmartAV.ERROR_RETURN_VAL) {
 					retVal = dbUtil.updateInputTable(visit.getTask_id());
 					Log.i(TAG, "update status of i/p table : " + retVal);
 
@@ -344,7 +345,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 				visit.setUser_name(wlTask.getUser_name());
 				visit.setUser_fname(wlTask.getUser_fname());
 				visit.setUser_lname(wlTask.getUser_lname());
-				visit.setVersion_id(Util.VERSION_ID);
+				visit.setVersion_id(ConstantSmartAV.VERSION_ID);
 				visit.setActivity_type(wlTask.getActivity_type());
 				visit.setCluster_name(wlTask.getCluster_name());
 
@@ -352,7 +353,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 				// String visitJson = getVisistJSON(visit);
 				long retVal = dbUtil.insertVisitIntoDB(visit);
 				Log.i(TAG, "insert visit into o/p table retVal: " + retVal);
-				if (retVal != Util.ERROR_RETURN_VAL) {
+				if (retVal != ConstantSmartAV.ERROR_RETURN_VAL) {
 					retVal = dbUtil.updateInputTable(visit.getTask_id());
 					Log.i(TAG, "update status of i/p table : " + retVal);
 
@@ -375,12 +376,12 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			Log.i(TAG, "DataLoader.freshTaskList.size() : "
 					+ DataLoader.freshTaskList.size());
 			DataLoader.freshTaskList.remove(DataLoader.CLICKED_ITEM_POSITION);
-			main.putExtra(Util.CHILD_ITEM, Util.FRESH);
+			main.putExtra(ConstantSmartAV.CHILD_ITEM, ConstantSmartAV.FRESH);
 		} else {
 			Log.i(TAG, "DataLoader.wlTaskList.size() : "
 					+ DataLoader.wlTaskList.size());
 			DataLoader.wlTaskList.remove(DataLoader.CLICKED_ITEM_POSITION);
-			main.putExtra(Util.CHILD_ITEM, Util.PENDING);
+			main.putExtra(ConstantSmartAV.CHILD_ITEM, ConstantSmartAV.PENDING);
 		}
 
 		main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -390,12 +391,12 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		finish();
 	}
 
-	private void capturePhoto(PHOTO_TYPE type) {
+	private void capturePhoto(ConstantSmartAV.PHOTO_TYPE type) {
 
 		Uri imageUri = getImageStoreLocation(type);
-		Util.IMAGE_FILE_PATH = imageUri.getPath();
+		ConstantSmartAV.IMAGE_FILE_PATH = imageUri.getPath();
 		Log.i(TAG, "capturePhoto : Util.IMAGE_FILE_PATH : "
-				+ Util.IMAGE_FILE_PATH);
+				+ ConstantSmartAV.IMAGE_FILE_PATH);
 		// ///capture image/////
 		Intent cameraIntent = new Intent();
 		cameraIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -405,7 +406,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			switch (type) {
 			case PROOF_ID_PHOTO:
 				startActivityForResult(cameraIntent,
-						Util.PROOF_ID_PHOTO_REQUEST_CODE);
+						ConstantSmartAV.PROOF_ID_PHOTO_REQUEST_CODE);
 
 				// cropImage imagePath :
 				// /storage/sdcard0/doco/2665_3_0_proof_id.png
@@ -413,15 +414,15 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 				break;
 			case ADDRESS_PHOTO:
 				startActivityForResult(cameraIntent,
-						Util.ADDRESS_PHOTO_REQUEST_CODE);
+						ConstantSmartAV.ADDRESS_PHOTO_REQUEST_CODE);
 				break;
 			case HOUSE_PHOTO:
 				startActivityForResult(cameraIntent,
-						Util.HOUSE_PHOTO_REQUEST_CODE);
+						ConstantSmartAV.HOUSE_PHOTO_REQUEST_CODE);
 				break;
 			case DOCUMENT_ID_PHOTO:
 				startActivityForResult(cameraIntent,
-						Util.DOCUMENT_PHOTO_REQUEST_CODE);
+						ConstantSmartAV.DOCUMENT_PHOTO_REQUEST_CODE);
 				break;
 			default:
 				break;
@@ -434,7 +435,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		}
 	}
 
-	private Uri getImageStoreLocation(PHOTO_TYPE type) {
+	private Uri getImageStoreLocation(ConstantSmartAV.PHOTO_TYPE type) {
 
 		File docoImageDir = null;
 		File docoImage = null;
@@ -447,7 +448,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			 */
 
 			docoImageDir = new File(Environment.getExternalStorageDirectory()
-					+ Util.IMAGE_FOLDER);
+					+ ConstantSmartAV.IMAGE_FOLDER);
 
 			try {
 				if (!docoImageDir.exists()) {
@@ -459,7 +460,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-proof_id-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setProofId(docoImage.getName());
 					break;
@@ -468,7 +469,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-address_photo-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setAddressId(docoImage.getName());
 					break;
@@ -476,7 +477,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-house_photo-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setHouseId(docoImage.getName());
 					break;
@@ -484,7 +485,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-document_id-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setDocumentId(docoImage.getName());
 					break;
@@ -502,7 +503,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		} else {
 			Log.i(TAG, "Internal storage present in device........");
 
-			docoImageDir = new File(getFilesDir() + Util.IMAGE_FOLDER);
+			docoImageDir = new File(getFilesDir() + ConstantSmartAV.IMAGE_FOLDER);
 
 			try {
 				if (!docoImageDir.exists()) {
@@ -515,7 +516,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-proof_id-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setProofId(docoImage.getName());
 					break;
@@ -524,7 +525,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-address_photo-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setAddressId(docoImage.getName());
 					break;
@@ -532,7 +533,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-house_photo-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setHouseId(docoImage.getName());
 					break;
@@ -540,7 +541,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					docoImage = new File(docoImageDir, visit.getTask_id() + "-"
 							+ visit.getOfr_visit() + "-" + visit.getReav_flag()
 							+ "-document_id-" + visit.getCaf_no() + "-"
-							+ visit.getCluster_name() + Util.IMAGE_EXTENSION);
+							+ visit.getCluster_name() + ConstantSmartAV.IMAGE_EXTENSION);
 					docoImage.createNewFile();
 					visit.setDocumentId(docoImage.getName());
 					break;
@@ -580,25 +581,25 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			// Log.i(TAG, "Photo path : " + imageUri);
 
 			try {
-				if (requestCode == Util.PROOF_ID_PHOTO_REQUEST_CODE) {
+				if (requestCode == ConstantSmartAV.PROOF_ID_PHOTO_REQUEST_CODE) {
 					/*
 					 * Uri imageUri = data.getData(); Log.i(TAG, "Photo path : "
 					 * + imageUri);
 					 */
 
-					cropImage(Util.IMAGE_FILE_PATH,
-							Util.PHOTO_TYPE.PROOF_ID_PHOTO);
+					cropImage(ConstantSmartAV.IMAGE_FILE_PATH,
+							ConstantSmartAV.PHOTO_TYPE.PROOF_ID_PHOTO);
 
-				} else if (requestCode == Util.ADDRESS_PHOTO_REQUEST_CODE) {
-					cropImage(Util.IMAGE_FILE_PATH,
-							Util.PHOTO_TYPE.ADDRESS_PHOTO);
+				} else if (requestCode == ConstantSmartAV.ADDRESS_PHOTO_REQUEST_CODE) {
+					cropImage(ConstantSmartAV.IMAGE_FILE_PATH,
+							ConstantSmartAV.PHOTO_TYPE.ADDRESS_PHOTO);
 
-				} else if (requestCode == Util.HOUSE_PHOTO_REQUEST_CODE) {
-					cropImage(Util.IMAGE_FILE_PATH, Util.PHOTO_TYPE.HOUSE_PHOTO);
+				} else if (requestCode == ConstantSmartAV.HOUSE_PHOTO_REQUEST_CODE) {
+					cropImage(ConstantSmartAV.IMAGE_FILE_PATH, ConstantSmartAV.PHOTO_TYPE.HOUSE_PHOTO);
 
-				} else if (requestCode == Util.DOCUMENT_PHOTO_REQUEST_CODE) {
-					cropImage(Util.IMAGE_FILE_PATH,
-							Util.PHOTO_TYPE.DOCUMENT_ID_PHOTO);
+				} else if (requestCode == ConstantSmartAV.DOCUMENT_PHOTO_REQUEST_CODE) {
+					cropImage(ConstantSmartAV.IMAGE_FILE_PATH,
+							ConstantSmartAV.PHOTO_TYPE.DOCUMENT_ID_PHOTO);
 
 				}/*
 				 * else if (requestCode == Util.SIGNATURE_REQUEST_CODE) {
@@ -620,21 +621,21 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 				 * signature.setImageBitmap(b);
 				 * 
 				 * }
-				 */else if (requestCode == Util.PROOF_ID_PHOTO_REQUEST_CODE_CROP) {
+				 */else if (requestCode == ConstantSmartAV.PROOF_ID_PHOTO_REQUEST_CODE_CROP) {
 					showCroppedImagePreview(
-							Util.PROOF_ID_PHOTO_REQUEST_CODE_CROP, data);
+							ConstantSmartAV.PROOF_ID_PHOTO_REQUEST_CODE_CROP, data);
 
-				} else if (requestCode == Util.ADDRESS_PHOTO_REQUEST_CODE_CROP) {
+				} else if (requestCode == ConstantSmartAV.ADDRESS_PHOTO_REQUEST_CODE_CROP) {
 					showCroppedImagePreview(
-							Util.ADDRESS_PHOTO_REQUEST_CODE_CROP, data);
+							ConstantSmartAV.ADDRESS_PHOTO_REQUEST_CODE_CROP, data);
 
-				} else if (requestCode == Util.HOUSE_PHOTO_REQUEST_CODE_CROP) {
-					showCroppedImagePreview(Util.HOUSE_PHOTO_REQUEST_CODE_CROP,
+				} else if (requestCode == ConstantSmartAV.HOUSE_PHOTO_REQUEST_CODE_CROP) {
+					showCroppedImagePreview(ConstantSmartAV.HOUSE_PHOTO_REQUEST_CODE_CROP,
 							data);
 
-				} else if (requestCode == Util.DOCUMENT_PHOTO_REQUEST_CODE_CROP) {
+				} else if (requestCode == ConstantSmartAV.DOCUMENT_PHOTO_REQUEST_CODE_CROP) {
 					showCroppedImagePreview(
-							Util.DOCUMENT_PHOTO_REQUEST_CODE_CROP, data);
+							ConstantSmartAV.DOCUMENT_PHOTO_REQUEST_CODE_CROP, data);
 
 				}
 			} catch (Exception e) {
@@ -654,9 +655,9 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 					.getExternalStorageState())) {
 				docoImageDir = new File(
 						Environment.getExternalStorageDirectory()
-								+ Util.IMAGE_FOLDER);
+								+ ConstantSmartAV.IMAGE_FOLDER);
 			} else {
-				docoImageDir = new File(getFilesDir() + Util.IMAGE_FOLDER);
+				docoImageDir = new File(getFilesDir() + ConstantSmartAV.IMAGE_FOLDER);
 			}
 			FileOutputStream fos = null;
 			try {
@@ -667,7 +668,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 				signFileName = visit.getTask_id() + "-" + visit.getOfr_visit()
 						+ "-" + visit.getReav_flag() + "-customer_sign-"
 						+ visit.getCaf_no() + "-" + visit.getCluster_name()
-						+ Util.IMAGE_EXTENSION;
+						+ ConstantSmartAV.IMAGE_EXTENSION;
 
 				File f = new File(docoImageDir, signFileName);
 				f.createNewFile();
@@ -693,7 +694,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			}
 
 			// Util.base64PhotoSign = getImageBase64(b);
-			Util.base64PhotoSign = signFileName;
+			ConstantSmartAV.base64PhotoSign = signFileName;
 		}
 	}
 
@@ -702,7 +703,7 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 		return Uri.parse(data.getStringExtra(CropImage.IMAGE_PATH));
 	}
 
-	private void cropImage(String imagePath, PHOTO_TYPE type) {
+	private void cropImage(String imagePath, ConstantSmartAV.PHOTO_TYPE type) {
 
 		Log.i(TAG, "cropImage imagePath : " + imagePath);
 		try {
@@ -718,19 +719,19 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			switch (type) {
 			case PROOF_ID_PHOTO:
 				startActivityForResult(cropIntent,
-						Util.PROOF_ID_PHOTO_REQUEST_CODE_CROP);
+						ConstantSmartAV.PROOF_ID_PHOTO_REQUEST_CODE_CROP);
 				break;
 			case ADDRESS_PHOTO:
 				startActivityForResult(cropIntent,
-						Util.ADDRESS_PHOTO_REQUEST_CODE_CROP);
+						ConstantSmartAV.ADDRESS_PHOTO_REQUEST_CODE_CROP);
 				break;
 			case HOUSE_PHOTO:
 				startActivityForResult(cropIntent,
-						Util.HOUSE_PHOTO_REQUEST_CODE_CROP);
+						ConstantSmartAV.HOUSE_PHOTO_REQUEST_CODE_CROP);
 				break;
 			case DOCUMENT_ID_PHOTO:
 				startActivityForResult(cropIntent,
-						Util.DOCUMENT_PHOTO_REQUEST_CODE_CROP);
+						ConstantSmartAV.DOCUMENT_PHOTO_REQUEST_CODE_CROP);
 				break;
 			default:
 				break;
@@ -759,38 +760,38 @@ public class CaptureVisitActivity extends Activity implements OnClickListener,
 			// BitmapDrawable drawable = new BitmapDrawable(getResources(),
 			// croppedBitmap);
 
-			if (requestCode == Util.PROOF_ID_PHOTO_REQUEST_CODE_CROP) {
+			if (requestCode == ConstantSmartAV.PROOF_ID_PHOTO_REQUEST_CODE_CROP) {
 
 				imgProofId.setImageBitmap(croppedBitmap);
 
 				// idImageView.setBackgroundDrawable(drawable);
-				Util.base64PhotoProofId = getImageBase64(croppedBitmap);
-				Util.base64PhotoProofId = visit.getTask_id() + "_"
+				ConstantSmartAV.base64PhotoProofId = getImageBase64(croppedBitmap);
+				ConstantSmartAV.base64PhotoProofId = visit.getTask_id() + "_"
 						+ visit.getVisit_id() + "_" + visit.getReav_flag()
-						+ "_proof_id" + Util.IMAGE_EXTENSION;
+						+ "_proof_id" + ConstantSmartAV.IMAGE_EXTENSION;
 				// Log.i(TAG, "Util.base64PhotoId : " + Util.base64PhotoId);
-			} else if (requestCode == Util.ADDRESS_PHOTO_REQUEST_CODE_CROP) {
+			} else if (requestCode == ConstantSmartAV.ADDRESS_PHOTO_REQUEST_CODE_CROP) {
 				imgAddressId.setImageBitmap(croppedBitmap);
-				Util.base64PhotoAdd = getImageBase64(croppedBitmap);
-				Util.base64PhotoAdd = visit.getTask_id() + "_"
+				ConstantSmartAV.base64PhotoAdd = getImageBase64(croppedBitmap);
+				ConstantSmartAV.base64PhotoAdd = visit.getTask_id() + "_"
 						+ visit.getVisit_id() + "_" + visit.getReav_flag()
-						+ "_address_photo" + Util.IMAGE_EXTENSION;
+						+ "_address_photo" + ConstantSmartAV.IMAGE_EXTENSION;
 				// Log.i(TAG, "Util.base64PhotoId : " + Util.base64PhotoId);
-			} else if (requestCode == Util.HOUSE_PHOTO_REQUEST_CODE_CROP) {
+			} else if (requestCode == ConstantSmartAV.HOUSE_PHOTO_REQUEST_CODE_CROP) {
 				imgHousePhoto.setImageBitmap(croppedBitmap);
-				Util.base64PhotoHouse = getImageBase64(croppedBitmap);
-				Util.base64PhotoHouse = visit.getTask_id() + "_"
+				ConstantSmartAV.base64PhotoHouse = getImageBase64(croppedBitmap);
+				ConstantSmartAV.base64PhotoHouse = visit.getTask_id() + "_"
 						+ visit.getVisit_id() + "_" + visit.getReav_flag()
-						+ "_house_photo" + Util.IMAGE_EXTENSION;
+						+ "_house_photo" + ConstantSmartAV.IMAGE_EXTENSION;
 				// Log.i(TAG, "Util.base64PhotoId : " + Util.base64PhotoId);
-			} else if (requestCode == Util.DOCUMENT_PHOTO_REQUEST_CODE_CROP) {
+			} else if (requestCode == ConstantSmartAV.DOCUMENT_PHOTO_REQUEST_CODE_CROP) {
 				imgDocId.setImageBitmap(croppedBitmap);
 
-				Util.base64PhotoDocument = getImageBase64(croppedBitmap);
+				ConstantSmartAV.base64PhotoDocument = getImageBase64(croppedBitmap);
 
-				Util.base64PhotoDocument = visit.getTask_id() + "_"
+				ConstantSmartAV.base64PhotoDocument = visit.getTask_id() + "_"
 						+ visit.getVisit_id() + "_" + visit.getReav_flag()
-						+ "_document_id" + Util.IMAGE_EXTENSION;
+						+ "_document_id" + ConstantSmartAV.IMAGE_EXTENSION;
 				// Log.i(TAG, "Util.base64PhotoId : " + Util.base64PhotoId);
 			}
 

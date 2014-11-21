@@ -1,6 +1,7 @@
 package woxi.cvs.activities;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.FreshTask;
 import woxi.cvs.model.Visit;
 import woxi.cvs.model.WLTask;
@@ -31,7 +32,7 @@ public class VisitActivityNew extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		getActionBar().setLogo(null);
 		setContentView(R.layout.activity_visitform_new);
 		

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.customwidgets.DateTimePicker;
 import woxi.cvs.model.BulkTask;
 import woxi.cvs.model.Visit;
@@ -63,7 +64,7 @@ public class DecisionActivityBulk extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		setContentView(R.layout.activity_decision_bulk);
 		visit = new Visit();
 		csmNo = (TextView)this.findViewById(R.id.csmNo);
@@ -254,8 +255,8 @@ public class DecisionActivityBulk extends FragmentActivity implements
 		if(appointmentDate.getText().toString().isEmpty()){
 		Toast.makeText(DecisionActivityBulk.this,"Please select Appointment Date..",Toast.LENGTH_LONG).show();
 		}
-		Date d1 = Util.sdf.parse(appointmentDate.getText().toString());
-		Date d2 = Util.sdf.parse(Util.sdf.format(Calendar.getInstance().getTime()));
+		Date d1 = ConstantSmartAV.sdf.parse(appointmentDate.getText().toString());
+		Date d2 = ConstantSmartAV.sdf.parse(ConstantSmartAV.sdf.format(Calendar.getInstance().getTime()));
 		
 		try {
 			if (obj instanceof BulkTask) {
@@ -433,7 +434,7 @@ public class DecisionActivityBulk extends FragmentActivity implements
 		customerStayAddressButton = (RadioButton) findViewById(selectedId);
 		
 		visit.setCustomerStayAddressStatus(""+ customerStayAddressButton.getTag().toString());
-		visit.setVerification_timestamp(Util.sdf.format(new Date()));
+		visit.setVerification_timestamp(ConstantSmartAV.sdf.format(new Date()));
 		visit.setAppointmentTimeDate(appointmentDate.getText().toString());
 	}
 	public void callCaptureVisitActivity(){

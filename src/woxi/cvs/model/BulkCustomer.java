@@ -33,6 +33,14 @@ public class BulkCustomer {
 		this.index = index2;
 	}
 
+//	public HashMap<String, BulkCustomer> getBulkCustomerMap() {
+//		return bulkCustomerMap;
+//	}
+//
+//	public void setBulkCustomerMap(HashMap<String, BulkCustomer> bulkCustomerMap) {
+//		this.bulkCustomerMap = bulkCustomerMap;
+//	}
+
 	public String getAccountNo() {
 		return accountNo;
 	}
@@ -73,11 +81,28 @@ public class BulkCustomer {
 		this.bulk_id = bulk_id;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		BulkCustomer other = (BulkCustomer) obj;
-		if ((!accountNo.equals(other.accountNo)) &&(!mobileNo.equals(other.mobileNo)))
-			return false;		
-		return true;
-	}	
+//	/*
+//	 * Method to get an particular Customer to edit from a List of Customers
+//	 * already added
+//	 */
+//	public BulkCustomer findBulkCustomerByMobileNo(int index) {
+//		return bulkCustomerMap.get(index);
+//	}
+//
+//	/*
+//	 * Method to add an customer in the List. Return Parameters : True : If
+//	 * customer is not present with same mobile number can be added
+//	 * successfully. False :If Mobile Number already exists Customer cannot be
+//	 * added in a list.
+//	*/
+//	public boolean addBulkCustomer(BulkCustomer bulkCustomer) {
+//		if (bulkCustomerMap.containsKey(bulkCustomer.getMobileNo())) {
+//			return false;
+//		}
+//		this.bulkCustomerMap.put(bulkCustomer.getMobileNo(), bulkCustomer);
+//		return true;
+//	}
+
+
+
 }

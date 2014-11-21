@@ -11,6 +11,7 @@ import static woxi.cvs.db.DBContract.DROP_INPUT_TABLE;
 import static woxi.cvs.db.DBContract.DROP_OUTPUT_TABLE;
 import static woxi.cvs.db.DBContract.INPUT_TABLE_NAME;
 import static woxi.cvs.db.DBContract.OUTPUT_TABLE_NAME;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.util.Util;
 import android.content.ContentValues;
@@ -57,7 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		case BULK_TABLE:return db.delete(BULK_TABLE_NAME, null, null);
 			
 		default:
-			return (int) Util.ERROR_RETURN_VAL; // -100 indicates error
+			return (int) ConstantSmartAV.ERROR_RETURN_VAL; // -100 indicates error
 		}
 	}
 	
@@ -71,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			
 		case BULK_TABLE:return db.insert(BULK_TABLE_NAME,null,values);
 		default:
-			return Util.ERROR_RETURN_VAL; // -100 indicates error
+			return ConstantSmartAV.ERROR_RETURN_VAL; // -100 indicates error
 		}
 	}
 

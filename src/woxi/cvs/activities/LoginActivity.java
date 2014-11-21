@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.model.BulkTask;
@@ -59,12 +60,12 @@ public class LoginActivity extends Activity {
 		actionBar.setLogo(getResources().getDrawable(R.drawable.docomo));*/
 		actionBar.hide();
 		
-		SharedPreferences preferences = this.getSharedPreferences(Util.PREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences preferences = this.getSharedPreferences(ConstantSmartAV.PREFERENCES, Context.MODE_PRIVATE);
 		editor = preferences.edit();
-		String username = preferences.getString(Util.USERNAME_STR, Util.ERROR_STRING);
-		String password = preferences.getString(Util.PASSWORD_STR, Util.ERROR_STRING);
+		String username = preferences.getString(ConstantSmartAV.USERNAME_STR, ConstantSmartAV.ERROR_STRING);
+		String password = preferences.getString(ConstantSmartAV.PASSWORD_STR, ConstantSmartAV.ERROR_STRING);
 		
-		if(!(username.equals(Util.ERROR_STRING) || password.equals(Util.ERROR_STRING))){
+		if(!(username.equals(ConstantSmartAV.ERROR_STRING) || password.equals(ConstantSmartAV.ERROR_STRING))){
 			isUserAvailable = true;
 		}
 		
@@ -95,7 +96,7 @@ public class LoginActivity extends Activity {
 					if(Util.isConnectingToInternet(getApplicationContext())){
 						//new LoginTask().execute(new String[]{"http://ubuntuone.com/2LI5GfYAOfRZLd9t7SGiIV"});
 						//new LoginTask().execute(new String[]{"http://www.woxiprogrammers.com/CVSONE/ajax/tablet/getInputTasklist.php?username=ofr&password=ofr"});
-						new LoginTask().execute(new String[]{Util.INPUT_JSON_URL + "username="+etUsername.getText().toString()+"&password="+etPassword.getText().toString()+"&version="+Util.VERSION_ID});
+						new LoginTask().execute(new String[]{ConstantSmartAV.INPUT_JSON_URL + "username="+etUsername.getText().toString()+"&password="+etPassword.getText().toString()+"&version="+ConstantSmartAV.VERSION_ID});
 					}else{
 						Util.showToast(getString(R.string.internetUnavailable), getApplicationContext(),true);
 					}
@@ -110,7 +111,7 @@ public class LoginActivity extends Activity {
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			
-			if(!result.equals(Util.ERROR_STRING)){
+			if(!result.equals(ConstantSmartAV.ERROR_STRING)){
 				startActivity(new Intent(LoginActivity.this,
 						MainActivityNew.class));
 				finish();
@@ -125,9 +126,9 @@ public class LoginActivity extends Activity {
 			try {
 				DBUtil dbUtil = new DBUtil(getApplicationContext());
 				
-				ArrayList<FreshTask> freshList = (ArrayList<FreshTask>) dbUtil.fetchInputData(Util.FRESHTASK);
-				ArrayList<WLTask> wlList = (ArrayList<WLTask>) dbUtil.fetchInputData(Util.WLTASK);
-				ArrayList<BulkTask> bulkList = (ArrayList<BulkTask>) dbUtil.fetchInputData(Util.BulkTASK);
+				ArrayList<FreshTask> freshList = (ArrayList<FreshTask>) dbUtil.fetchInputData(ConstantSmartAV.FRESHTASK);
+				ArrayList<WLTask> wlList = (ArrayList<WLTask>) dbUtil.fetchInputData(ConstantSmartAV.WLTASK);
+				ArrayList<BulkTask> bulkList = (ArrayList<BulkTask>) dbUtil.fetchInputData(ConstantSmartAV.BulkTASK);
 				
 				if(freshList != null){
 					DataLoader.freshTaskList = freshList;
@@ -147,7 +148,7 @@ public class LoginActivity extends Activity {
 				return "";
 			}catch (Exception e) {
 				e.printStackTrace();
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 
@@ -171,10 +172,10 @@ public class LoginActivity extends Activity {
 				
 			try{
 				String jsonStr = callWS(params[0]);
-				if((jsonStr.trim()).equalsIgnoreCase(Util.FALSE)){
-					return Util.FALSE;
+				if((jsonStr.trim()).equalsIgnoreCase(ConstantSmartAV.FALSE)){
+					return ConstantSmartAV.FALSE;
 				}
-				else if(jsonStr != Util.ERROR_STRING){
+				else if(jsonStr != ConstantSmartAV.ERROR_STRING){
 					processJSON(jsonStr);
 				}else{
 					Log.i("doInBackground", "error in method fetchJson@@@@@@@");
@@ -183,7 +184,7 @@ public class LoginActivity extends Activity {
 				return jsonStr;
 			}catch (Exception e) {
 				e.printStackTrace();
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 
@@ -191,18 +192,18 @@ public class LoginActivity extends Activity {
 		protected void onPostExecute(String result) {
 			progressDialog.dismiss();
 			result = result.trim();
-			if(result.equalsIgnoreCase(Util.FALSE)){
+			if(result.equalsIgnoreCase(ConstantSmartAV.FALSE)){
 				Log.i(TAG, "Invalid User");
 				Toast.makeText(LoginActivity.this, "Please check Username and Password.", Toast.LENGTH_LONG).show();
-			} else if (result.equals(Util.VERSION_STRING)) {
+			} else if (result.equals(ConstantSmartAV.VERSION_STRING)) {
 				Log.i("", "Version Not Matched");
 				Toast.makeText(LoginActivity.this, "Please upgrade SmartAv version.", Toast.LENGTH_LONG).show();
-			} else if (!result.equals(Util.ERROR_STRING)) {
+			} else if (!result.equals(ConstantSmartAV.ERROR_STRING)) {
 
-				 Util.initiateAlarmManager(getApplicationContext());
+				Util.initiateAlarmManager(getApplicationContext());
 				 
-				editor.putString(Util.USERNAME_STR, etUsername.getText().toString());
-				editor.putString(Util.PASSWORD_STR, etPassword.getText().toString());
+				editor.putString(ConstantSmartAV.USERNAME_STR, etUsername.getText().toString());
+				editor.putString(ConstantSmartAV.PASSWORD_STR, etPassword.getText().toString());
 				editor.commit();
 	
 				startActivity(new Intent(LoginActivity.this,
@@ -226,7 +227,7 @@ public class LoginActivity extends Activity {
 			url = new URL(urlStr);
 			connection = (HttpURLConnection) url
 					.openConnection();
-			connection.setReadTimeout(Util.TIMEOUT);
+			connection.setReadTimeout(ConstantSmartAV.TIMEOUT);
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/xml");
 
@@ -248,11 +249,11 @@ public class LoginActivity extends Activity {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			
-			return Util.ERROR_STRING;
+			return ConstantSmartAV.ERROR_STRING;
 		} catch (IOException e) {
 			e.printStackTrace();
 			
-			return Util.ERROR_STRING;
+			return ConstantSmartAV.ERROR_STRING;
 		}
 		
 		finally{
@@ -322,7 +323,7 @@ public class LoginActivity extends Activity {
 				dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
 				
 				long retVal = dbUtil.insertIntoInputTable(freshList, wlList,bulkList);
-				if(retVal == Util.ERROR_RETURN_VAL){
+				if(retVal == ConstantSmartAV.ERROR_RETURN_VAL){
 					Log.i("error !!!", "Error inserting data into DB!!!!!!!");
 				}
 					

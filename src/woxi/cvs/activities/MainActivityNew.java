@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 
 import woxi.cvs.R;
 import woxi.cvs.adapter.CVSExpandableListAdapter;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.fragments.AboutFragment;
@@ -87,13 +88,13 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 		Log.i(TAG, "onCreate MainActivity");
 
 		SharedPreferences preferences = this.getSharedPreferences(
-				Util.PREFERENCES, Context.MODE_PRIVATE);
+				ConstantSmartAV.PREFERENCES, Context.MODE_PRIVATE);
 		editor = preferences.edit();
 
 		setContentView(R.layout.activity_main_new);
 		visit = new Visit();
 
-		String childItem = getIntent().getStringExtra(Util.CHILD_ITEM);
+		String childItem = getIntent().getStringExtra(ConstantSmartAV.CHILD_ITEM);
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -167,11 +168,11 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 		if (savedInstanceState == null) {
 			if (childItem != null && !childItem.equals("")) {
-				if (childItem.equals(Util.FRESH)) {
+				if (childItem.equals(ConstantSmartAV.FRESH)) {
 					selectItem(FRAGMENT_POSITION.FRESH);
 					mDrawerList.setItemChecked(1, true);
 
-				} else if (childItem.equals(Util.PENDING)) {
+				} else if (childItem.equals(ConstantSmartAV.PENDING)) {
 					selectItem(FRAGMENT_POSITION.PENDING);
 					mDrawerList.setItemChecked(2, true);
 
@@ -428,9 +429,9 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 			if (Util.isConnectingToInternet(getApplicationContext())) {
 				new SyncVisitData()
-						.execute(new String[] { Util.OUTPUT_UPLOAD_DATA_URL });
+						.execute(new String[] { ConstantSmartAV.OUTPUT_UPLOAD_DATA_URL });
 				new SyncVisitImages()
-						.execute(new String[] { Util.OUTPUT_UPLOAD_DATA_URL });
+						.execute(new String[] { ConstantSmartAV.OUTPUT_UPLOAD_DATA_URL });
 
 			} else {
 				Util.showToast(getString(R.string.internetUnavailable),
@@ -484,8 +485,8 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 			progressDialog.dismiss();
 
-			if (result.equals(Util.NO_RECORDS_FOUND)) {
-				Log.i("AlarmReceiver", "No Records to sync!!!");
+			if (result.equals(ConstantSmartAV.NO_RECORDS_FOUND)) {
+				
 				Intent intent = new Intent(getApplicationContext(),
 						LoginActivity.class);
 				editor.clear();
@@ -494,7 +495,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				startActivity(intent);
 				finish();
 
-			} else if (!result.equals(Util.ERROR_STRING)) {
+			} else if (!result.equals(ConstantSmartAV.ERROR_STRING)) {
 				Util.showToast("Data Sync Successfull",
 						getApplicationContext(), true);
 
@@ -509,7 +510,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				startActivity(intent);
 				finish();
 				// onBackPressed();
-			} else if (result.equals(Util.ERROR_STRING))
+			} else if (result.equals(ConstantSmartAV.ERROR_STRING))
 				Util.showToast("Data Sync Error", getApplicationContext(), true);
 		}
 
@@ -520,26 +521,26 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				url = new URL(params[0]);
 			} catch (MalformedURLException e1) {
 				e1.printStackTrace();
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 
 			String visitJson = dbUtil.fetchOutputData();
 			visitJson = encodeData(visitJson);
 			Boolean output;
-			if (visitJson.equals(Util.NO_RECORDS_FOUND)) {
-				return Util.NO_RECORDS_FOUND;
-			} else if (!visitJson.equals(Util.ERROR_STRING)) {
+			if (visitJson.equals(ConstantSmartAV.NO_RECORDS_FOUND)) {
+				return ConstantSmartAV.NO_RECORDS_FOUND;
+			} else if (!visitJson.equals(ConstantSmartAV.ERROR_STRING)) {
 				// output =
 				// Util.synchroniseData(visitJson,getApplicationContext());
 				output = Util.synchroniseData(getApplicationContext());
 				if (output) {
 					dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
-					return Util.SUCCESS;
+					return ConstantSmartAV.SUCCESS;
 				} else {
-					return Util.ERROR_STRING;
+					return ConstantSmartAV.ERROR_STRING;
 				}
 			} else {
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 	}

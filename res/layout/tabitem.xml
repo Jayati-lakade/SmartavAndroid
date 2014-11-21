@@ -51,25 +51,30 @@
     
         />
 
+
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/btnsave"
         android:layout_width="26dp"
-        android:layout_height="26dp"   
+        android:layout_height="26dp"
+   
         android:layout_marginLeft="5dp"
-        android:onClick="SaveUpdate"
+       android:onClick="SaveUpdate"
         android:layout_weight="0.01"
-        android:background="@drawable/save"
+        android:background="@drawable/save1"
         android:gravity="left"
         android:scaleType="centerCrop" />
-    
-    <Button
-        android:id="@+id/btnDelete"
+
+    <ImageView
         android:layout_width="26dp"
-        android:layout_height="26dp"   
+        android:layout_height="26dp"
+      
         android:layout_marginLeft="5dp"
+  
         android:layout_weight="0.01"
-        android:background="@drawable/delete"
+        android:background="@drawable/cancel"
         android:gravity="left"
-        android:scaleType="centerCrop" />    
+      
+        android:scaleType="centerCrop" />
+    
  
 </LinearLayout>

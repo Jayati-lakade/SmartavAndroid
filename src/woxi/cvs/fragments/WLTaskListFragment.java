@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import woxi.cvs.R;
 import woxi.cvs.activities.TaskDetailActivity;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.DataLoader;
 import woxi.cvs.model.WLTask;
 import woxi.cvs.util.Util;
@@ -69,7 +70,7 @@ public class WLTaskListFragment extends Fragment {
 				Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
 				intent.putExtra("task", tasksList.get(pos));
 //				intent.putExtra("customerName","-"+tasksList.get(pos).getCust_name());
-				Util.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
+				ConstantSmartAV.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
 				startActivity(intent);
 				
 				DataLoader.CLICKED_ITEM_POSITION = pos;

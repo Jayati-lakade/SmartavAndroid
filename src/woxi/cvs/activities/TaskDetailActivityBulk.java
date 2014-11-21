@@ -1,6 +1,7 @@
 package woxi.cvs.activities;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.BulkTask;
 import woxi.cvs.util.Util;
 import android.app.Activity;
@@ -28,7 +29,7 @@ public class TaskDetailActivityBulk extends Activity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		getActionBar().setLogo(null);
 		
 		setContentView(R.layout.activity_taskdetail_bulk);

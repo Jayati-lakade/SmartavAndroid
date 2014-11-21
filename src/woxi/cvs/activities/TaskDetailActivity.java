@@ -1,6 +1,7 @@
 package woxi.cvs.activities;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.BulkTask;
 import woxi.cvs.model.FreshTask;
 import woxi.cvs.model.WLTask;
@@ -31,7 +32,7 @@ public class TaskDetailActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		getActionBar().setLogo(null);
 		
 		setContentView(R.layout.activity_taskdetail);
@@ -102,7 +103,7 @@ public class TaskDetailActivity extends Activity implements OnClickListener {
 		altNumber.setText("" + task.getAlternate_contact_no()); 
 		statusAv.setText(task.getStatus_av()); 
 		priority.setText(task.getPriority()); 
-		billPlan.setText(task.getPlan()); 
+		billPlan.setText(task.getBill_plan()); 
 		cafType.setText(task.getCaf_type());
 		dealerCode.setText(task.getDealerCode());
 		productType.setText(task.getProduct_type());

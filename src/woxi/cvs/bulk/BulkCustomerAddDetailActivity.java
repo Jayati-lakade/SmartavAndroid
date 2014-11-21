@@ -2,8 +2,6 @@ package woxi.cvs.bulk;
 
 import java.util.ArrayList;
 
-
-
 import woxi.cvs.R;
 import woxi.cvs.activities.CaptureVisitActivityBulk;
 import woxi.cvs.adapter.CustomAdapter;
@@ -23,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class BulkCustomerAddDetailActivity extends Activity implements OnClickListener {
@@ -34,9 +33,10 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 	public ArrayList<BulkCustomer> customListViewValuesArr = new ArrayList<BulkCustomer>();
 	public static int count = 0;
 	private Button btnAdd;
-	private Button btnReset,btnpreview,btncapturevisit;
+	private Button btnReset,btnsave,btnpreview,btncapturevisit,btnnext,btnpre;
 	
 	private EditText accountNo, mobileNo, fullName, designation;
+	private TextView accountNoText,mobileNotext,fullnameText,designationText;;
 	private BulkTask bulkTask;
 	private DBUtil dbUtil ;
 	private Visit visit;
@@ -45,25 +45,34 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbUtil = new DBUtil(getApplicationContext());
-		setContentView(R.layout.activity_custom_list_view_bulk);
+		setContentView(R.layout.activity_custom_list_view_android_example);
 		btnAdd = (Button) findViewById(R.id.btnAdd);
 		btnReset = (Button) findViewById(R.id.btnReset);
 		btnpreview=(Button) findViewById(R.id.btnpreview);
-		btncapturevisit=(Button) findViewById(R.id.btnCaptureVisit);		
+		btncapturevisit=(Button) findViewById(R.id.btnCaptureVisit);
+		
+		btnsave = (Button) findViewById(R.id.btnsave);
 		accountNo = (EditText) findViewById(R.id.accountNo);
 		mobileNo = (EditText) findViewById(R.id.mobileNo);
 		fullName = (EditText) findViewById(R.id.fullName);
 		designation = (EditText) findViewById(R.id.designation);
 		
+		/*accountNoText=(TextView) findViewById(R.id.accountNoText);
+		mobileNotext=(TextView) findViewById(R.id.mobileNoText);
+		designationText=(TextView) findViewById(R.id.designationText);
+		fullnameText=(TextView) findViewById(R.id.fullNameText);*/
 		CustomListView = this;
-		
+		//Object taskObj;
 		/******** Take some data in Arraylist ( CustomListViewValuesArr ) ***********/
+		
+
 		Resources res = getResources();
 		list = (ListView) findViewById(R.id.list);
 		bulkTask = (BulkTask)getIntent().getExtras().get("task");
 		setListData();
 		/**************** Create Custom Adapter *********/
-		adapter = new CustomAdapter(CustomListView, customListViewValuesArr,res);
+		adapter = new CustomAdapter(CustomListView, customListViewValuesArr,
+				res);
 		list.setAdapter(adapter);
 		btnAdd.setOnClickListener(this);
 		btnReset.setOnClickListener(this);
@@ -110,7 +119,9 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 				DBUtil.updateBulkTable(bulkTask.getBulk_id(),customListViewValuesArr);
 			}else{
 				DBUtil.insertIntoBulkTable(bulkTask.getBulk_id(), customListViewValuesArr);
-			}			
+			}
+			
+			
 			resetViewFields();
 		
 			break;
@@ -133,7 +144,31 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 			intentCapture.putExtra("visit",visit);
 			startActivity(intentCapture);
 			break;
-	
+		/*	
+		case R.id.btnsave:
+			BulkCustomer bulkCustomer1 = new BulkCustomer();
+
+			
+			/******* Firstly take data in model object ******
+			bulkCustomer1.setAccountNo(accountNo.getText().toString());
+			bulkCustomer1.setMobileNo(mobileNo.getText().toString());
+			bulkCustomer1.setFullName(fullName.getText().toString());
+			bulkCustomer1.setDesignation(designation.getText().toString());
+		
+
+		
+
+			/******** Take Model Object in ArrayList **********
+			customListViewValuesArr.add(bulkCustomer1);
+			
+			
+			
+			list = (ListView) findViewById(R.id.list);
+			/**************** Create Custom Adapter *********
+			list.setAdapter(adapter);
+			DBUtil.updateBulkTable(bulkTask.getBulk_id(),customListViewValuesArr);
+			break;
+			*/
 		default:
 			break;
 		}
@@ -151,15 +186,7 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 		designation.setText("");
 	}
 
- /*
-   1: To save and update the record.	
-   2: To delete the record.
- */
-	public void onItemClick(final int mPosition,int task) {
-		
-		switch(task){
-		case 1 : 
-		
+	public void onItemClick(final int mPosition) {
 		BulkCustomer bulkCustomer = (BulkCustomer) customListViewValuesArr
 				.get(mPosition);
 
@@ -215,11 +242,7 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 		// CustomListViewValuesArr.remove(mPosition);
 		/**************** Create Custom Adapter *********/
 		// list.setAdapter(adapter);
-		break;
-		
-		case 2 : 
-			Toast.makeText(getApplicationContext(), "Clicked...", Toast.LENGTH_LONG).show();
-			break;
+
 	}
-	}
+
 }

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.customwidgets.DateTimePicker;
 import woxi.cvs.model.FreshTask;
 import woxi.cvs.model.Visit;
@@ -64,7 +65,7 @@ public class DecisionActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		setContentView(R.layout.activity_decision);
 		visit = new Visit();
 		csmNo = (TextView)this.findViewById(R.id.csmNo);
@@ -261,15 +262,15 @@ public class DecisionActivity extends FragmentActivity implements
 		if(appointmentDate.getText().toString().isEmpty()){
 		Toast.makeText(DecisionActivity.this,"Please select Appointment Date..",Toast.LENGTH_LONG).show();
 		}
-		Date d1 = Util.sdf.parse(appointmentDate.getText().toString());
-		Date d2 = Util.sdf.parse(Util.sdf.format(Calendar.getInstance().getTime()));
+		Date d1 = ConstantSmartAV.sdf.parse(appointmentDate.getText().toString());
+		Date d2 = ConstantSmartAV.sdf.parse(ConstantSmartAV.sdf.format(Calendar.getInstance().getTime()));
 		
 		try {
 			if (obj instanceof FreshTask) {
 
-				d2 = Util.sdf.parse(freshTask.getStart_timestamp());
+				d2 = ConstantSmartAV.sdf.parse(freshTask.getStart_timestamp());
 			} else if (obj instanceof WLTask) {
-				d2 = Util.sdf.parse((wlTask.getStart_timestamp()));
+				d2 = ConstantSmartAV.sdf.parse((wlTask.getStart_timestamp()));
 			}
 
 			Long diff = d2.getTime() - d1.getTime();
@@ -445,7 +446,7 @@ public class DecisionActivity extends FragmentActivity implements
 		customerStayAddressButton = (RadioButton) findViewById(selectedId);
 		
 		visit.setCustomerStayAddressStatus(""+ customerStayAddressButton.getTag().toString());
-		visit.setVerification_timestamp(Util.sdf.format(new Date()));
+		visit.setVerification_timestamp(ConstantSmartAV.sdf.format(new Date()));
 		visit.setAppointmentTimeDate(appointmentDate.getText().toString());
 	}
 	public void callCaptureVisitActivity(){
