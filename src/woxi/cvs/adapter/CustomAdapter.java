@@ -171,6 +171,7 @@ public class CustomAdapter extends BaseAdapter {// implements OnClickListener {
 
 				BulkCustomerAddDetailActivity bulkCustomerAddDetailActivity = (BulkCustomerAddDetailActivity) activity;
 				bulkCustomerAddDetailActivity.onItemClick(mPosition,1);
+				System.out.println("BtnSave Clicked");
 				break;
 
 			case R.id.btnDelete:
