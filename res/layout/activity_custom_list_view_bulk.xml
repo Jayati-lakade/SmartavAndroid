@@ -86,18 +86,18 @@
 
                     <Button
                         android:id="@+id/btnAdd"
-                        android:layout_width="45sp"
+                        android:layout_width="55sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="ADD"
+                        android:text="Add"
                         android:textSize="14dp" />
 
                     <Button
                         android:id="@+id/btnReset"
-                        android:layout_width="45sp"
+                        android:layout_width="55sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="RESET"
+                        android:text="Reset"
                         android:textSize="14dp" />
             
                 </LinearLayout>
@@ -110,18 +110,18 @@
                     android:paddingTop="0dp" >
                     <Button
                         android:id="@+id/btnpreview"
-                        android:layout_width="45sp"
+                        android:layout_width="55sp"
                         android:layout_height="wrap_content"
-                        android:text="Preview" 
-                        android:textSize="14dp"
-                        />
-                                      <Button
+                        android:text="Preview"
+                        android:textSize="14dp" />
+
+                    <Button
                         android:id="@+id/btnCaptureVisit"
-                        android:layout_width="45sp"
+                        android:layout_width="55sp"
                         android:layout_height="wrap_content"
-                        android:text="CAPTURE" 
-                        android:textSize="14dp"
-                        />
+                        android:text="Capture"
+                        android:textSize="14dp" />
+
         </LinearLayout>
             </LinearLayout>
 

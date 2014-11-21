@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import eu.janmuller.android.simplecropimage.CropImage;
 import woxi.cvs.R;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.gpstracking.GPSTracker;
@@ -44,7 +45,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import eu.janmuller.android.simplecropimage.CropImage;
 
 public class CaptureVisitActivity extends Activity implements OnClickListener,
 		OnItemSelectedListener {
