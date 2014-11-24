@@ -73,6 +73,12 @@ public class BulkCustomer {
 		this.bulk_id = bulk_id;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		return Integer.valueOf(mobileNo);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		BulkCustomer other = (BulkCustomer) obj;

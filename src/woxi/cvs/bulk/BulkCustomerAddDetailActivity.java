@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 
 
+import java.util.LinkedHashSet;
+
 import woxi.cvs.R;
 import woxi.cvs.activities.CaptureVisitActivityBulk;
 import woxi.cvs.adapter.CustomAdapter;
@@ -27,11 +29,12 @@ import android.widget.Toast;
 
 public class BulkCustomerAddDetailActivity extends Activity implements OnClickListener {
 
-	ListView list,list_TextView;
+	ListView bulkCustomerListView;
 	CustomAdapter adapter;
 	CustomAdapterBulkDetails TextAdapter;
-	public BulkCustomerAddDetailActivity CustomListView = null;
-	public ArrayList<BulkCustomer> customListViewValuesArr = new ArrayList<BulkCustomer>();
+	public BulkCustomerAddDetailActivity customListView = null;
+	public LinkedHashSet<BulkCustomer> customListViewValuesSet = new LinkedHashSet<BulkCustomer>();
+	public ArrayList<BulkCustomer> customListViewValuesList = new ArrayList<BulkCustomer>();
 	public static int count = 0;
 	private Button btnAdd;
 	private Button btnReset,btnpreview,btncapturevisit;
@@ -40,12 +43,17 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 	private BulkTask bulkTask;
 	private DBUtil dbUtil ;
 	private Visit visit;
+	
+	private static final int UPDATE = 1;
+	private static final int DELETE = 2;
+	private Resources res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbUtil = new DBUtil(getApplicationContext());
 		setContentView(R.layout.activity_custom_list_view_bulk);
+		
 		btnAdd = (Button) findViewById(R.id.btnAdd);
 		btnReset = (Button) findViewById(R.id.btnReset);
 		btnpreview=(Button) findViewById(R.id.btnpreview);
@@ -55,29 +63,41 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 		fullName = (EditText) findViewById(R.id.fullName);
 		designation = (EditText) findViewById(R.id.designation);
 		
-		CustomListView = this;
+		customListView = this;
 		
 		/******** Take some data in Arraylist ( CustomListViewValuesArr ) ***********/
-		Resources res = getResources();
-		list = (ListView) findViewById(R.id.list);
+		res = getResources();
+		bulkCustomerListView = (ListView) findViewById(R.id.list);
 		bulkTask = (BulkTask)getIntent().getExtras().get("task");
 		setListData();
 		/**************** Create Custom Adapter *********/
-		adapter = new CustomAdapter(CustomListView, customListViewValuesArr,res);
-		list.setAdapter(adapter);
+		
+		adapter = new CustomAdapter(customListView, getBulkCustomerValuesList(customListViewValuesSet),res);
+		bulkCustomerListView.setAdapter(adapter);
 		btnAdd.setOnClickListener(this);
 		btnReset.setOnClickListener(this);
 		btnpreview.setOnClickListener(this);
 		btncapturevisit.setOnClickListener(this);
 	}
 
+	private ArrayList getBulkCustomerValuesList(LinkedHashSet<BulkCustomer> customListViewValuesSet) {
+		if( customListViewValuesSet!=null && !customListViewValuesSet.isEmpty()){
+//			customListViewValuesList.clear();
+			System.gc();
+			customListViewValuesList =new ArrayList<BulkCustomer>(customListViewValuesSet);
+			return customListViewValuesList;
+		}
+		return customListViewValuesList;
+	}
+
 	/****** Function to set data in ArrayList *************/
 	public void setListData() {
-		customListViewValuesArr = dbUtil.searchBulKTask(new Integer(bulkTask.getBulk_id()));
-		if(customListViewValuesArr!=null){
-			list.setAdapter(adapter);
+		customListViewValuesSet = dbUtil.searchBulKTask(new Integer(bulkTask.getBulk_id()));
+		customListViewValuesList = getBulkCustomerValuesList(customListViewValuesSet);
+		if(customListViewValuesSet!=null){
+			bulkCustomerListView.setAdapter(adapter);
 		}else{
-			customListViewValuesArr = new ArrayList<BulkCustomer>();
+			customListViewValuesSet = new LinkedHashSet<BulkCustomer>();
 		}
 		
 	}
@@ -86,43 +106,35 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 	public void onClick(View v) {
 		switch (v.getId()) {
 
-		case R.id.btnAdd:
-		
+		case R.id.btnAdd:		
 			BulkCustomer bulkCustomer = new BulkCustomer();
-
 			/******* Firstly take data in model object ******/
 			bulkCustomer.setAccountNo(accountNo.getText().toString());
 			bulkCustomer.setMobileNo(mobileNo.getText().toString());
 			bulkCustomer.setFullName(fullName.getText().toString());
 			bulkCustomer.setDesignation(designation.getText().toString());
-
-
 			/******** Take Model Object in ArrayList **********/
-			customListViewValuesArr.add(bulkCustomer);
-			
-			
-			
-			list = (ListView) findViewById(R.id.list);
-			/**************** Create Custom Adapter *********/
-			list.setAdapter(adapter);
+			if(!customListViewValuesSet.add(bulkCustomer)){
+				Toast.makeText(customListView, "Customer already exists with same Mobile No. \n Please try again", Toast.LENGTH_LONG).show();
+			}			
 			int count = dbUtil.searchBulKTaskCustomers(bulkTask.getBulk_id());
 			if(count>0){
-				DBUtil.updateBulkTable(bulkTask.getBulk_id(),customListViewValuesArr);
+				DBUtil.updateBulkTable(bulkTask.getBulk_id(),getBulkCustomerValuesList(customListViewValuesSet));
 			}else{
-				DBUtil.insertIntoBulkTable(bulkTask.getBulk_id(), customListViewValuesArr);
-			}			
+				DBUtil.insertIntoBulkTable(bulkTask.getBulk_id(), getBulkCustomerValuesList(customListViewValuesSet));
+			}
+			adapter = new CustomAdapter(customListView, getBulkCustomerValuesList(customListViewValuesSet),res);
+			bulkCustomerListView.setAdapter(adapter);			
 			resetViewFields();
 		
 			break;
 
-		case R.id.btnReset:
-			resetViewFields();
-			break;
+		case R.id.btnReset:	
+			   resetViewFields();
+			   break;
 			
 		case R.id.btnpreview:
-	
-			Intent intent = new Intent(BulkCustomerAddDetailActivity.this, BulkCustomerViewDetailActivity.class);
-			
+	  		Intent intent = new Intent(BulkCustomerAddDetailActivity.this, BulkCustomerViewDetailActivity.class);			
 			intent.putExtra("task", bulkTask);
 			startActivity(intent);
 			break;
@@ -151,75 +163,56 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 		designation.setText("");
 	}
 
- /*
+ /* taskOpeartion : 
    1: To save and update the record.	
    2: To delete the record.
  */
-	public void onItemClick(final int mPosition,int task) {
+	public void onItemClick(final int mPosition,int taskOpeartion) {
 		
-		switch(task){
-		case 1 : 
+		BulkCustomer bulkCustomer = (BulkCustomer) customListViewValuesList.get(mPosition);
 		
-		BulkCustomer bulkCustomer = (BulkCustomer) customListViewValuesArr
-				.get(mPosition);
-
-		Toast.makeText(CustomListView, bulkCustomer.toString(),
-				Toast.LENGTH_LONG).show();
-
-		list = (ListView) findViewById(R.id.list);
-
-		//
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-				BulkCustomerAddDetailActivity.this);
-
-		// Setting Dialog Title
-		alertDialog.setTitle("Confirm Delete...");
-
-		// Setting Dialog Message
-		alertDialog.setMessage("Are you sure you want delete this?");
-
-		// Setting Icon to Dialog
-		// alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
+	 
+		switch(taskOpeartion){
+	
+		 case UPDATE : 
+			
+			Toast.makeText(getApplicationContext(), "Clicked...", Toast.LENGTH_LONG).show();
+			customListViewValuesSet.remove(bulkCustomer);
+			accountNo.setText(bulkCustomer.getAccountNo());
+			mobileNo.setText(bulkCustomer.getMobileNo());
+			fullName.setText(bulkCustomer.getFullName());
+			designation.setText(bulkCustomer.getDesignation());
+			btnAdd.setText("SAVE");
+			break;
+			
+		 case DELETE :
+			 Toast.makeText(customListView, bulkCustomer.toString(),Toast.LENGTH_LONG).show();
+			 bulkCustomerListView = (ListView) findViewById(R.id.list);		
+			 AlertDialog.Builder alertDialog = new AlertDialog.Builder(BulkCustomerAddDetailActivity.this);
+			 alertDialog.setTitle("Confirm Delete...");		            // Setting Dialog Title
+			 alertDialog.setMessage("Are you sure you want delete this?");	// Setting Dialog Message
+		      
+		  // Setting Positive "Yes" Button
+		      alertDialog.setPositiveButton("YES",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						BulkCustomer bulkCustomer = (BulkCustomer) customListViewValuesArr
-								.get(mPosition);
-
-				//		Toast.makeText(CustomListView, bulkCustomer.toString(),Toast.LENGTH_LONG).show();
-
-						list = (ListView) findViewById(R.id.list);
-						customListViewValuesArr.remove(mPosition);
-						DBUtil.updateBulkTable(bulkTask.getBulk_id(),customListViewValuesArr);
-						/**************** Create Custom Adapter *********/
-						list.setAdapter(adapter);
+						BulkCustomer bulkCustomer = (BulkCustomer) customListViewValuesList.get(mPosition);
+						bulkCustomerListView = (ListView) findViewById(R.id.list);
+						customListViewValuesSet.remove(mPosition);
+						DBUtil.updateBulkTable(bulkTask.getBulk_id(),getBulkCustomerValuesList(customListViewValuesSet));
+						bulkCustomerListView.setAdapter(adapter); //Create Custom Adapter					
 					}
 				});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
+		      
+		  // Setting Negative "NO" Button
+		      alertDialog.setNegativeButton("NO",new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						// Write your code here to execute after dialog
-						Toast.makeText(getApplicationContext(),
-								"You clicked on NO", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"You clicked on NO", Toast.LENGTH_SHORT).show();
 						dialog.cancel();
 					}
 				});
 
-		// Showing Alert Message
-		alertDialog.show();
-		//
-
-		// CustomListViewValuesArr.remove(mPosition);
-		/**************** Create Custom Adapter *********/
-		// list.setAdapter(adapter);
-		break;
-		
-		case 2 : 
-			Toast.makeText(getApplicationContext(), "Clicked...", Toast.LENGTH_LONG).show();
-			break;
+        		alertDialog.show();
+		break;			
 	}
-	}
+  }
 }

@@ -1,6 +1,7 @@
 package woxi.cvs.bulk;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import woxi.cvs.R;
 import woxi.cvs.adapter.CustomAdapterBulkDetails;
@@ -28,7 +29,8 @@ public class BulkCustomerViewDetailActivity extends Activity implements Paginati
 	CustomAdapterBulkDetails bulkCustomerTextAdapter;
 
 	public  BulkCustomerViewDetailActivity customListView = null;
-	public ArrayList<BulkCustomer> bulkCustomerlist = new ArrayList<BulkCustomer>();
+	public LinkedHashSet<BulkCustomer> bulkCustomerSet = new LinkedHashSet<BulkCustomer>();
+	public ArrayList<BulkCustomer> bulkCustomerList = new ArrayList<BulkCustomer>();
 	private LinearLayout paginationLinearScroll;
 	private ArrayList<BulkCustomer> paginationBulkCustomerList;
 	private static final int paginationRowLimit = ConstantSmartAV.PAGINATION_LIMIT; //Set the limit of Pagination Size
@@ -56,8 +58,9 @@ public class BulkCustomerViewDetailActivity extends Activity implements Paginati
 		res = getResources();
 		bulkCustomerListView = (ListView) findViewById(R.id.bulklistview);
 		bulkTask = (BulkTask) getIntent().getExtras().get("task");
-		bulkCustomerlist = dbUtil.searchBulKTask(new Integer(bulkTask.getBulk_id()));
-		int size = bulkCustomerlist.size()/paginationRowLimit;
+		bulkCustomerSet = dbUtil.searchBulKTask(Integer.valueOf(bulkTask.getBulk_id()));
+		bulkCustomerList = getBulkCustomerValuesList(bulkCustomerSet);
+		int size = bulkCustomerSet.size()/paginationRowLimit;
 		for (int j = 0; j < size; j++) {
 			final int k;
 			k = j;
@@ -84,19 +87,19 @@ public class BulkCustomerViewDetailActivity extends Activity implements Paginati
 		
 		/**************** Create Custom Adapter *********/
 		bulkCustomerTextAdapter = new CustomAdapterBulkDetails(customListView,
-				bulkCustomerlist, res);
+				getBulkCustomerValuesList(bulkCustomerSet), res);
 		bulkCustomerListView.setAdapter(bulkCustomerTextAdapter);
 
 	}
 
 	@Override
 	public void onNextPagebuttonClick(int posStart) {
-
+		
 		paginationBulkCustomerList.clear();
 		posStart = posStart*paginationRowLimit;
 		for(int i = 0; i<paginationRowLimit;i++)
 		{
-			paginationBulkCustomerList.add(i,bulkCustomerlist.get(posStart));
+			paginationBulkCustomerList.add(i,bulkCustomerList.get(posStart));
 			posStart = posStart+1;
 		}		
 		
@@ -104,4 +107,15 @@ public class BulkCustomerViewDetailActivity extends Activity implements Paginati
 				paginationBulkCustomerList, res);
 		bulkCustomerListView.setAdapter(bulkCustomerTextAdapter);
 		}
+	
+	private ArrayList getBulkCustomerValuesList(LinkedHashSet<BulkCustomer> customListViewValuesSet) {
+		if( bulkCustomerSet!=null && !bulkCustomerSet.isEmpty()){
+			bulkCustomerList.clear();
+			System.gc();
+			bulkCustomerList =new ArrayList<BulkCustomer>(customListViewValuesSet);
+			return bulkCustomerList;
+		}
+		return bulkCustomerList;
+	}
+
 }
