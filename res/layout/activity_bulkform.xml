@@ -34,7 +34,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="COMPANY NAME"
+                        android:text="@string/companyName"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="VISIT AT"
+                        android:text="@string/visitAt"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -90,7 +90,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="CONTACT PERSON"
+                        android:text="@string/contactPerson"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="ALTERNATE NUMBER"
+                        android:text="@string/alternateNo"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="APPOINTMENT TIME"
+                        android:text="@string/appointmentTime"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -168,7 +168,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="NO OF CONNECTIONS"
+                        android:text="@string/noOfConnections"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -190,7 +190,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="SERVICE TYPE"
+                        android:text="@string/serviceType"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -222,7 +222,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="ADDRESS"
+                        android:text="@string/address"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -256,7 +256,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:padding="5dp"
-                        android:text="LANDMARK"
+                        android:text="@string/landMark"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -281,7 +281,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="VISIT NUMBER"
+                        android:text="@string/visitNo"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -303,7 +303,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="NATURE OF BUSINESS"
+                        android:text="@string/natureOfBusiness"
                         android:textColor="@color/taskDetailElementsHeader"
                         android:textStyle="bold" />
 
@@ -333,14 +333,6 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" >
 
-                <!-- <Button -->
-                <!-- android:id="@+id/btnVisitHistory" -->
-                <!-- android:layout_width="0dp" -->
-                <!-- android:layout_height="wrap_content" -->
-                <!-- android:layout_marginRight="10dp" -->
-                <!-- android:layout_weight="1" -->
-                <!-- android:background="@drawable/button_selector" -->
-                <!-- android:text="Visit History" /> -->
 
                 <Button
                     android:id="@+id/btnCaptureVisit"
@@ -349,7 +341,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_selector"
-                    android:text="Capture Visit" />
+                    android:text="@string/captureVisit" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

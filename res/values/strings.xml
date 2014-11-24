@@ -1,18 +1,4 @@
-<!--
-  Copyright 2013 The Android Open Source Project
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
--->
+<!--   Copyright 2013 The Android Open Source Project -->
 
 <resources>
 
@@ -28,7 +14,6 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Sign In</string>
-    <!-- <string name="copyright">\u00A9 2014, All Rights Reserved, version 1.3</string> -->
     <string name="copyright">Developed By WOXI, Ver 1.6</string>
     <string name="ofr_name">Welcome, Bharat Makwana</string>
     <string name="cancel">Cancel</string>
@@ -43,8 +28,7 @@
 
     <string-array name="nav_drawer_items">
         <item>Task List</item>
-<!--         <item>Settings</item>
-        <item>About</item> -->
+        <!-- <item>Settings</item> <item>About</item>-->
         <item>Logout</item>
     </string-array>
     <string-array name="nav_drawer_child_items">
@@ -113,7 +97,6 @@
         <item>Refused receiving</item>
         <item>Wrong commitment</item>
         <item>Not Applicable</item>
-        
     </array>
     <array name="occupancy">
         <item>Self</item>
@@ -160,8 +143,7 @@
         <item>Negative</item>
         <item>Pending</item>
     </array>
-    
-     <array name="avOutcomeWithoutPending">
+    <array name="avOutcomeWithoutPending">
         <item>Positive</item>
         <item>To be referred</item>
         <item>Negative</item>
@@ -184,4 +166,68 @@
 
     <!-- %%%%%%%%%%%%%%%%%%%%%%%Characters Allowed%%%%%%%%%%%%%%%%%%%%%%% -->
     <string name="allowedCharacters">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+
+    <!-- Task -->
+    <string name="caf">CAF and Customer Name</string>
+    <string name="address">Address</string>
+    <string name="contact">Contact</string>
+    <string name="status">Status</string>
+
+    <!-- Bulk Customers List -->
+    <string name="addButton">Add</string>
+    <string name="resetButton">Reset</string>
+    <string name="previewButton">Preview</string>
+    <string name="captureButton">Capture</string>
+	<string name="mobileHint">Mobile No</string>
+	<string name="nameHint">Full name</string>
+	<string name="designationHint">Designation</string>
+	<string name="accountNoHint">Account No.</string>
+	
+	<!-- BULK FORM -->
+	<string name="companyName">COMPANY NAME</string>
+	<string name="visitAt">VISIT AT</string>
+	<string name="contactPerson">CONTACT PERSON</string>
+	<string name="alternateNo">ALTERNATE NUMBER</string>
+	<string name="appointmentTime">APPOINTMENT TIME</string>
+	<string name="noOfConnections">NO OF CONNECTIONS</string>
+	<string name="serviceType">SERVICE TYPE</string>
+	<string name="landMark">LANDMARK</string>
+	<string name="visitNo">VISIT NUMBER</string>
+	<string name="natureOfBusiness">NATURE OF BUSINESS</string>
+	<string name="captureVisit">Capture Visit</string>
+	
+	<!-- BULK FORM CAPTURE VISIT -->
+	<string name="personMet">PERSON MET</string>
+	<string name="personMetName">PERSON MET(NAME)</string>
+	<string name="remarks">REMARKS</string>
+	<string name="remarkHint">Remark</string>
+	<string name="custAltNo">CUSTOMER ALTERNATE NO</string>
+	<string name="phoneNo">Phone Number</string>
+	<string name="custEmailId">CUSTOMER EMAIL ID</string>
+	<string name="emailIdHint">Email ID</string>
+	<string name="capLandMark">CAPTURED LANDMARK</string>
+	<string name="landmark">Landmark</string>
+	<string name="signature">SIGNATURE</string>
+	<string name="proofId">PROOF ID</string>
+	<string name="housePhoto">HOUSE PHOTO</string>
+	<string name="welcomeLetterMessage">Is welcome letter delivered:</string>
+	<string name="ofrAcceptanceMessage">I member of Universal Management Serices do here by declare that I have visited the above mentioned premises of subscriber</string>
+	<string name="verifierSign">Verifier Signature ……………………………………………………</string>
+	<string name="ofrOath">I on behalf of Universal Management Services here by confirm that we take the full responsibility of the above stated verification done by our verifier and also authorize Company to penalize us in case of wrong / fake reporting in this regard.</string>
+	<string name="superViserName">Supervisor :Aniket Maral</string>
+	<string name="sign">Signature :</string>
+	<string name="agencyName">Agency Name : :</string>
+	<string name="agencySeal">Agency Seal :  :</string>
+	<string name="finalAv">Final AV Outcome:</string>
+	<string name="submitButton">Submit :</string>
+	
+	 
+	 
+	
+	
+	
+	
+	
+	
+	
 </resources>

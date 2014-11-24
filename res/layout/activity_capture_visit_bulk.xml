@@ -28,7 +28,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="PERSON MET"
+                    android:text="@string/personMet"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="PERSON MET(NAME)"
+                    android:text="@string/personMetName"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="REMARKS"
+                    android:text="@string/remarks"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_edittext"
                     android:gravity="left|center_horizontal"
-                    android:hint="Remark"
+                    android:hint="@string/remarkHint"
                     android:inputType="textCapCharacters"
                     android:lines="2"
                     android:padding="5dp" />
@@ -123,7 +123,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="CUSTOMER ALTERNATE NO"
+                        android:text="@string/custAltNo"
                         android:textColor="@color/taskDetailElementsHeader" />
 
                     <EditText
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_edittext"
                         android:gravity="center_vertical"
-                        android:hint="Phone Number"
+                        android:hint="@string/phoneNo"
                         android:inputType="number"
                         android:imeOptions="actionNext"
                         android:padding="5dp" />
@@ -149,7 +149,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="CUSTOMER EMAIL ID"
+                        android:text="@string/custEmailId"
                         android:textColor="@color/taskDetailElementsHeader" />
 
                     <EditText
@@ -157,7 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Email ID"
+                        android:hint="@string/emailIdHint"
                         android:inputType="textEmailAddress" >
                     </EditText>
                 </LinearLayout>
@@ -179,7 +179,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text=" CAPTURED LANDMARK"
+                        android:text="@string/capLandMark"
                         android:textColor="@color/taskDetailElementsHeader" />
 
                     <EditText
@@ -188,7 +188,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_edittext"
                         android:gravity="center_vertical"
-                        android:hint="Landmark"
+                        android:hint="@string/landmark"
                         android:inputType="textMultiLine"
                         android:padding="5dp"
                         android:scrollbars="vertical" />
@@ -210,7 +210,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="SIGNATURE"
+                    android:text="@string/signature"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -246,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingLeft="5dp"
-                    android:text="PROOF ID"
+                    android:text="@string/proofId"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -294,7 +294,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingLeft="5dp"
-                    android:text="HOUSE PHOTO"
+                    android:text="@string/housePhoto"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -318,7 +318,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingLeft="5dp"
-                    android:text="PERSON MET"
+                    android:text="@string/personMet"
                     android:textColor="@color/taskDetailElementsHeader"
                     android:textStyle="bold" />
 
@@ -345,7 +345,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Is welcome letter delivered:"
+                android:text="@string/welcomeLetterMessage"
                 android:textStyle="bold" />
 
             <RadioGroup
@@ -406,7 +406,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:padding="5dp"
-                android:text="I member of Universal Management Serices do here by declare that I have visited the above mentioned premises of subscriber "
+                android:text="@string/ofrAcceptanceMessage"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -437,7 +437,7 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:singleLine="true"
-                android:text="Verifier Signature ……………………………………………………"
+                android:text="@string/verifierSign"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -456,7 +456,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:padding="5dp"
-                android:text="I on behalf of Universal Management Services here by confirm that we take the full responsibility of the above stated verification done by our verifier and also authorize Company to penalize us in case of wrong / fake reporting in this regard."
+                android:text="@string/ofrOath"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -476,7 +476,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:singleLine="true"
-                android:text="Supervisor :Aniket Maral"
+                android:text="@string/superViserName"
                 android:textStyle="bold" />
 
             <TextView
@@ -485,7 +485,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="0.3"
                 android:singleLine="true"
-                android:text="Signature :"
+                android:text="@string/sign"
                 android:textStyle="bold" />
                <ImageView
                 android:id="@+id/signature"
@@ -510,7 +510,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:singleLine="true"
-                android:text="Agency Name : "
+                android:text="@string/agencyName"
                 android:textStyle="bold" />
             
             <TextView
@@ -529,7 +529,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:singleLine="true"
-                android:text="Agency Seal : "
+                android:text="@string/agencySeal"
                 android:textStyle="bold" />
 
             <ImageView
@@ -565,7 +565,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:padding="5dp"
-                    android:text="Final AV Outcome: "
+                    android:text="@string/finalAv"
                     android:textStyle="bold" />
 
                 <Spinner
@@ -576,39 +576,14 @@
                     android:entries="@array/avOutcome" />
                 
             </LinearLayout>
-            <!--  
-            <LinearLayout
-                android:id="@+id/finAvOutLinLayout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" >
-
-                <TextView
-                    android:id="@+id/finAvOut2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:padding="5dp"
-                    android:text="Final AV Outcome: "
-                    android:textStyle="bold" />
-
-                 <Spinner
-                    android:id="@+id/avOutcomeWithoutPending"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:entries="@array/avOutcomeWithoutPending" />
-                
-            </LinearLayout>
            
-			-->
             <Button
                 android:id="@+id/submitVisit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/button_selector"
-                android:text="Submit" />
+                android:text="@string/submitButton" />
         </LinearLayout>
     </LinearLayout>
 

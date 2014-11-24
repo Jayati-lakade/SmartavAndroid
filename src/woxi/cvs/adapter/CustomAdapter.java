@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /********* Adapter class extends with BaseAdapter and implements with OnClickListener ************/
-public class CustomAdapter extends BaseAdapter {// implements OnClickListener {
+public class CustomAdapter extends BaseAdapter  {// implements OnClickListener {
 
 	/*********** Declare Used Variables *********/
 	private Activity activity;
@@ -30,15 +30,15 @@ public class CustomAdapter extends BaseAdapter {// implements OnClickListener {
 	Context context;
 
 	/************* CustomAdapter Constructor *****************/
-	public CustomAdapter(Activity a, ArrayList d, Resources resLocal) {
+	public CustomAdapter(Activity activity, ArrayList data, Resources resLocal) {
 
 		/********** Take passed values **********/
-		activity = a;
-		data = d;
+    	this.activity = activity;
+		this.data = data;
 		res = resLocal;
 
 		/*********** Layout inflator to call external xml layout () **********************/
-		inflater = (LayoutInflater) activity
+		inflater = (LayoutInflater) this.activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 	}
@@ -109,48 +109,10 @@ public class CustomAdapter extends BaseAdapter {// implements OnClickListener {
 			holder.mobileNo.setText(empValues.getMobileNo());
 			holder.fullName.setText(empValues.getFullName());
 			holder.designation.setText(empValues.getDesignation());
-
 			/******** Set Item Click Listner for LayoutInflater for each row ***********/
 			vi.setOnClickListener(new OnItemClickListener(position));
-//
-//			/*
-//			 * holder.btnsave.setOnClickListener(new View.OnClickListener() {
-//			 * 
-//			 * @Override public void onClick(View v) { switch (v.getId()) { case
-//			 * R.id.btnsave:
-//			 * 
-//			 * BulkCustomer bulkcustomer=new BulkCustomer();
-//			 * bulkcustomer.setAccountNo(holder.accountNo.getText().toString());
-//			 * bulkcustomer.setMobileNo(holder.mobileNo.getText().toString());
-//			 * bulkcustomer.setFullName(holder.fullName.getText().toString());
-//			 * bulkcustomer
-//			 * .setDesignation(holder.designation.getText().toString());
-//			 * 
-//			 * //////////////////////////////////////////////////////////////////
-//			 * ///
-//			 * 
-//			 * 
-//			 * /******** Take Model Object in ArrayList **********
-//			 * customListViewValuesArr.add(bulkcustomer);
-//			 * 
-//			 * 
-//			 * 
-//			 * // list = (ListView) findViewById(R.id.list); /****************
-//			 * Create Custom Adapter ********* // list.setAdapter(adapter);
-//			 * DBUtil
-//			 * .updateBulkTable(bulkcustomer.getBulk_id(),customListViewValuesArr
-//			 * );
-//			 * 
-//			 * 
-//			 * break;
-//			 * 
-//			 * default: break; }
-//			 * 
-//			 * }
-//			 * 
-//			 * });
-//			 */
-
+			holder.btnsave.setOnClickListener((new OnItemClickListener(position)));
+			holder.btnDelete.setOnClickListener((new OnItemClickListener(position)));
 		}
 		return vi;
 	}
@@ -168,16 +130,14 @@ public class CustomAdapter extends BaseAdapter {// implements OnClickListener {
 
 			switch (view.getId()) {
 			case R.id.btnSave:
-
 				BulkCustomerAddDetailActivity bulkCustomerAddDetailActivity = (BulkCustomerAddDetailActivity) activity;
 				bulkCustomerAddDetailActivity.onItemClick(mPosition,1);
-				System.out.println("BtnSave Clicked");
 				break;
 
 			case R.id.btnDelete:
 				BulkCustomerAddDetailActivity bulkCustomerAddDetailActivity1 = (BulkCustomerAddDetailActivity) activity;
 				bulkCustomerAddDetailActivity1.onItemClick(mPosition,2);
-
+				break;
 			}
 		}
 

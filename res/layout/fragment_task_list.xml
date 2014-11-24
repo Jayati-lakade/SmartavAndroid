@@ -22,7 +22,7 @@
             android:background="@drawable/table_row_background"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="CAF and Customer Name"
+            android:text="@string/caf"
             android:textColor="@color/header"
             android:textSize="@dimen/mediumText"
             android:textStyle="bold" />
@@ -34,7 +34,7 @@
             android:background="@drawable/table_row_background"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="Address"
+            android:text="@string/address"
             android:textColor="@color/header"
             android:textSize="@dimen/mediumText"
             android:textStyle="bold" />
@@ -46,7 +46,7 @@
             android:background="@drawable/table_row_background"
             android:gravity="center_vertical"
             android:padding="5dp"
-            android:text="Contact"
+            android:text="@string/contact"
             android:textColor="@color/header"
             android:textSize="@dimen/mediumText"
             android:textStyle="bold" />
@@ -59,7 +59,7 @@
             android:background="@drawable/table_row_background"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Status"
+            android:text="@string/status"
             android:textColor="@color/header"
             android:textSize="@dimen/mediumText"
             android:textStyle="bold" />

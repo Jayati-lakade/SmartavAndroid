@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.model.BulkCustomer;
@@ -332,7 +333,7 @@ public class DBUtil {
 		ArrayList<FreshTask> freshTasksLists = null;
 		ArrayList<WLTask> wlTasksLists = null;
 		ArrayList<BulkTask> bulkTasksLists = null;
-		ArrayList<BulkCustomer> bulkCustomerLists = null;
+		LinkedHashSet<BulkCustomer> bulkCustomerSet = null;
 		StringBuilder record = new StringBuilder();
 		StringBuilder priority = new StringBuilder();
 		Gson gson = null;
@@ -344,7 +345,7 @@ public class DBUtil {
 		} else if (taskType.equalsIgnoreCase(Util.BulkTASK)) {
 			bulkTasksLists = new ArrayList<BulkTask>();
 		}else if (taskType.equalsIgnoreCase(Util.BulkCUSTOMER)) {
-			bulkCustomerLists = new ArrayList<BulkCustomer>();
+			bulkCustomerSet = new LinkedHashSet<BulkCustomer>();
 		}
 		
 		cursor.moveToFirst();
@@ -375,7 +376,7 @@ public class DBUtil {
 				// bulkTask.setPriority(priority.toString());
 				bulkTasksLists.add(bulkTask);
 			}else if (taskType.equalsIgnoreCase(Util.BulkCUSTOMER)) {			
-						Type typeToken3 = new TypeToken<ArrayList<BulkCustomer>>(){}.getType();
+						Type typeToken3 = new TypeToken<LinkedHashSet<BulkCustomer>>(){}.getType();
 						return gson.fromJson(record.toString(), typeToken3);				
 			}
 
@@ -593,12 +594,12 @@ public class DBUtil {
 		return priorityChanger;
 	}
 
-	public  ArrayList<BulkCustomer> searchBulKTask(int bulk_id) {	
+	public  LinkedHashSet<BulkCustomer> searchBulKTask(int bulk_id) {	
 		initiateDB();
 		Cursor cursor= dbHelper.readRecordData(TABLE_TYPE.BULK_TABLE, db, bulk_id);
-		ArrayList<BulkCustomer> bulkCustomers = new ArrayList<BulkCustomer>();
-		bulkCustomers = (ArrayList<BulkCustomer>) cursorToArrayList(cursor,Util.BulkCUSTOMER);
-		return bulkCustomers;
+		LinkedHashSet<BulkCustomer> bulkCustomersSet = new LinkedHashSet<BulkCustomer>();
+		bulkCustomersSet = (LinkedHashSet<BulkCustomer>) cursorToArrayList(cursor,Util.BulkCUSTOMER);
+		return bulkCustomersSet;
 	}
 	
 	public  int searchBulKTaskCustomers(int bulk_id) {	

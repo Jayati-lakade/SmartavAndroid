@@ -1,5 +1,5 @@
 package woxi.cvs.activities;
-//hello
+
 import java.io.ByteArrayOutputStream;
 
 import woxi.cvs.R;
@@ -22,295 +22,187 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class CaptureSignatureActivity extends Activity {
-    SignatureView mSignature;
-    Paint paint;
-    LinearLayout mContent;
-    Button clear, save;
- 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.signature_new);
- 
-        save = (Button) findViewById(R.id.save);
-        save.setEnabled(false);
-        clear = (Button) findViewById(R.id.clear);
-        mContent = (LinearLayout) findViewById(R.id.mysignature);
- 
-        mSignature = new SignatureView(this, null);
-        mContent.addView(mSignature);
- 
-        save.setOnClickListener(onButtonClick);
-        clear.setOnClickListener(onButtonClick);
-    }
- 
-    Button.OnClickListener onButtonClick = new Button.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == clear) {
-                mSignature.clear();
-            } else if (v == save) {
-                mSignature.save();
-            }
-        }
-    };
-    
-    public void save() {
-        Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),
-                mContent.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable = mContent.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
-        mContent.draw(canvas);
+	SignatureView mSignature;
+	Paint paint;
+	LinearLayout mContent;
+	Button clear, save;
 
-        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        returnedBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-        Intent intent = new Intent();
-        intent.putExtra("byteArray", bs.toByteArray());
-        setResult(Activity.RESULT_OK, intent);
-        finish();
-    }
- 
- 
-    
-    public class SignatureView extends View {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.signature_new);
 
-    	  private static final float STROKE_WIDTH = 7f;
+		save = (Button) findViewById(R.id.save);
+		save.setEnabled(false);
+		clear = (Button) findViewById(R.id.clear);
+		mContent = (LinearLayout) findViewById(R.id.mysignature);
 
-    	  /** Need to track this so the dirty region can accommodate the stroke. **/
-    	  private static final float HALF_STROKE_WIDTH = STROKE_WIDTH / 2;
+		mSignature = new SignatureView(this, null);
+		mContent.addView(mSignature);
 
-    	  private Paint paint = new Paint();
-    	  private Path path = new Path();
+		save.setOnClickListener(onButtonClick);
+		clear.setOnClickListener(onButtonClick);
+	}
 
-    	  /**
-    	   * Optimizes painting by invalidating the smallest possible area.
-    	   */
-    	  private float lastTouchX;
-    	  private float lastTouchY;
-    	  private final RectF dirtyRect = new RectF();
+	Button.OnClickListener onButtonClick = new Button.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (v == clear) {
+				mSignature.clear();
+			} else if (v == save) {
+				mSignature.save();
+			}
+		}
+	};
 
-    	  public SignatureView(Context context, AttributeSet attrs) {
-    	    super(context, attrs);
+	public void save() {
+		Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),
+				mContent.getHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(returnedBitmap);
+		Drawable bgDrawable = mContent.getBackground();
+		if (bgDrawable != null)
+			bgDrawable.draw(canvas);
+		else
+			canvas.drawColor(Color.WHITE);
+		mContent.draw(canvas);
 
-    	    paint.setAntiAlias(true);
-    	    paint.setColor(Color.BLACK);
-    	    paint.setStyle(Paint.Style.STROKE);
-    	    paint.setStrokeJoin(Paint.Join.ROUND);
-    	    paint.setStrokeWidth(STROKE_WIDTH);
-    	  }
-    	  public void save() {
-    	        Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),
-    	                mContent.getHeight(), Bitmap.Config.ARGB_8888);
-    	        Canvas canvas = new Canvas(returnedBitmap);
-    	        Drawable bgDrawable = mContent.getBackground();
-    	        if (bgDrawable != null)
-    	            bgDrawable.draw(canvas);
-    	        else
-    	            canvas.drawColor(Color.WHITE);
-    	        mContent.draw(canvas);
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		returnedBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+		Intent intent = new Intent();
+		intent.putExtra("byteArray", bs.toByteArray());
+		setResult(Activity.RESULT_OK, intent);
+		finish();
+	}
 
-    	        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-    	        returnedBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-    	        Intent intent = new Intent();
-    	        intent.putExtra("byteArray", bs.toByteArray());
-    	        setResult(1, intent);
-    	        finish();
-    	    }	  
+	public class SignatureView extends View {
 
-    	  /**
-    	   * Erases the signature.
-    	   */
-    	  public void clear() {
-    	    path.reset();
+		private static final float STROKE_WIDTH = 7f;
+		/** Need to track this so the dirty region can accommodate the stroke. **/
+		private static final float HALF_STROKE_WIDTH = STROKE_WIDTH / 2;
+		private Paint paint = new Paint();
+		private Path path = new Path();
+		/** Optimizes painting by invalidating the smallest possible area. */
+		private float lastTouchX;
+		private float lastTouchY;
+		private final RectF dirtyRect = new RectF();
 
-    	    // Repaints the entire view.
-    	    invalidate();
-    	  }
+		public SignatureView(Context context, AttributeSet attrs) {
+			super(context, attrs);
+			paint.setAntiAlias(true);
+			paint.setColor(Color.BLACK);
+			paint.setStyle(Paint.Style.STROKE);
+			paint.setStrokeJoin(Paint.Join.ROUND);
+			paint.setStrokeWidth(STROKE_WIDTH);
+		}
 
-    	  @Override
-    	  protected void onDraw(Canvas canvas) {
-    	    canvas.drawPath(path, paint);
-    	  }
+		public void save() {
+			Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),mContent.getHeight(), Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(returnedBitmap);
+			Drawable bgDrawable = mContent.getBackground();
+			
+			if (bgDrawable != null)
+				bgDrawable.draw(canvas);
+			else
+				canvas.drawColor(Color.WHITE);
+			
+			mContent.draw(canvas);
+			ByteArrayOutputStream bs = new ByteArrayOutputStream();
+			returnedBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+			Intent intent = new Intent();
+			intent.putExtra("byteArray", bs.toByteArray());
+			setResult(1, intent);
+			finish();
+		}
 
-    	  @Override
-    	  public boolean onTouchEvent(MotionEvent event) {
-    	    float eventX = event.getX();
-    	    float eventY = event.getY();
-    	    save.setEnabled(true);
-    	    
-    	    switch (event.getAction()) {
-    	      case MotionEvent.ACTION_DOWN:
-    	        path.moveTo(eventX, eventY);
-    	        lastTouchX = eventX;
-    	        lastTouchY = eventY;
-    	        // There is no end point yet, so don't waste cycles invalidating.
-    	        return true;
+		/** Erases the signature. */
+		public void clear() {
+			path.reset();
+			invalidate(); // Repaints the entire view.			
+		}
 
-    	      case MotionEvent.ACTION_MOVE:
-    	      case MotionEvent.ACTION_UP:
-    	        // Start tracking the dirty region.
-    	        resetDirtyRect(eventX, eventY);
+		@Override
+		protected void onDraw(Canvas canvas) {
+			canvas.drawPath(path, paint);
+		}
 
-    	        // When the hardware tracks events faster than they are delivered, the
-    	        // event will contain a history of those skipped points.
-    	        int historySize = event.getHistorySize();
-    	        for (int i = 0; i < historySize; i++) {
-    	          float historicalX = event.getHistoricalX(i);
-    	          float historicalY = event.getHistoricalY(i);
-    	          expandDirtyRect(historicalX, historicalY);
-    	          path.lineTo(historicalX, historicalY);
-    	        }
+		@Override
+		public boolean onTouchEvent(MotionEvent event) {
+			float eventX = event.getX();
+			float eventY = event.getY();
+			save.setEnabled(true);
 
-    	        // After replaying history, connect the line to the touch point.
-    	        path.lineTo(eventX, eventY);
-    	        break;
+			switch (event.getAction()) {
 
-    	      default:
-    	        Log.i("","Ignored touch event: " + event.toString());
-    	        return false;
-    	    }
+			case MotionEvent.ACTION_DOWN:
+				 path.moveTo(eventX, eventY);
+				 lastTouchX = eventX;
+				 lastTouchY = eventY;
+				return true;
 
-    	    // Include half the stroke width to avoid clipping.
-    	    invalidate(
-    	        (int) (dirtyRect.left - HALF_STROKE_WIDTH),
-    	        (int) (dirtyRect.top - HALF_STROKE_WIDTH),
-    	        (int) (dirtyRect.right + HALF_STROKE_WIDTH),
-    	        (int) (dirtyRect.bottom + HALF_STROKE_WIDTH));
+			case MotionEvent.ACTION_MOVE:
+			case MotionEvent.ACTION_UP:
+				// Start tracking the dirty region.
+				resetDirtyRect(eventX, eventY);
 
-    	    lastTouchX = eventX;
-    	    lastTouchY = eventY;
+				/* When the hardware tracks events faster than they are
+				 delivered, the event will contain a history of those skipped points.*/
+				int historySize = event.getHistorySize();
+				for (int i = 0; i < historySize; i++) {
+					float historicalX = event.getHistoricalX(i);
+					float historicalY = event.getHistoricalY(i);
+					expandDirtyRect(historicalX, historicalY);
+					path.lineTo(historicalX, historicalY);
+				}
 
-    	    return true;
-    	  }
+				// After replaying history, connect the line to the touch point.
+				path.lineTo(eventX, eventY);
+				break;
 
-    	  /**
-    	   * Called when replaying history to ensure the dirty region includes all
-    	   * points.
-    	   */
-    	  private void expandDirtyRect(float historicalX, float historicalY) {
-    	    if (historicalX < dirtyRect.left) {
-    	      dirtyRect.left = historicalX;
-    	    } else if (historicalX > dirtyRect.right) {
-    	      dirtyRect.right = historicalX;
-    	    }
-    	    if (historicalY < dirtyRect.top) {
-    	      dirtyRect.top = historicalY;
-    	    } else if (historicalY > dirtyRect.bottom) {
-    	      dirtyRect.bottom = historicalY;
-    	    }
-    	  }
+			default:
+				Log.i("", "Ignored touch event: " + event.toString());
+				return false;
+			}
 
-    	  /**
-    	   * Resets the dirty region when the motion event occurs.
-    	   */
-    	  private void resetDirtyRect(float eventX, float eventY) {
+			// Include half the stroke width to avoid clipping.
+			invalidate((int) (dirtyRect.left - HALF_STROKE_WIDTH),
+					(int) (dirtyRect.top - HALF_STROKE_WIDTH),
+					(int) (dirtyRect.right + HALF_STROKE_WIDTH),
+					(int) (dirtyRect.bottom + HALF_STROKE_WIDTH));
 
-    	    // The lastTouchX and lastTouchY were set when the ACTION_DOWN
-    	    // motion event occurred.
-    	    dirtyRect.left = Math.min(lastTouchX, eventX);
-    	    dirtyRect.right = Math.max(lastTouchX, eventX);
-    	    dirtyRect.top = Math.min(lastTouchY, eventY);
-    	    dirtyRect.bottom = Math.max(lastTouchY, eventY);
-    	  }
-    	}
+			lastTouchX = eventX;
+			lastTouchY = eventY;
+
+			return true;
+		}
+
+		/**
+		 * Called when replaying history to ensure the dirty region includes all
+		 * points.
+		 */
+		private void expandDirtyRect(float historicalX, float historicalY) {
+			if (historicalX < dirtyRect.left) {
+				dirtyRect.left = historicalX;
+			} else if (historicalX > dirtyRect.right) {
+				dirtyRect.right = historicalX;
+			}
+			if (historicalY < dirtyRect.top) {
+				dirtyRect.top = historicalY;
+			} else if (historicalY > dirtyRect.bottom) {
+				dirtyRect.bottom = historicalY;
+			}
+		}
+
+		/**
+		 * Resets the dirty region when the motion event occurs.
+		 */
+		private void resetDirtyRect(float eventX, float eventY) {
+
+			// The lastTouchX and lastTouchY were set when the ACTION_DOWN
+			// motion event occurred.
+			dirtyRect.left = Math.min(lastTouchX, eventX);
+			dirtyRect.right = Math.max(lastTouchX, eventX);
+			dirtyRect.top = Math.min(lastTouchY, eventY);
+			dirtyRect.bottom = Math.max(lastTouchY, eventY);
+		}
+	}
 }
-    /*  public class signature extends View {
-    static final float STROKE_WIDTH = 10f;
-    static final float HALF_STROKE_WIDTH = STROKE_WIDTH / 2;
-    Paint paint = new Paint();
-    Path path = new Path();
-
-    float lastTouchX;
-    float lastTouchY;
-    final RectF dirtyRect = new RectF();
-
-    public signature(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(STROKE_WIDTH);
-    }
-
-    public void clear() {
-        path.reset();
-        invalidate();
-        save.setEnabled(false);
-    }
-
-    public void save() {
-        Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),
-                mContent.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(returnedBitmap);
-        Drawable bgDrawable = mContent.getBackground();
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas);
-        else
-            canvas.drawColor(Color.WHITE);
-        mContent.draw(canvas);
-
-        ByteArrayOutputStream bs = new ByteArrayOutputStream();
-        returnedBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-        Intent intent = new Intent();
-        intent.putExtra("byteArray", bs.toByteArray());
-        setResult(1, intent);
-        finish();
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        canvas.drawPath(path, paint);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float eventX = event.getX();
-        float eventY = event.getY();
-        save.setEnabled(true);
-
-        switch (event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-            path.moveTo(eventX, eventY);
-            lastTouchX = eventX;
-            lastTouchY = eventY;
-            return true;
-
-        case MotionEvent.ACTION_MOVE:
-
-        case MotionEvent.ACTION_UP:
-
-            resetDirtyRect(eventX, eventY);
-            int historySize = event.getHistorySize();
-            for (int i = 0; i < historySize; i++) {
-                float historicalX = event.getHistoricalX(i);
-                float historicalY = event.getHistoricalY(i);
-                path.lineTo(historicalX, historicalY);
-            }
-            path.lineTo(eventX, eventY);
-            break;
-        }
-
-        invalidate((int) (dirtyRect.left - HALF_STROKE_WIDTH),
-                (int) (dirtyRect.top - HALF_STROKE_WIDTH),
-                (int) (dirtyRect.right + HALF_STROKE_WIDTH),
-                (int) (dirtyRect.bottom + HALF_STROKE_WIDTH));
-
-        lastTouchX = eventX;
-        lastTouchY = eventY;
-
-        return true;
-    }
-
-    private void resetDirtyRect(float eventX, float eventY) {
-        dirtyRect.left = Math.min(lastTouchX, eventX);
-        dirtyRect.right = Math.max(lastTouchX, eventX);
-        dirtyRect.top = Math.min(lastTouchY, eventY);
-        dirtyRect.bottom = Math.max(lastTouchY, eventY);
-    }
-}*/
-

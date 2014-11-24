@@ -32,7 +32,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:hint="Full name"
+                        android:hint="@string/nameHint"
                         android:nextFocusDown="@+id/mobileNo"
                         android:padding="5dp"
                         android:textSize="12dp" />
@@ -42,7 +42,7 @@
                         android:layout_width="193dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:hint="Mobile No"
+                        android:hint="@string/mobileHint"
                         android:inputType="number"
                         android:nextFocusDown="@+id/designation"
                         android:padding="5dp"
@@ -60,7 +60,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:hint="Designation"
+                        android:hint="@string/designationHint"
                         android:nextFocusDown="@+id/accountNo"
                         android:padding="5dp"
                         android:textSize="12dp" />
@@ -70,7 +70,7 @@
                         android:layout_width="193dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:hint="Account No."
+                        android:hint="@string/accountNoHint"
                         android:inputType="number"
                         android:padding="5dp"
                         android:textSize="12dp" />
@@ -89,7 +89,7 @@
                         android:layout_width="55sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Add"
+                        android:text="@string/addButton"
                         android:textSize="14dp" />
 
                     <Button
@@ -97,32 +97,32 @@
                         android:layout_width="55sp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Reset"
+                        android:text="@string/resetButton"
                         android:textSize="14dp" />
-            
                 </LinearLayout>
-                               <LinearLayout
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingBottom="5dp"
                     android:paddingLeft="5dp"
                     android:paddingTop="0dp" >
+
                     <Button
                         android:id="@+id/btnpreview"
                         android:layout_width="55sp"
                         android:layout_height="wrap_content"
-                        android:text="Preview"
+                        android:text="@string/previewButton"
                         android:textSize="14dp" />
 
                     <Button
                         android:id="@+id/btnCaptureVisit"
                         android:layout_width="55sp"
                         android:layout_height="wrap_content"
-                        android:text="Capture"
+                        android:text="@string/captureButton"
                         android:textSize="14dp" />
-
-        </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <ListView
