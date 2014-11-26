@@ -172,7 +172,42 @@
     <string name="address">Address</string>
     <string name="contact">Contact</string>
     <string name="status">Status</string>
+	
+	 <!--TASK CAPTURE VISIT-->
+	 <string name="personMetTask">PERSON MET</string>
+	 <string name="personMetNameTask">PERSON MET(NAME)</string> 
+     <string name="personNameTask">Person Name</string>
+	 <string name="remarksTask">REMARKS</string>
+	 <string name="remarkHintTask">Remark</string>
+	 <string name="custAltNoTask">CUSTOMER ALTERNATE NO</string>
+	 <string name="phoneNoTask">Phone Number</string>
+	 <string name="custEmailTask">CUSTOMER EMAIL ID</string>
+	 <string name="emailIdTask">Email ID</string>
+	 <string name="capLandMarkTask">CAPTURED LANDMARK</string>
+	 <string name="landMarkHintTask">Landmark</string>
+	 <string name="signTask">SIGNATURE</string>
+	 <string name="addIdTask">ADDRESS ID</string>
+	 <string name="housePhotoTask">HOUSE PHOTO</string>
+	 <string name="welcomeLetterTask">Is welcome letter delivered:</string>
 
+	 
+	 
+	 <!--COMMON-->
+	 
+	 <string name="welcomeLetterMessage">Is welcome letter delivered:</string>
+	<string name="ofrAcceptanceMessage">I member of Universal Management Serices do here by declare that I have visited the above mentioned premises of subscriber</string>
+	<string name="verifierSign">Verifier Signature ……………………………………………………</string>
+	<string name="ofrOath">I on behalf of Universal Management Services here by confirm that we take the full responsibility of the above stated verification done by our verifier and also authorize Company to penalize us in case of wrong / fake reporting in this regard.</string>
+	<string name="superViserName">Supervisor :Aniket Maral</string>
+	<string name="sign">Signature :</string>
+	<string name="agencyName">Agency Name  :</string>
+	<string name="agencySeal">Agency Seal :  </string>
+	<string name="finalAv">Final AV Outcome:</string>
+	<string name="submitButton">Submit :</string>
+	 
+	 
+	 
+	 
     <!-- Bulk Customers List -->
     <string name="addButton">Add</string>
     <string name="resetButton">Reset</string>
@@ -210,24 +245,5 @@
 	<string name="signature">SIGNATURE</string>
 	<string name="proofId">PROOF ID</string>
 	<string name="housePhoto">HOUSE PHOTO</string>
-	<string name="welcomeLetterMessage">Is welcome letter delivered:</string>
-	<string name="ofrAcceptanceMessage">I member of Universal Management Serices do here by declare that I have visited the above mentioned premises of subscriber</string>
-	<string name="verifierSign">Verifier Signature ……………………………………………………</string>
-	<string name="ofrOath">I on behalf of Universal Management Services here by confirm that we take the full responsibility of the above stated verification done by our verifier and also authorize Company to penalize us in case of wrong / fake reporting in this regard.</string>
-	<string name="superViserName">Supervisor :Aniket Maral</string>
-	<string name="sign">Signature :</string>
-	<string name="agencyName">Agency Name : :</string>
-	<string name="agencySeal">Agency Seal :  :</string>
-	<string name="finalAv">Final AV Outcome:</string>
-	<string name="submitButton">Submit :</string>
-	
-	 
-	 
-	
-	
-	
-	
-	
-	
 	
 </resources>
