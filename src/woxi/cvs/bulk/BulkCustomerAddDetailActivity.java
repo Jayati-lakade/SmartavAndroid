@@ -81,6 +81,7 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 	}
 
 	private ArrayList getBulkCustomerValuesList(LinkedHashSet<BulkCustomer> customListViewValuesSet) {
+
 		if( customListViewValuesSet!=null){
 //			customListViewValuesList.clear();
 			System.gc();
@@ -107,7 +108,6 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 		switch (v.getId()) {
 
 		case R.id.btnAdd:		
-			btnAdd.setText("ADD");   //Resetting to Add label
 			BulkCustomer bulkCustomer = new BulkCustomer();
 			/******* Firstly take data in model object ******/
 			bulkCustomer.setAccountNo(accountNo.getText().toString());
@@ -172,13 +172,14 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 	 
 		switch(taskOpeartion){
 	
-		 case UPDATE : 			
+		 case UPDATE : 
+
 			customListViewValuesSet.remove(bulkCustomer);
 			accountNo.setText(bulkCustomer.getAccountNo());
 			mobileNo.setText(bulkCustomer.getMobileNo());
 			fullName.setText(bulkCustomer.getFullName());
 			designation.setText(bulkCustomer.getDesignation());
-			btnAdd.setText("Save");//Changing the Add button label to Save
+			btnAdd.setText("SAVE");
 			break;
 			
 		 case DELETE :
@@ -193,10 +194,12 @@ public class BulkCustomerAddDetailActivity extends Activity implements OnClickLi
 					public void onClick(DialogInterface dialog, int which) {
 						BulkCustomer bulkCustomer = (BulkCustomer) customListViewValuesList.get(mPosition);
 						bulkCustomerListView = (ListView) findViewById(R.id.list);
+
 						customListViewValuesSet.remove(bulkCustomer);
 						DBUtil.updateBulkTable(bulkTask.getBulk_id(),getBulkCustomerValuesList(customListViewValuesSet));
 						adapter = new CustomAdapter(customListView, getBulkCustomerValuesList(customListViewValuesSet),res);
 						bulkCustomerListView.setAdapter(adapter);	
+
 					}
 				});
 		      

@@ -110,6 +110,7 @@ public class BulkCustomerViewDetailActivity extends Activity implements Paginati
 	
 	private ArrayList getBulkCustomerValuesList(LinkedHashSet<BulkCustomer> customListViewValuesSet) {
 		if( bulkCustomerSet!=null){
+
 			bulkCustomerList.clear();
 			System.gc();
 			bulkCustomerList =new ArrayList<BulkCustomer>(customListViewValuesSet);
