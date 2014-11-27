@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.customwidgets.DateTimePicker;
 import woxi.cvs.model.BulkTask;
 import woxi.cvs.model.Visit;
@@ -15,7 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -63,7 +64,7 @@ public class DecisionActivityBulk extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		setContentView(R.layout.activity_decision_bulk);
 		visit = new Visit();
 		csmNo = (TextView)this.findViewById(R.id.csmNo);
@@ -90,7 +91,11 @@ public class DecisionActivityBulk extends FragmentActivity implements
 		negativeShortReason = (Spinner) this.findViewById(R.id.negativeShortReason);
 		
 		btnProceed = (Button) this.findViewById(R.id.btnProceed);
-
+		/*
+		 * Desc:following fields are shown on tablet screen for capturing the information. 
+		 * Developed By:Sourabh shah
+		 * version:1.1
+ */
 		if (addressTraced != null) {
 			addressTraced.setOnCheckedChangeListener(new OnCheckedChangeListener() {
  			 public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -231,12 +236,16 @@ public class DecisionActivityBulk extends FragmentActivity implements
 						callCaptureVisitActivity();
 					}
 				} catch (ParseException e) {
-				Log.e(TAG,e.getMessage());
+		
 				}
 			}
 		});
 	}
-
+	/*
+	 * Desc:show the calendar.
+	 * Developed By:Sourabh shah
+	 * Version:1.1
+	 */
 
 	@Override
 	public void onClick(View v) {
@@ -254,8 +263,8 @@ public class DecisionActivityBulk extends FragmentActivity implements
 		if(appointmentDate.getText().toString().isEmpty()){
 		Toast.makeText(DecisionActivityBulk.this,"Please select Appointment Date..",Toast.LENGTH_LONG).show();
 		}
-		Date d1 = Util.sdf.parse(appointmentDate.getText().toString());
-		Date d2 = Util.sdf.parse(Util.sdf.format(Calendar.getInstance().getTime()));
+		Date d1 = ConstantSmartAV.sdf.parse(appointmentDate.getText().toString());
+		Date d2 = ConstantSmartAV.sdf.parse(ConstantSmartAV.sdf.format(Calendar.getInstance().getTime()));
 		
 		try {
 			if (obj instanceof BulkTask) {
@@ -275,11 +284,11 @@ public class DecisionActivityBulk extends FragmentActivity implements
 		//		visit.setAgencyName(bulkTask.getAgency_name());
 				isVisitFresh = true;
 			} if (diffValue > 0) {				
-				Log.i(TAG,"Appointment Escalation SLA Due Limit");
+			
 				popUpDialog(isVisitFresh);
 			}
 			if (diffValue <= 0) {
-				Log.i(TAG,"Appointment Within SSL Due Limit");
+	
 				callCaptureVisitActivity();
 			}
 				
@@ -293,7 +302,11 @@ public class DecisionActivityBulk extends FragmentActivity implements
 			Log.e(TAG+":checkIfLessThan96Hours:",e.getMessage());
 		}*/
 	}
-
+	/*
+	 * Desc:According to SLA logic if the appointment exceeds show the message .
+	 * Developed By:Sourabh shah
+	 * Version:1.1
+	 */
 	private void popUpDialog(boolean visitType) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle("Alert");
@@ -339,14 +352,14 @@ public class DecisionActivityBulk extends FragmentActivity implements
 					public void onClick(View v) {
 						mDateTimePicker.clearFocus();
 						int month = (mDateTimePicker.get(Calendar.MONTH) + 1);
-						Log.i(TAG,"int month : " + month);
+			
 						String mon = "";
 						if (month / 10 == 0) {
 							mon = "0" + month;
-							Log.i(TAG,"If String mon : " + mon);
+			
 						} else {
 							mon = String.valueOf(month);
-							Log.i(TAG,"Else String mon : " + mon);
+			
 						}
 						appointmentDate.setText(mDateTimePicker
 								.get(Calendar.YEAR)
@@ -363,7 +376,7 @@ public class DecisionActivityBulk extends FragmentActivity implements
 								+ mDateTimePicker.get(Calendar.MINUTE)
 								+ ":" + "00");
 						mDateTimeDialog.dismiss();
-						Log.i(TAG,"Time : "+ appointmentDate.getText());
+					
 					}
 
 				});
@@ -433,7 +446,7 @@ public class DecisionActivityBulk extends FragmentActivity implements
 		customerStayAddressButton = (RadioButton) findViewById(selectedId);
 		
 		visit.setCustomerStayAddressStatus(""+ customerStayAddressButton.getTag().toString());
-		visit.setVerification_timestamp(Util.sdf.format(new Date()));
+		visit.setVerification_timestamp(ConstantSmartAV.sdf.format(new Date()));
 		visit.setAppointmentTimeDate(appointmentDate.getText().toString());
 	}
 	public void callCaptureVisitActivity(){

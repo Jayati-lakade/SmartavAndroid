@@ -1,6 +1,7 @@
 package woxi.cvs.activities;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.FreshTask;
 import woxi.cvs.model.Visit;
 import woxi.cvs.model.WLTask;
@@ -15,7 +16,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+/*
+ * Desc:Fetch the data from JSON and show it
+ * Deveoled By:Sourbh Shah
+ * Version:1.1
+ */
 public class VisitActivityNew extends Activity {
 
 	Button btnCaptureVisit, btnVisitHistory;
@@ -31,7 +36,7 @@ public class VisitActivityNew extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(false);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		getActionBar().setLogo(null);
 		setContentView(R.layout.activity_visitform_new);
 		
@@ -55,7 +60,7 @@ public class VisitActivityNew extends Activity {
 			
 		} else if(obj instanceof WLTask){
 			wlTask = (WLTask) obj;
-			visit.setOfr_visit(wlTask.getOfr_visit());
+			//visit.setOfr_visit(wlTask.getOfr_visit());
 			visit.setReav_flag(wlTask.getReav_flag());
 			visit.setCaf_no(wlTask.getCaf_no());
 			visit.setCluster_name(wlTask.getCluster_name());
@@ -79,15 +84,15 @@ public class VisitActivityNew extends Activity {
 	}
 	private void populateWLTaskFields(WLTask task) {
 		visit.setTask_id(task.getTask_id());
-		visit.setOfr_visit(task.getOfr_visit());
+	//	visit.setOfr_visit(task.getOfr_visit());
 		customerName.setText(task.getCust_name()); 
 		address.setText(task.getAddress()); 
 		landmark.setText(task.getLandmark()); 
 		telephoneNumber.setText(task.getTelephone_no());
 		altNumber.setText(task.getAlternate_contact_no()); 
 		try{
-			int visitNo = Integer.parseInt(task.getOfr_visit());
-			visitNumber.setText(""+(visitNo));
+		//	int visitNo = Integer.parseInt(task.getOfr_visit());
+		//	visitNumber.setText(""+(visitNo));
 			
 		}catch(Exception ex){
 			visitNumber.setText("1");

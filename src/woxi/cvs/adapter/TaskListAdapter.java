@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TaskListAdapter extends CursorAdapter{
@@ -23,14 +22,16 @@ public class TaskListAdapter extends CursorAdapter{
 		TextView  taskNo = (TextView) view.findViewById(R.id.tvSrNo);
 		TextView customerName = (TextView) view.findViewById(R.id.tvCustomerName);
 		TextView customerAddress = (TextView) view.findViewById(R.id.tvCustomerAddress);
-		TextView customerContactNo = (TextView) view.findViewById(R.id.tvCustomerContactNo);
+		
+		TextView customerCafNo=(TextView) view.findViewById(R.id.tvCafType);
 		TextView status = (TextView) view.findViewById(R.id.tvStatus);
-		ImageView priority = (ImageView) view.findViewById(R.id.imgPriority);
+	//	ImageView priority = (ImageView) view.findViewById(R.id.imgPriority);
 		
 		taskNo.setText(cursor.getString(1));
 		customerName.setText(cursor.getString(2));
 		customerAddress.setText(cursor.getString(3));
-		customerContactNo.setText(cursor.getString(4));
+		
+		customerCafNo.setText(cursor.getString(4));
 		status.setText(cursor.getString(5));
 
 	}

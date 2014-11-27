@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import woxi.cvs.R;
 import woxi.cvs.activities.TaskDetailActivity;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.DataLoader;
 import woxi.cvs.model.FreshTask;
 import woxi.cvs.util.Util;
@@ -67,7 +68,7 @@ public class FreshTaskListFragment extends Fragment {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
 					Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
 					intent.putExtra("task", tasksList.get(pos));
-					Util.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
+					ConstantSmartAV.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
 					startActivity(intent);
 					
 					DataLoader.CLICKED_ITEM_POSITION = pos;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import woxi.cvs.R;
 import woxi.cvs.activities.TaskDetailActivityBulk;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.BulkTask;
 import woxi.cvs.model.DataLoader;
 import woxi.cvs.util.Util;
@@ -70,7 +71,7 @@ public class BulkTaskListFragment extends Fragment {
 				Intent intent = new Intent(getActivity(), TaskDetailActivityBulk.class);
 				intent.putExtra("task", tasksList.get(pos));
 //				intent.putExtra("customerName","-"+tasksList.get(pos).getCust_name());
-				Util.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
+				ConstantSmartAV.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
 				startActivity(intent);
 				
 				DataLoader.CLICKED_ITEM_POSITION = pos;

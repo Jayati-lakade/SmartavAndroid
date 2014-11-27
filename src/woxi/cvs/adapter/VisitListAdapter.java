@@ -6,7 +6,7 @@ import woxi.cvs.R;
 import woxi.cvs.model.Visit;
 import woxi.cvs.model.VisitForm;
 import android.content.Context;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +78,7 @@ public class VisitListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public Object getGroup(int groupPosition) {
-		Log.i("Parent", groupPosition + "=  getGroup ");
+	
 
 		return parents.get(groupPosition);
 	}

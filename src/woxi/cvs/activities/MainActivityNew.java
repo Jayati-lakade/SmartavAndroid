@@ -16,6 +16,7 @@
 
 package woxi.cvs.activities;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.LinkedHashMap;
 
 import woxi.cvs.R;
 import woxi.cvs.adapter.CVSExpandableListAdapter;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.fragments.AboutFragment;
@@ -56,7 +58,11 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
-
+/*
+ * This class is to  create the drawers and according to option fetch the data in list form
+ * developed By:sourabh Shah
+ * version:1.1
+ */
 public class MainActivityNew extends Activity implements OnGroupClickListener,
 		OnChildClickListener, OnGroupExpandListener {
 	private DrawerLayout mDrawerLayout;
@@ -74,7 +80,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private CVSExpandableListAdapter adapter;
 	private static int SELECTED_CHILD_POSITION;
-
+//drawer options
 	public static enum FRAGMENT_POSITION {
 		FRESH, PENDING, BULK, SETTINGS, ABOUT
 	};
@@ -87,13 +93,13 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 		Log.i(TAG, "onCreate MainActivity");
 
 		SharedPreferences preferences = this.getSharedPreferences(
-				Util.PREFERENCES, Context.MODE_PRIVATE);
+				ConstantSmartAV.PREFERENCES, Context.MODE_PRIVATE);
 		editor = preferences.edit();
 
 		setContentView(R.layout.activity_main_new);
 		visit = new Visit();
 
-		String childItem = getIntent().getStringExtra(Util.CHILD_ITEM);
+		String childItem = getIntent().getStringExtra(ConstantSmartAV.CHILD_ITEM);
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -167,11 +173,11 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 		if (savedInstanceState == null) {
 			if (childItem != null && !childItem.equals("")) {
-				if (childItem.equals(Util.FRESH)) {
+				if (childItem.equals(ConstantSmartAV.FRESH)) {
 					selectItem(FRAGMENT_POSITION.FRESH);
 					mDrawerList.setItemChecked(1, true);
 
-				} else if (childItem.equals(Util.PENDING)) {
+				} else if (childItem.equals(ConstantSmartAV.PENDING)) {
 					selectItem(FRAGMENT_POSITION.PENDING);
 					mDrawerList.setItemChecked(2, true);
 
@@ -183,7 +189,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				DataLoader.CLICKED_ITEM_POSITION = DataLoader.INVALID_ITEM_POSITION;
 				DataLoader.IS_TASK_COMPLETED = false;
 			} else {
-				selectItem(FRAGMENT_POSITION.BULK);
+				selectItem(FRAGMENT_POSITION.FRESH);
 			}
 
 			mDrawerList.expandGroup(0);
@@ -202,7 +208,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 	protected void onResume() {
 		super.onResume();
 
-		Log.i(TAG, "onResume");
+
 	}
 
 	public void notifyAdapterDataSetChanged() {
@@ -223,9 +229,9 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 	 * @Override public void onBackPressed() { super.onBackPressed(); Log.i("",
 	 * "onBackPressed : "); }
 	 */
-
+/*
 	private void setGroupIndicatorToRight() {
-		/* Get the screen width */
+		/* Get the screen width *
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int width = dm.widthPixels;
@@ -233,7 +239,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 		mDrawerList.setIndicatorBounds(getDipsFromPixel(35),
 				getDipsFromPixel(40));
 	}
-
+*/
 	// Convert pixel to dip
 	public int getDipsFromPixel(float pixels) {
 		// Get the screen's density scale
@@ -293,7 +299,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 	private void selectItem(FRAGMENT_POSITION position) {
 		// update the main content by replacing fragments
-		Log.i("MainActivityNew", "selectItem  position : " + position);
+	
 		Fragment fragment = null;
 		switch (position) {
 		case FRESH:
@@ -321,6 +327,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 			proceed(fragment);
 			break;
+			/*
 		case SETTINGS:
 			fragment = new SettingsFragment();
 			setTitle(navMenuTitles[1]);
@@ -331,7 +338,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 			setTitle(navMenuTitles[2]);
 			proceed(fragment);
 			break;
-
+		*/
 		default:
 			break;
 		}
@@ -376,21 +383,21 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 	@Override
 	public boolean onChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
-		Log.i("onChildClick", "groupPosition : " + groupPosition + " :: "
-				+ "childPosition : " + childPosition);
+		
+		
+	
 		if (groupPosition == 0) {
 			MainActivityNew.SELECTED_CHILD_POSITION = childPosition;
 			if (childPosition == 0) {
-				Log.i("", "show fresh task list.......@@@@@");
+				
 				selectItem(FRAGMENT_POSITION.FRESH);
 
 			} else if (childPosition == 1) {
-				Log.i("", "show pending task list.......@@@@@");
+			
 				selectItem(FRAGMENT_POSITION.PENDING);
 
 			} else if (childPosition == 2) {
-				Log.i("", "show pending task list......" + ".@@@@@");
-
+			
 				selectItem(FRAGMENT_POSITION.BULK);
 
 			}
@@ -405,7 +412,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 	@Override
 	public boolean onGroupClick(ExpandableListView parent, View v,
 			int groupPosition, long id) {
-		Log.i("onGroupClick", "groupPosition : " + groupPosition);
+
 		// if (groupPosition == 1) {
 		// Log.i("", "show settings fragment.......@@@@@");
 		// selectItem(FRAGMENT_POSITION.SETTINGS);
@@ -419,7 +426,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 		// } else if (groupPosition == 3) { //Depending on the position of menu
 		// items
 		if (groupPosition == 1) {
-			Log.i("", "Logout.......@@@@@");
+		
 			setCheckedState(parent, groupPosition, 0, true);
 			/*
 			 * editor.clear(); editor.commit();
@@ -428,9 +435,9 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 			if (Util.isConnectingToInternet(getApplicationContext())) {
 				new SyncVisitData()
-						.execute(new String[] { Util.OUTPUT_UPLOAD_DATA_URL });
+						.execute(new String[] { ConstantSmartAV.OUTPUT_UPLOAD_DATA_URL });
 				new SyncVisitImages()
-						.execute(new String[] { Util.OUTPUT_UPLOAD_DATA_URL });
+						.execute(new String[] { ConstantSmartAV.OUTPUT_UPLOAD_DATA_URL });
 
 			} else {
 				Util.showToast(getString(R.string.internetUnavailable),
@@ -484,8 +491,8 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 
 			progressDialog.dismiss();
 
-			if (result.equals(Util.NO_RECORDS_FOUND)) {
-				Log.i("AlarmReceiver", "No Records to sync!!!");
+			if (result.equals(ConstantSmartAV.NO_RECORDS_FOUND)) {
+				
 				Intent intent = new Intent(getApplicationContext(),
 						LoginActivity.class);
 				editor.clear();
@@ -494,7 +501,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				startActivity(intent);
 				finish();
 
-			} else if (!result.equals(Util.ERROR_STRING)) {
+			} else if (!result.equals(ConstantSmartAV.ERROR_STRING)) {
 				Util.showToast("Data Sync Successfull",
 						getApplicationContext(), true);
 
@@ -509,7 +516,7 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				startActivity(intent);
 				finish();
 				// onBackPressed();
-			} else if (result.equals(Util.ERROR_STRING))
+			} else if (result.equals(ConstantSmartAV.ERROR_STRING))
 				Util.showToast("Data Sync Error", getApplicationContext(), true);
 		}
 
@@ -520,49 +527,78 @@ public class MainActivityNew extends Activity implements OnGroupClickListener,
 				url = new URL(params[0]);
 			} catch (MalformedURLException e1) {
 				e1.printStackTrace();
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 
 			String visitJson = dbUtil.fetchOutputData();
 			visitJson = encodeData(visitJson);
 			Boolean output;
-			if (visitJson.equals(Util.NO_RECORDS_FOUND)) {
-				return Util.NO_RECORDS_FOUND;
-			} else if (!visitJson.equals(Util.ERROR_STRING)) {
+			if (visitJson.equals(ConstantSmartAV.NO_RECORDS_FOUND)) {
+				return ConstantSmartAV.NO_RECORDS_FOUND;
+			} else if (!visitJson.equals(ConstantSmartAV.ERROR_STRING)) {
 				// output =
 				// Util.synchroniseData(visitJson,getApplicationContext());
 				output = Util.synchroniseData(getApplicationContext());
 				if (output) {
 					dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
-					return Util.SUCCESS;
+					
+					trimCache(getApplicationContext());
+					return ConstantSmartAV.SUCCESS;
 				} else {
-					return Util.ERROR_STRING;
+					return ConstantSmartAV.ERROR_STRING;
 				}
 			} else {
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 	}
 
+	public static void trimCache(Context context) {
+	      try {
+	         File dir = context.getCacheDir();
+	         if (dir != null && dir.isDirectory()) {
+	            deleteDir(dir);
+	         }
+	      } catch (Exception e) {
+	         // TODO: handle exception
+	      }
+	   }
+
+	   public static boolean deleteDir(File dir) {
+	      if (dir != null && dir.isDirectory()) {
+	         String[] children = dir.list();
+	         for (int i = 0; i < children.length; i++) {
+	            boolean success = deleteDir(new File(dir, children[i]));
+	            if (!success) {
+	               return false;
+	            }
+	         }
+	      }
+
+	      // The directory is now empty so delete it
+	      return dir.delete();
+	   }
+	   
 	private class SyncVisitImages extends AsyncTask<String, Void, String> {
-		DBUtil dbUtil = new DBUtil(getApplicationContext());
+		//DBUtil dbUtil = new DBUtil(getApplicationContext());
 
 		@Override
 		protected void onPreExecute() {
-			Log.i(TAG, "Inside PreExecute Method of SyncVisitImages");
+		
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			Log.i(TAG, "Inside PostExecute Method of SyncVisitImages");
+		
 		}
 
 		@Override
 		protected String doInBackground(String... params) {
-			Log.i(TAG, "Inside BAckground Method of SyncVisitImages");
+		
 			boolean result = Util.synchroniseImage(getFilesDir(),
 					getApplicationContext());
+		trimCache(getApplicationContext());
 			return "" + result;
 		}
 

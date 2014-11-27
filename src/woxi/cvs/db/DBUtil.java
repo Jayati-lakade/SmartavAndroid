@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.model.BulkCustomer;
 import woxi.cvs.model.BulkTask;
@@ -58,12 +59,12 @@ public class DBUtil {
 			case BULK_TABLE:
 				return dbHelper.delete(TABLE_TYPE.BULK_TABLE, db);
 			default:
-				return (int) Util.ERROR_RETURN_VAL;
+				return (int) ConstantSmartAV.ERROR_RETURN_VAL;
 
 			}
 		} catch (Exception e) {
 			Log.e(TAG + ":deleteData:", e.getLocalizedMessage());
-			return (int) Util.ERROR_RETURN_VAL;
+			return (int) ConstantSmartAV.ERROR_RETURN_VAL;
 		} finally {
 			db.close();
 		}
@@ -87,7 +88,7 @@ public class DBUtil {
 		values.put(DBContract.COLUMN_STATUS, "null");
 		val = dbHelper.insertRecord(TABLE_TYPE.BULK_TABLE, values, db);
 		
-		if (val != Util.ERROR_RETURN_VAL) {
+		if (val != ConstantSmartAV.ERROR_RETURN_VAL) {
 		//	val = DBUtil.updateBulkTable(bulkCustomer.getBulk_id());
 //			val = DBUtil.updateBulkTable("123");
 		}
@@ -176,7 +177,7 @@ public class DBUtil {
 			return retVal;
 		} catch (Exception e) {
 			Log.e(TAG + ":insertIntoInputTable:", e.getLocalizedMessage());
-			return Util.ERROR_RETURN_VAL; // -100 indicates exception
+			return ConstantSmartAV.ERROR_RETURN_VAL; // -100 indicates exception
 		}
 
 		finally {
@@ -185,7 +186,11 @@ public class DBUtil {
 		}
 
 	}
-
+    /*
+     * Desc:Insert the record by converting data into JSON fromat.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	public long insertVisitIntoDB(Visit visit) {
 		initiateDB();
 		Gson gson = new Gson();
@@ -203,18 +208,22 @@ public class DBUtil {
 
 				return retVal;
 			} else {
-				return Util.ERROR_RETURN_VAL;
+				return ConstantSmartAV.ERROR_RETURN_VAL;
 			}
 		} catch (Exception e) {
 			Log.e(TAG + ":insertVisitIntoDB:", e.getLocalizedMessage());
-			return Util.ERROR_RETURN_VAL;
+			return ConstantSmartAV.ERROR_RETURN_VAL;
 		}
 
 		finally {
 			db.close();
 		}
 	}
-
+    /*
+     * Desc:Update the data by Task id.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	public int updateInputTable(int task_id) {
 		initiateDB();
 		try {
@@ -227,7 +236,7 @@ public class DBUtil {
 					whereArgs);
 		} catch (Exception e) {
 			Log.e(TAG + ":updateInputTable:", e.getLocalizedMessage());
-			return (int) Util.ERROR_RETURN_VAL;
+			return (int) ConstantSmartAV.ERROR_RETURN_VAL;
 		}
 
 		finally {
@@ -249,14 +258,18 @@ public class DBUtil {
 					whereArgs);
 		} catch (Exception e) {
 			Log.e(TAG + ":updateBulkTable:", e.getLocalizedMessage());
-			return (int) Util.ERROR_RETURN_VAL;
+			return (int) ConstantSmartAV.ERROR_RETURN_VAL;
 		}
 
 		finally {
 			db.close();
 		}
 	}
-
+    /*
+     * Desc:Fetch the data from input table.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	public Object fetchInputData(String taskType) {
 		initiateDB();
 		String[] columns = { DBContract.COLUMN_RECORD,
@@ -265,7 +278,7 @@ public class DBUtil {
 				+ DBContract.COLUMN_RECORD_STATUS + " = ?";
 
 		try {
-			if (taskType.equalsIgnoreCase(Util.FRESHTASK)) {
+			if (taskType.equalsIgnoreCase(ConstantSmartAV.FRESHTASK)) {
 				String[] selectionArgs = { DBContract.REQUEST_TYPE_FRESH,
 						0 + "" };
 				Cursor c = db.query(DBContract.INPUT_TABLE_NAME, columns,
@@ -274,7 +287,7 @@ public class DBUtil {
 					return cursorToArrayList(c, taskType);
 				else
 					return null;
-			} else if (taskType.equalsIgnoreCase(Util.WLTASK)) {
+			} else if (taskType.equalsIgnoreCase(ConstantSmartAV.WLTASK)) {
 				String[] selectionArgs = { DBContract.REQUEST_TYPE_PENDING,
 						0 + "" };
 				Cursor c = db.query(DBContract.INPUT_TABLE_NAME, columns,
@@ -283,7 +296,7 @@ public class DBUtil {
 					return cursorToArrayList(c, taskType);
 				else
 					return null;
-			} else if (taskType.equalsIgnoreCase(Util.BulkTASK)) {
+			} else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkTASK)) {
 				String[] selectionArgs = { DBContract.REQUEST_TYPE_BULK, 0 + "" };
 				Cursor c = db.query(DBContract.INPUT_TABLE_NAME, columns,
 						selection, selectionArgs, null, null, null);
@@ -303,8 +316,12 @@ public class DBUtil {
 			db.close();
 		}
 	}
+    /*
+     * Desc: Used to fetch all records to change there priorities.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 
-	// Used to fetch all records to change there priorities
 	public int updateInputPriorities() {
 		initiateDB();
 		String[] columns = { DBContract.COLUMN_TASK_ID,
@@ -338,13 +355,13 @@ public class DBUtil {
 		StringBuilder priority = new StringBuilder();
 		Gson gson = null;
 		gson = new Gson();
-		if (taskType.equalsIgnoreCase(Util.FRESHTASK)) {
+		if (taskType.equalsIgnoreCase(ConstantSmartAV.FRESHTASK)) {
 			freshTasksLists = new ArrayList<FreshTask>();
-		} else if (taskType.equalsIgnoreCase(Util.WLTASK)) {
+		} else if (taskType.equalsIgnoreCase(ConstantSmartAV.WLTASK)) {
 			wlTasksLists = new ArrayList<WLTask>();
-		} else if (taskType.equalsIgnoreCase(Util.BulkTASK)) {
+		} else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkTASK)) {
 			bulkTasksLists = new ArrayList<BulkTask>();
-		}else if (taskType.equalsIgnoreCase(Util.BulkCUSTOMER)) {
+		}else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkCUSTOMER)) {
 			bulkCustomerSet = new LinkedHashSet<BulkCustomer>();
 		}
 		
@@ -355,45 +372,49 @@ public class DBUtil {
 			record.setLength(0);// Resetting record for each record.
 			record = record.append(cursor.getString(cursor
 					.getColumnIndex(DBContract.COLUMN_RECORD)));
-			if(!taskType.equalsIgnoreCase(Util.BulkCUSTOMER)){			
+			if(!taskType.equalsIgnoreCase(ConstantSmartAV.BulkCUSTOMER)){			
 			priority.setLength(0);// Resetting priority for each record.			
 			priority = priority.append(cursor.getString(cursor
 					.getColumnIndex(DBContract.COLUMN_PRIORITY)));
 			}
 			
-			if (taskType.equalsIgnoreCase(Util.FRESHTASK)) {
+			if (taskType.equalsIgnoreCase(ConstantSmartAV.FRESHTASK)) {
 				FreshTask freshTask = gson.fromJson(record.toString(),
 						FreshTask.class);
 				freshTask.setPriority(priority.toString());
 				freshTasksLists.add(freshTask);
-			} else if (taskType.equalsIgnoreCase(Util.WLTASK)) {
+			} else if (taskType.equalsIgnoreCase(ConstantSmartAV.WLTASK)) {
 				WLTask wlTask = gson.fromJson(record.toString(), WLTask.class);
 				wlTask.setPriority(priority.toString());
 				wlTasksLists.add(wlTask);
-			} else if (taskType.equalsIgnoreCase(Util.BulkTASK)) {
+			} else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkTASK)) {
 				BulkTask bulkTask = gson.fromJson(record.toString(),
 						BulkTask.class);
 				// bulkTask.setPriority(priority.toString());
 				bulkTasksLists.add(bulkTask);
-			}else if (taskType.equalsIgnoreCase(Util.BulkCUSTOMER)) {			
+			}else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkCUSTOMER)) {			
 						Type typeToken3 = new TypeToken<LinkedHashSet<BulkCustomer>>(){}.getType();
 						return gson.fromJson(record.toString(), typeToken3);				
 			}
 
 			cursor.moveToNext();
 		}
-		if (taskType.equalsIgnoreCase(Util.FRESHTASK)) {
+		if (taskType.equalsIgnoreCase(ConstantSmartAV.FRESHTASK)) {
 			return freshTasksLists;
-		} else if (taskType.equalsIgnoreCase(Util.WLTASK)) {
+		} else if (taskType.equalsIgnoreCase(ConstantSmartAV.WLTASK)) {
 			return wlTasksLists;
-		} else if (taskType.equalsIgnoreCase(Util.BulkTASK)) {
+		} else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkTASK)) {
 			return bulkTasksLists;
 		} else {
 			return null;
 		}
 
 	}
-
+    /*
+     * Desc: Fetch the data from output table.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	public String fetchOutputData() {
 		initiateDB();
 		String[] columns = { DBContract.COLUMN_RECORD };
@@ -403,11 +424,11 @@ public class DBUtil {
 			if (c != null) {
 				return cursorToArrayLisForOutput(c);
 			} else {
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		} catch (Exception e) {
 			Log.e(TAG + ":fetchOutputData:", e.getLocalizedMessage());
-			return Util.ERROR_STRING;
+			return ConstantSmartAV.ERROR_STRING;
 		} finally {
 			db.close();
 		}
@@ -433,11 +454,11 @@ public class DBUtil {
 				Log.i(TAG, "OUTPUT JSON : " + gson.toJson(visitList));
 				return gson.toJson(visitList);
 			} else {
-				return Util.NO_RECORDS_FOUND;
+				return ConstantSmartAV.NO_RECORDS_FOUND;
 			}
 		} catch (Exception e) {
 			Log.e(TAG + ":cursorToArrayList:", e.getLocalizedMessage());
-			return Util.ERROR_STRING;
+			return ConstantSmartAV.ERROR_STRING;
 		}
 	}
 
@@ -475,7 +496,11 @@ public class DBUtil {
 			return 0;
 		}
 	}
-
+    /*
+     * Desc:update the records by their priority.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	private int updateRecord(PriorityChanger priorityChanger) {
 
 		priorityChanger = priorityLogic(priorityChanger);
@@ -493,13 +518,17 @@ public class DBUtil {
 					whereArgs);
 		} catch (Exception e) {
 			Log.e(TAG + ":updateInputTable:", e.getLocalizedMessage());
-			return (int) Util.ERROR_RETURN_VAL;
+			return (int) ConstantSmartAV.ERROR_RETURN_VAL;
 		} finally {
 			db.close();
 		}
 
 	}
-
+    /*
+     * Desc: Priority logic.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	private PriorityChanger priorityLogic(PriorityChanger priorityChanger) {
 
 		String pTime = priorityChanger.getPriority_timestamp();
@@ -598,7 +627,7 @@ public class DBUtil {
 		initiateDB();
 		Cursor cursor= dbHelper.readRecordData(TABLE_TYPE.BULK_TABLE, db, bulk_id);
 		LinkedHashSet<BulkCustomer> bulkCustomersSet = new LinkedHashSet<BulkCustomer>();
-		bulkCustomersSet = (LinkedHashSet<BulkCustomer>) cursorToArrayList(cursor,Util.BulkCUSTOMER);
+		bulkCustomersSet = (LinkedHashSet<BulkCustomer>) cursorToArrayList(cursor,ConstantSmartAV.BulkCUSTOMER);
 		return bulkCustomersSet;
 	}
 	

@@ -7,7 +7,7 @@ import woxi.cvs.R;
 import woxi.cvs.model.NavDrawerItem;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +94,7 @@ public class CVSExpandableListAdapter extends BaseExpandableListAdapter{
 		}
 		
 		if(groupPosition == 0){
-			Log.i("", "groupPosition : " + groupPosition);
+		
 			
 			convertView.setBackgroundResource(android.R.color.transparent);
 			

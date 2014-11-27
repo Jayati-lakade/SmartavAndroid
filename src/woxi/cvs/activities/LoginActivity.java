@@ -13,7 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
+import woxi.cvs.db.DBHelper;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.model.BulkTask;
 import woxi.cvs.model.DataLoader;
@@ -59,12 +61,12 @@ public class LoginActivity extends Activity {
 		actionBar.setLogo(getResources().getDrawable(R.drawable.docomo));*/
 		actionBar.hide();
 		
-		SharedPreferences preferences = this.getSharedPreferences(Util.PREFERENCES, Context.MODE_PRIVATE);
+		SharedPreferences preferences = this.getSharedPreferences(ConstantSmartAV.PREFERENCES, Context.MODE_PRIVATE);
 		editor = preferences.edit();
-		String username = preferences.getString(Util.USERNAME_STR, Util.ERROR_STRING);
-		String password = preferences.getString(Util.PASSWORD_STR, Util.ERROR_STRING);
+		String username = preferences.getString(ConstantSmartAV.USERNAME_STR, ConstantSmartAV.ERROR_STRING);
+		String password = preferences.getString(ConstantSmartAV.PASSWORD_STR, ConstantSmartAV.ERROR_STRING);
 		
-		if(!(username.equals(Util.ERROR_STRING) || password.equals(Util.ERROR_STRING))){
+		if(!(username.equals(ConstantSmartAV.ERROR_STRING) || password.equals(ConstantSmartAV.ERROR_STRING))){
 			isUserAvailable = true;
 		}
 		
@@ -95,7 +97,7 @@ public class LoginActivity extends Activity {
 					if(Util.isConnectingToInternet(getApplicationContext())){
 						//new LoginTask().execute(new String[]{"http://ubuntuone.com/2LI5GfYAOfRZLd9t7SGiIV"});
 						//new LoginTask().execute(new String[]{"http://www.woxiprogrammers.com/CVSONE/ajax/tablet/getInputTasklist.php?username=ofr&password=ofr"});
-						new LoginTask().execute(new String[]{Util.INPUT_JSON_URL + "username="+etUsername.getText().toString()+"&password="+etPassword.getText().toString()+"&version="+Util.VERSION_ID});
+						new LoginTask().execute(new String[]{ConstantSmartAV.INPUT_JSON_URL + "username="+etUsername.getText().toString()+"&password="+etPassword.getText().toString()+"&version="+ConstantSmartAV.VERSION_ID});
 					}else{
 						Util.showToast(getString(R.string.internetUnavailable), getApplicationContext(),true);
 					}
@@ -103,14 +105,18 @@ public class LoginActivity extends Activity {
 			}
 		});
 	}
-	
+	/*
+	 * Desc:fetch the data from inout table according to drwaer selection
+	 * Developed By:Sourabh shah
+	 * version:1.1
+	 */
 	private class FecthDataFromDB extends AsyncTask<String, Integer, String>{
 
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			
-			if(!result.equals(Util.ERROR_STRING)){
+			if(!result.equals(ConstantSmartAV.ERROR_STRING)){
 				startActivity(new Intent(LoginActivity.this,
 						MainActivityNew.class));
 				finish();
@@ -125,9 +131,9 @@ public class LoginActivity extends Activity {
 			try {
 				DBUtil dbUtil = new DBUtil(getApplicationContext());
 				
-				ArrayList<FreshTask> freshList = (ArrayList<FreshTask>) dbUtil.fetchInputData(Util.FRESHTASK);
-				ArrayList<WLTask> wlList = (ArrayList<WLTask>) dbUtil.fetchInputData(Util.WLTASK);
-				ArrayList<BulkTask> bulkList = (ArrayList<BulkTask>) dbUtil.fetchInputData(Util.BulkTASK);
+				ArrayList<FreshTask> freshList = (ArrayList<FreshTask>) dbUtil.fetchInputData(ConstantSmartAV.FRESHTASK);
+				ArrayList<WLTask> wlList = (ArrayList<WLTask>) dbUtil.fetchInputData(ConstantSmartAV.WLTASK);
+				ArrayList<BulkTask> bulkList = (ArrayList<BulkTask>) dbUtil.fetchInputData(ConstantSmartAV.BulkTASK);
 				
 				if(freshList != null){
 					DataLoader.freshTaskList = freshList;
@@ -147,7 +153,7 @@ public class LoginActivity extends Activity {
 				return "";
 			}catch (Exception e) {
 				e.printStackTrace();
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 
@@ -171,19 +177,19 @@ public class LoginActivity extends Activity {
 				
 			try{
 				String jsonStr = callWS(params[0]);
-				if((jsonStr.trim()).equalsIgnoreCase(Util.FALSE)){
-					return Util.FALSE;
+				if((jsonStr.trim()).equalsIgnoreCase(ConstantSmartAV.FALSE)){
+					return ConstantSmartAV.FALSE;
 				}
-				else if(jsonStr != Util.ERROR_STRING){
+				else if(jsonStr != ConstantSmartAV.ERROR_STRING){
 					processJSON(jsonStr);
 				}else{
-					Log.i("doInBackground", "error in method fetchJson@@@@@@@");
+	
 					progressDialog.dismiss();
 				}				
 				return jsonStr;
 			}catch (Exception e) {
 				e.printStackTrace();
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 
@@ -191,18 +197,18 @@ public class LoginActivity extends Activity {
 		protected void onPostExecute(String result) {
 			progressDialog.dismiss();
 			result = result.trim();
-			if(result.equalsIgnoreCase(Util.FALSE)){
-				Log.i(TAG, "Invalid User");
+			if(result.equalsIgnoreCase(ConstantSmartAV.FALSE)){
+			
 				Toast.makeText(LoginActivity.this, "Please check Username and Password.", Toast.LENGTH_LONG).show();
-			} else if (result.equals(Util.VERSION_STRING)) {
-				Log.i("", "Version Not Matched");
-				Toast.makeText(LoginActivity.this, "Please upgrade SmartAv version.", Toast.LENGTH_LONG).show();
-			} else if (!result.equals(Util.ERROR_STRING)) {
+			} else if (result.equals(ConstantSmartAV.VERSION_STRING)) {
+			
+				Toast.makeText(LoginActivity.this, "Please upgrade SmartAV version.", Toast.LENGTH_LONG).show();
+			} else if (!result.equals(ConstantSmartAV.ERROR_STRING)) {
 
 				 Util.initiateAlarmManager(getApplicationContext());
 				 
-				editor.putString(Util.USERNAME_STR, etUsername.getText().toString());
-				editor.putString(Util.PASSWORD_STR, etPassword.getText().toString());
+				editor.putString(ConstantSmartAV.USERNAME_STR, etUsername.getText().toString());
+				editor.putString(ConstantSmartAV.PASSWORD_STR, etPassword.getText().toString());
 				editor.commit();
 	
 				startActivity(new Intent(LoginActivity.this,
@@ -210,7 +216,7 @@ public class LoginActivity extends Activity {
 				finish();
 
 			} else {
-				Log.i("", "Exception occured");
+			
 				Toast.makeText(LoginActivity.this, "You are not authorized. Please check your credentials.", Toast.LENGTH_LONG).show();
 			}
 		}
@@ -226,7 +232,7 @@ public class LoginActivity extends Activity {
 			url = new URL(urlStr);
 			connection = (HttpURLConnection) url
 					.openConnection();
-			connection.setReadTimeout(Util.TIMEOUT);
+			connection.setReadTimeout(ConstantSmartAV.TIMEOUT);
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/xml");
 
@@ -248,11 +254,11 @@ public class LoginActivity extends Activity {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			
-			return Util.ERROR_STRING;
+			return ConstantSmartAV.ERROR_STRING;
 		} catch (IOException e) {
 			e.printStackTrace();
 			
-			return Util.ERROR_STRING;
+			return ConstantSmartAV.ERROR_STRING;
 		}
 		
 		finally{
@@ -272,7 +278,7 @@ public class LoginActivity extends Activity {
 			JSONObject jsonObject;
 			try {
 				jsonObject = new JSONObject(jsonStr);
-				Log.i("", "jsonObject.length() : " + jsonObject.length());
+			
 				
 				JSONArray freshTasksArray = null, wlTasksArray = null,BulkTasksArray = null;
 				Gson gson = new Gson();
@@ -287,7 +293,7 @@ public class LoginActivity extends Activity {
 					// taskFlag = visit.setTaskFlag(0);
 				}
 					
-					Log.i("", "freshListArraL : " + freshList);
+			
 					DataLoader.freshTaskList = freshList;
 				
 				
@@ -301,7 +307,7 @@ public class LoginActivity extends Activity {
 					// taskFlag = visit.setTaskFlag(0);
 				}
 					
-					Log.i("", "wlListArrayL : " + wlList);
+	
 					DataLoader.wlTaskList = wlList;
 					
 					if(jsonObject.has("BULK") ){
@@ -314,16 +320,41 @@ public class LoginActivity extends Activity {
 						// taskFlag = visit.setTaskFlag(0);
 					}
 						
-						Log.i("", "Bulk : " + bulkList);
+						
 						DataLoader.bulkTaskList = bulkList;
 				
 				DBUtil dbUtil = new DBUtil(getApplicationContext());
 				dbUtil.deleteData(TABLE_TYPE.INPUT_TABLE);
-				dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
+				/*
+				 * Desc:To sync the data on Login button click
+				 * DeveLoped By:Jayati Lakade.
+				 * Version:1.6
+				 */
+				/////////////////////
+				//dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
+				String visitJson = dbUtil.fetchOutputData();
+				visitJson = encodeData(visitJson);
+				Boolean output;
+				DBHelper dbhelper;
+				
+				if (visitJson.equals(ConstantSmartAV.NO_RECORDS_FOUND) || (!visitJson.equals((ConstantSmartAV.NO_RECORDS_FOUND)) || (!visitJson.equals((ConstantSmartAV.ERROR_STRING))))){
+					output = Util.synchroniseData(getApplicationContext());
+					System.out.println("In Login------------------------------------------------------------------------------------");
+					//Toast.makeText(getApplicationContext(), "In login sync....", Toast.LENGTH_LONG).show();
+				//	Thread.sleep(12000);
+					if(output){
+					dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);	
+					System.out.println("Deleted from login ************************************************************************");
+					}
+			
+				}
+			
+				/////////////////////
+			
 				
 				long retVal = dbUtil.insertIntoInputTable(freshList, wlList,bulkList);
-				if(retVal == Util.ERROR_RETURN_VAL){
-					Log.i("error !!!", "Error inserting data into DB!!!!!!!");
+				if(retVal == ConstantSmartAV.ERROR_RETURN_VAL){
+					
 				}
 					
 					
@@ -334,25 +365,42 @@ public class LoginActivity extends Activity {
 		}
 		
 		private ArrayList<FreshTask> getFreshList(JSONArray freshTasksArray, Gson gson){
-			Log.i("","freshTasksArray.length() : "+ freshTasksArray.length());
+			
 			Type typeToken1 = new TypeToken<ArrayList<FreshTask>>(){}.getType();
 			// taskFlag = visit.setTaskFlag(0);
 			return gson.fromJson(freshTasksArray.toString(), typeToken1);
 		}
 		
 		private ArrayList<WLTask> getWLList(JSONArray wlTasksArray, Gson gson){
-			Log.i("","wlTasksArray.length() : " + wlTasksArray.length());
+			
 			Type typeToken2 = new TypeToken<ArrayList<WLTask>>(){}.getType();
 		//	 taskFlag = visit.setTaskFlag(0);
 			return gson.fromJson(wlTasksArray.toString(), typeToken2);
 		}
+		private String encodeData(String name) {
 
+			name = name.replace("{", "APPLEATE");
+			name = name.replace("}", "BALLBAT");
+			name = name.replace("\"", "CATCOPY");
+			name = name.replace("/", "DOGDUMP");
+			name = name.replace(":", "EAGLEEGG");
+			name = name.replace("\n", "FROG");
+			name = name.replace("+", "HOUSE");
+			name = name.replace("\\u", "IAMTOPPER");
+			name = name.replace(",", "JACK");
+			return name;
+
+		}
+		
+		
 		private ArrayList<BulkTask> getBulkList(JSONArray BulkTasksArray, Gson gson){
-			Log.i("","TasksArray.length() : " + BulkTasksArray.length());
+		
 			Type typeToken3 = new TypeToken<ArrayList<BulkTask>>(){}.getType();
 			// taskFlag = visit.setTaskFlag(0);
 			return gson.fromJson(BulkTasksArray.toString(), typeToken3);
 		}
+		
+		
 		/*private String fetchJson(String urlStr) {
 		URL url;
 		BufferedReader reader = null;

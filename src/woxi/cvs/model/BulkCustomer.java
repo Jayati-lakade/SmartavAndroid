@@ -1,6 +1,10 @@
 package woxi.cvs.model;
 
-
+/*
+ * Desc:POJO for bulk customer entry
+ * Developed By:Sourabh Shah
+ * Version:1.8
+ */
 
 public class BulkCustomer {
 

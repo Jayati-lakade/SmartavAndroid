@@ -21,6 +21,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.receivers.AlarmReceiver;
 import android.app.AlarmManager;
@@ -31,11 +32,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
+
 import android.widget.Toast;
 
 public class Util {
-
+/*
 	public static String PREFERENCES = "cvsPrefs";
 	public static String USERNAME_STR = "USERNAME";
 	public static String PASSWORD_STR = "PASSWORD";
@@ -46,8 +47,8 @@ public class Util {
 	/*
 	  public static String INPUT_JSON_URL = "http://www.universalmanagement.co.in/ajax/tablet/getInputTasklist.php?";
 	  public static String OUTPUT_UPLOAD_DATA_URL ="http://www.universalmanagement.co.in/ajax/tablet/outputUploadTask.php";
-	  public static String OUTPUT_UPLOAD_IMAGE_URL ="http://www.universalmanagement.co.in/ajax/tablet/outputUploadImage.php";
-	 */
+	//  public static String OUTPUT_UPLOAD_IMAGE_URL ="http://www.universalmanagement.co.in/ajax/tablet/outputUploadImage.php";
+	 
 
 	public static String VERSION_ID = "SmartAV1.6";
 	public static String VERSION_STRING = "versionnotmatched";
@@ -65,13 +66,13 @@ public class Util {
 	public static String TRUE = "TRUE";
 	public static String FALSE = "FALSE";
 
-	/* Task Categories : START */
+	/* Task Categories : START *
 	public static String FRESHTASK = "FRESH";
 	public static String WLTASK = "WL";
 	public static String BulkTASK = "BULK";
 	public static String BulkCUSTOMER = "BULK_CUSTOMER";
 
-	/* Task Categories : END */
+	/* Task Categories : END *
 
 	public static int TIMEOUT = 0000; // 15 seconds of timeout for http
 										// connection
@@ -105,7 +106,7 @@ public class Util {
 	public static final long INTERVAL_IN_MINUTES = 2 * 60 * 1000;
 	public static String base64PhotoProofId, base64PhotoAdd, base64PhotoHouse,
 			base64PhotoDocument, base64PhotoSign;
-
+*/
 	public static void showToast(String message, Context context,
 			boolean lengthShort) {
 		if (lengthShort)
@@ -138,40 +139,44 @@ public class Util {
 	}
 
 	public static void initiateAlarmManager(Context context) {
-		Log.i("Util", "initiateAlarmManager.....");
+
 		AlarmManager alarmManager;
 		PendingIntent alarmIntent;
 
 		Intent intent = new Intent(context, AlarmReceiver.class);
 		alarmIntent = PendingIntent.getBroadcast(context,
-				Util.ALARM_INTENT_REQUEST_CODE, intent, 0);
+				ConstantSmartAV.ALARM_INTENT_REQUEST_CODE, intent, 0);
 
 		alarmManager = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-				INTERVAL_FOR_STARTUP, INTERVAL_IN_MINUTES, alarmIntent);
+				ConstantSmartAV.INTERVAL_FOR_STARTUP, ConstantSmartAV.INTERVAL_IN_MINUTES, alarmIntent);
 
 	}
-
+	/*
+	 * desc:Sync the data when capture
+	 * Developed By:Sourabh Shah
+	 * version:1.1
+	 */
 	public static synchronized boolean synchroniseData(Context context) {
 
 		DBUtil dbUtil = new DBUtil(context);
-		String visitJson = dbUtil.fetchOutputData();
+		String visitJson = dbUtil.fetchOutputData();//takes data from output table
 		visitJson = encodeData(visitJson);
-		if (visitJson.equals(NO_RECORDS_FOUND)) {
+		if (visitJson.equals(ConstantSmartAV.NO_RECORDS_FOUND)) {
 			return false;
 		} else {
 			try {
 				HttpClient client = new DefaultHttpClient();
-				HttpPost post = new HttpPost(Util.OUTPUT_UPLOAD_DATA_URL);
-				MultipartEntity reqEntity = new MultipartEntity();
+				HttpPost post = new HttpPost(ConstantSmartAV.OUTPUT_UPLOAD_DATA_URL);//"http://www.universalmanagement.co.in/alpha/ajax/tablet/outputUploadTask.php"
+				MultipartEntity reqEntity = new MultipartEntity();//upload file using multipartEntity
 				reqEntity.addPart("action", new StringBody(visitJson));
 				post.setEntity(reqEntity);
 				HttpResponse response = client.execute(post);
 				HttpEntity resEntity = response.getEntity();
 				final String response_str = EntityUtils.toString(resEntity);
 				if (resEntity != null) {
-					Log.i("RESPONSE", response_str);
+		
 					System.out.println("Response :" + response_str);
 					return true;
 				} else {
@@ -190,11 +195,16 @@ public class Util {
 		}
 	}
 
+	/*
+	 * desc:Sync the image when capture
+	 * Developed By:Sourabh Shah
+	 * version:1.1
+	 */
 	public static synchronized boolean synchroniseImage(File file,
 			Context context) {
 
 		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(Util.OUTPUT_UPLOAD_IMAGE_URL);
+		HttpPost post = new HttpPost(ConstantSmartAV.OUTPUT_UPLOAD_IMAGE_URL);
 		MultipartEntity reqEntity = new MultipartEntity();
 		HttpResponse response;
 		HttpEntity resEntity;
@@ -209,9 +219,9 @@ public class Util {
 		if (Environment.MEDIA_MOUNTED.equals(Environment
 				.getExternalStorageState())) {
 			docoImageDir = new File(Environment.getExternalStorageDirectory()
-					+ Util.IMAGE_FOLDER);
+					+ ConstantSmartAV.IMAGE_FOLDER);
 		} else {
-			docoImageDir = new File(file + Util.IMAGE_FOLDER);
+			docoImageDir = new File(file + ConstantSmartAV.IMAGE_FOLDER);
 		}
 		if (docoImageDir.isDirectory()) {
 			files = docoImageDir.listFiles();
@@ -265,7 +275,7 @@ public class Util {
 				 */
 
 				if (resEntity != null) {
-					Log.i("RESPONSE", response_str);
+			
 					System.out.println("Response :" + response_str);
 					response_str = response_str.replace("[", "");
 					response_str = response_str.replace("]", "");
@@ -283,10 +293,7 @@ public class Util {
 										Uri.parse("file://"
 												+ Environment
 														.getExternalStorageDirectory())));
-								if (fileDeleteStatus) {
-									Log.i("File Name", "Deleted file : "
-											+ successFile);
-								}
+
 							}
 						}
 

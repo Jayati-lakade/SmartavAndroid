@@ -5,18 +5,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 import woxi.cvs.R;
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.customwidgets.DateTimePicker;
 import woxi.cvs.model.FreshTask;
+import woxi.cvs.model.Task;
 import woxi.cvs.model.Visit;
 import woxi.cvs.model.WLTask;
-import woxi.cvs.util.Util;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -52,7 +52,8 @@ public class DecisionActivity extends FragmentActivity implements
 	static StringBuilder DEFAULT_Received = new StringBuilder("Received");
 	static StringBuilder DEFAULT_NotReceived = new StringBuilder("Not Received");
 	private FreshTask freshTask;
-	private WLTask wlTask;	
+	private WLTask wlTask;
+	private Task task;
 	private static Long CONSTRAINTTIME = Long.valueOf(57600); // 96 HOURS In Minutes Time Constraint.
 	private boolean isVisitFresh = false;
 //	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -64,7 +65,7 @@ public class DecisionActivity extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setTitle("SmartAV - "+Util.CURRENTCUSTOMER);
+		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
 		setContentView(R.layout.activity_decision);
 		visit = new Visit();
 		csmNo = (TextView)this.findViewById(R.id.csmNo);
@@ -91,7 +92,11 @@ public class DecisionActivity extends FragmentActivity implements
 		negativeShortReason = (Spinner) this.findViewById(R.id.negativeShortReason);
 		
 		btnProceed = (Button) this.findViewById(R.id.btnProceed);
-
+/*
+		 * Desc:following fields are shown on tablet screen for capturing the information. 
+		 * Developed By:Sourabh shah
+		 * version:1.1
+ */
 		if (addressTraced != null) {
 			addressTraced.setOnCheckedChangeListener(new OnCheckedChangeListener() {
  			 public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -238,13 +243,17 @@ public class DecisionActivity extends FragmentActivity implements
 						callCaptureVisitActivity();
 					}
 				} catch (ParseException e) {
-				Log.e(TAG,e.getMessage());
+		
 				}
 			}
 		});
 	}
 
-
+	/*
+	 * Desc:show the calendar.
+	 * Developed By:Sourabh shah
+	 * Version:1.1
+	 */
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -261,15 +270,15 @@ public class DecisionActivity extends FragmentActivity implements
 		if(appointmentDate.getText().toString().isEmpty()){
 		Toast.makeText(DecisionActivity.this,"Please select Appointment Date..",Toast.LENGTH_LONG).show();
 		}
-		Date d1 = Util.sdf.parse(appointmentDate.getText().toString());
-		Date d2 = Util.sdf.parse(Util.sdf.format(Calendar.getInstance().getTime()));
+		Date d1 = ConstantSmartAV.sdf.parse(appointmentDate.getText().toString());
+		Date d2 = ConstantSmartAV.sdf.parse(ConstantSmartAV.sdf.format(Calendar.getInstance().getTime()));
 		
 		try {
 			if (obj instanceof FreshTask) {
 
-				d2 = Util.sdf.parse(freshTask.getStart_timestamp());
+				d2 = ConstantSmartAV.sdf.parse(task.getStart_timestamp());
 			} else if (obj instanceof WLTask) {
-				d2 = Util.sdf.parse((wlTask.getStart_timestamp()));
+				d2 = ConstantSmartAV.sdf.parse((task.getStart_timestamp()));
 			}
 
 			Long diff = d2.getTime() - d1.getTime();
@@ -288,24 +297,28 @@ public class DecisionActivity extends FragmentActivity implements
 				visit.setTask_id(wlTask.getTask_id());
 				visit.setCaf_no(wlTask.getCaf_no());
 				visit.setReav_flag(wlTask.getReav_flag());
-				visit.setOfr_visit(wlTask.getOfr_visit());
+				//visit.setOfr_visit(task.getOfr_visit());
 				visit.setAgencyName(wlTask.getAgency_name());
 			}
 			if (diffValue > 0) {				
-				Log.i(TAG,"Appointment Escalation SLA Due Limit");
+				
 				popUpDialog(isVisitFresh);
 			}
 			if (diffValue <= 0) {
-				Log.i(TAG,"Appointment Within SSL Due Limit");
+		
 				callCaptureVisitActivity();
 			}
 				
 //			}
 		} catch (ParseException e) {
-			Log.e(TAG+":checkIfLessThan96Hours:",e.getMessage());
+		
 		}
 	}
-
+	/*
+	 * Desc:According to SLA logic if the appointment exceeds show the message .
+	 * Developed By:Sourabh shah
+	 * Version:1.1
+	 */
 	private void popUpDialog(boolean visitType) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle("Alert");
@@ -351,14 +364,14 @@ public class DecisionActivity extends FragmentActivity implements
 					public void onClick(View v) {
 						mDateTimePicker.clearFocus();
 						int month = (mDateTimePicker.get(Calendar.MONTH) + 1);
-						Log.i(TAG,"int month : " + month);
+					
 						String mon = "";
 						if (month / 10 == 0) {
 							mon = "0" + month;
-							Log.i(TAG,"If String mon : " + mon);
+					
 						} else {
 							mon = String.valueOf(month);
-							Log.i(TAG,"Else String mon : " + mon);
+				
 						}
 						appointmentDate.setText(mDateTimePicker
 								.get(Calendar.YEAR)
@@ -375,7 +388,7 @@ public class DecisionActivity extends FragmentActivity implements
 								+ mDateTimePicker.get(Calendar.MINUTE)
 								+ ":" + "00");
 						mDateTimeDialog.dismiss();
-						Log.i(TAG,"Time : "+ appointmentDate.getText());
+					
 					}
 
 				});
@@ -445,7 +458,7 @@ public class DecisionActivity extends FragmentActivity implements
 		customerStayAddressButton = (RadioButton) findViewById(selectedId);
 		
 		visit.setCustomerStayAddressStatus(""+ customerStayAddressButton.getTag().toString());
-		visit.setVerification_timestamp(Util.sdf.format(new Date()));
+		visit.setVerification_timestamp(ConstantSmartAV.sdf.format(new Date()));
 		visit.setAppointmentTimeDate(appointmentDate.getText().toString());
 	}
 	public void callCaptureVisitActivity(){
@@ -456,9 +469,10 @@ public class DecisionActivity extends FragmentActivity implements
 			visit.setOfr_visit(freshTask.getOfr_visit());
 			intent.putExtra("task", freshTask);
 		} else if (obj instanceof WLTask) {
-			visit.setOfr_visit(wlTask.getOfr_visit());
+			//visit.setOfr_visit(wlTask.getOfr_visit());
 			intent.putExtra("task", wlTask);
 		}
+
 		setVisitPOJO(visit);
 		intent.putExtra("visit", visit);
 		startActivity(intent);	

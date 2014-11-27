@@ -17,7 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
@@ -96,11 +96,15 @@ public class VisitHistoryActivity extends FragmentActivity implements
 		Object obj = getIntent().getExtras().get("task");
 		if(obj instanceof FreshTask){
 			freshTask = (FreshTask) obj;
-			Log.i("", "FreshTask object received in VisitHistory onCreate()");
+	
 		} else if(obj instanceof WLTask){
 			wlTask = (WLTask) obj;
-			Log.i("", "WLTask object received in VisitHistory onCreate()");
-		}	
+		
+		}/*	else if(obj instanceof RegularBulkTask){
+			regularBulkTask=(RegularBulkTask) obj;
+		
+			
+		}*/
 		
 		setContentView(R.layout.activity_visit_history);
 		// Initialise the TabHost

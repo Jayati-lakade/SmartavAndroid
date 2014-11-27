@@ -1,5 +1,10 @@
 package woxi.cvs.db;
-
+/*
+ * Desc:Class from creation.deletion of DB
+ * Developed By:Sourabh shah
+ * Version:Fresh,wl created in version 1.1.Bulk version:1.7
+ * 
+ */
 public class DBContract {
 
 	public enum TABLE_TYPE {

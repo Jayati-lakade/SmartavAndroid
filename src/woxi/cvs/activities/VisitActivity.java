@@ -9,7 +9,7 @@ import woxi.cvs.model.VisitForm;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
+
 import android.widget.ExpandableListView;
 
 public class VisitActivity extends Activity {
@@ -109,7 +109,7 @@ public class VisitActivity extends Activity {
 			// Adding Parent class object to ArrayList
 			list.add(parent);
 		}
-		Log.i("", "Dummy VisitForm size ::: " + list.size());
+
 		return list;
 	}
 

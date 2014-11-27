@@ -1,5 +1,6 @@
 package woxi.cvs.receivers;
 
+import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.db.DBContract.TABLE_TYPE;
 import woxi.cvs.db.DBUtil;
 import woxi.cvs.util.Util;
@@ -21,8 +22,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver{
 		this.context = context;
 		 dbUtil = new DBUtil(context);
 		if (Util.isConnectingToInternet(context)) {
-			new SyncVisitData().execute(new String[] {Util.OUTPUT_UPLOAD_DATA_URL});
-			new SyncVisitImages().execute(new String[] {Util.OUTPUT_UPLOAD_IMAGE_URL});
+			new SyncVisitData().execute(new String[] {ConstantSmartAV.OUTPUT_UPLOAD_DATA_URL});
+			new SyncVisitImages().execute(new String[] {ConstantSmartAV.OUTPUT_UPLOAD_IMAGE_URL});
 			new UpdateDataPriority();
 		}
 	}
@@ -45,10 +46,10 @@ public class AlarmReceiver extends WakefulBroadcastReceiver{
 			if (output) {
 				Log.i(TAG, "Data Synchronised By Scheduler");
 				dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
-				return Util.SUCCESS;
+				return ConstantSmartAV.SUCCESS;
 			} else {
 				Log.i(TAG, "Data NOT Synchronised By Scheduler");
-				return Util.ERROR_STRING;
+				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 	}
@@ -64,7 +65,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver{
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			Log.i(TAG, "Inside PostExecute Method of SyncVisitImages");
-			if(result.equalsIgnoreCase(Util.TRUE)){
+			if(result.equalsIgnoreCase(ConstantSmartAV.TRUE)){
 				Log.i(TAG, "Images Synched Successfully");
 			}else{
 				Log.i(TAG, "Images NOT Synched Successfully");

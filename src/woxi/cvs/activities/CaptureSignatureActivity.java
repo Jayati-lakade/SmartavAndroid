@@ -15,7 +15,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +43,11 @@ public class CaptureSignatureActivity extends Activity {
 		save.setOnClickListener(onButtonClick);
 		clear.setOnClickListener(onButtonClick);
 	}
-
+ /*
+  * Desc:On click save or clear the sign
+  * Developed By:Sourabh Shah
+  * Version:1.1
+  */
 	Button.OnClickListener onButtonClick = new Button.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -54,7 +58,11 @@ public class CaptureSignatureActivity extends Activity {
 			}
 		}
 	};
-
+    /*
+     * Desc:compress the sign,save the file with jpg extension.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	public void save() {
 		Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),
 				mContent.getHeight(), Bitmap.Config.ARGB_8888);
@@ -74,6 +82,11 @@ public class CaptureSignatureActivity extends Activity {
 		finish();
 	}
 
+    /*
+     * Desc:Preview of the sign.
+     * Developed By:Sourabh shah
+     * Version:1.1
+     */
 	public class SignatureView extends View {
 
 		private static final float STROKE_WIDTH = 7f;
@@ -94,7 +107,11 @@ public class CaptureSignatureActivity extends Activity {
 			paint.setStrokeJoin(Paint.Join.ROUND);
 			paint.setStrokeWidth(STROKE_WIDTH);
 		}
-
+    	    /*
+    	     * Desc:Save the sign in compress format.
+    	     * Developed By:Sourabh shah
+    	     * Version:1.1
+    	     */
 		public void save() {
 			Bitmap returnedBitmap = Bitmap.createBitmap(mContent.getWidth(),mContent.getHeight(), Bitmap.Config.ARGB_8888);
 			Canvas canvas = new Canvas(returnedBitmap);
@@ -159,7 +176,7 @@ public class CaptureSignatureActivity extends Activity {
 				break;
 
 			default:
-				Log.i("", "Ignored touch event: " + event.toString());
+
 				return false;
 			}
 
