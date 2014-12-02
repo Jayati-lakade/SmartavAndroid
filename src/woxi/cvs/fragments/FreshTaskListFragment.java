@@ -7,12 +7,12 @@ import woxi.cvs.activities.TaskDetailActivity;
 import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.DataLoader;
 import woxi.cvs.model.FreshTask;
-import woxi.cvs.util.Util;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,9 +34,8 @@ public class FreshTaskListFragment extends Fragment {
 	private ArrayList<FreshTask> originalList;
 	private ArrayList<FreshTask> tasksList;
 	private ListAdapter adapter;
-//	private MenuItem refreshMenuItem;
 	private static String TAG = "FreshTaskListFragment";
-	
+
 	public FreshTaskListFragment() {
 	}
 
@@ -45,11 +44,11 @@ public class FreshTaskListFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
+
 		adapter = new ListAdapter(DataLoader.freshTaskList);
 	}
 
@@ -58,45 +57,29 @@ public class FreshTaskListFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		View rootView = null;
-		
-			rootView = inflater.inflate(R.layout.fragment_task_list, container, false);
-			taskList = (ListView) rootView.findViewById(R.id.taskList);
-			taskList.setAdapter(adapter);
-			taskList.setOnItemClickListener(new OnItemClickListener() {
-	
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-					Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
-					intent.putExtra("task", tasksList.get(pos));
-					ConstantSmartAV.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
-					startActivity(intent);
-					
-					DataLoader.CLICKED_ITEM_POSITION = pos;
-				}
-			});
-	
-			taskList.setTextFilterEnabled(true);
-		//} else {
-		//	rootView = inflater.inflate(R.layout.no_records, container, false);
-		//}
+
+		rootView = inflater.inflate(R.layout.fragment_task_list, container,
+				false);
+		taskList = (ListView) rootView.findViewById(R.id.taskList);
+		taskList.setAdapter(adapter);
+		taskList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
+					long arg3) {
+				Intent intent = new Intent(getActivity(),TaskDetailActivity.class);
+				intent.putExtra("taskType", ConstantSmartAV.FRESH);
+				intent.putExtra("taskPosition",pos);
+				ConstantSmartAV.CURRENTCUSTOMER = tasksList.get(pos).getCust_name();
+				startActivity(intent);
+				DataLoader.CLICKED_ITEM_POSITION = pos;
+			}
+		});
+
+		taskList.setTextFilterEnabled(true);
 
 		return rootView;
 	}
-	
-	/*@Override
-	public void onResume() {
-		super.onResume();
-		Log.i(TAG, "onResume");
-		if(DataLoader.IS_TASK_COMPLETED && DataLoader.CLICKED_ITEM_POSITION != DataLoader.INVALID_ITEM_POSITION){
-			DataLoader.freshTaskList.remove(DataLoader.CLICKED_ITEM_POSITION);
-			adapter.notifyDataSetChanged();
-//			MainActivityNew mainActivityNew = (MainActivityNew) getActivity();
-			((MainActivityNew) getActivity()).notifyAdapterDataSetChanged();
-			
-			DataLoader.IS_TASK_COMPLETED = false;
-			DataLoader.CLICKED_ITEM_POSITION = DataLoader.INVALID_ITEM_POSITION;
-		}
-	}*/
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -137,13 +120,6 @@ public class FreshTaskListFragment extends Fragment {
 			// search action
 			return true;
 
-		/*case R.id.action_refresh:
-			// refresh
-			refreshMenuItem = item;
-			// load the data from server
-			new SyncData().execute();
-			return true;*/
-
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -156,6 +132,7 @@ public class FreshTaskListFragment extends Fragment {
 			tasksList = list;
 		}
 
+		
 		@Override
 		public int getCount() {
 			return tasksList.size();
@@ -195,8 +172,8 @@ public class FreshTaskListFragment extends Fragment {
 						.findViewById(R.id.tvCustomerName);
 				holder.customerAddress = (TextView) convertView
 						.findViewById(R.id.tvCustomerAddress);
-			//	holder.customerContactNo = (TextView) convertView.findViewById(R.id.tvCustomerContactNo);
-				holder.customerCafType=(TextView) convertView.findViewById(R.id.tvCafType);
+				holder.customerCafType = (TextView) convertView
+						.findViewById(R.id.tvCafType);
 				holder.status = (TextView) convertView
 						.findViewById(R.id.tvStatus);
 				holder.priority = (ImageView) convertView
@@ -211,28 +188,19 @@ public class FreshTaskListFragment extends Fragment {
 			holder.taskNo.setText("" + task.getCaf_no());
 			holder.customerName.setText(task.getCust_name());
 			holder.customerAddress.setText(task.getAddress());
-			holder.customerCafType.setText("     " +task.getCaf_type());
-			//holder.customerContactNo.setText("" + task.getTelephone_no());
-			
+			holder.customerCafType.setText("     " + task.getCaf_type());
+
 			holder.status.setText(task.getStatus_av());
-			
-			/*if (task.getPriority() == 0) {
-				holder.priority.setBackgroundColor(getResources().getColor(R.color.red));
-			} else if (task.getPriority() == 1) {
-				holder.priority.setBackgroundColor(getResources().getColor(R.color.green));
-			} else if (task.getPriority() == 2) {
-				holder.priority.setBackgroundColor(getResources().getColor(R.color.orange));
-			}*/
-			
+
 			if (task.getPriority().equalsIgnoreCase("critical")) {
 				holder.priority.setBackgroundResource(R.drawable.red);
 			} else if (task.getPriority().equalsIgnoreCase("high")) {
 				holder.priority.setBackgroundResource(R.drawable.yellow);
 			} else if (task.getPriority().equalsIgnoreCase("deadline missed")) {
 				holder.priority.setBackgroundResource(R.drawable.blue);
-			}else if (task.getPriority().equalsIgnoreCase("low")) {
+			} else if (task.getPriority().equalsIgnoreCase("low")) {
 				holder.priority.setBackgroundResource(R.drawable.green);
-			}			
+			}
 			return convertView;
 		}
 
@@ -257,7 +225,8 @@ public class FreshTaskListFragment extends Fragment {
 						ArrayList<FreshTask> filteredItems = new ArrayList<FreshTask>();
 						for (int i = 0, l = originalList.size(); i < l; i++) {
 							FreshTask task = originalList.get(i);
-							if (task.toString().toLowerCase().contains("" + constraint)) {
+							if (task.toString().toLowerCase()
+									.contains("" + constraint)) {
 								filteredItems.add(task);
 							}
 						}
@@ -273,34 +242,4 @@ public class FreshTaskListFragment extends Fragment {
 		}
 
 	}
-	
-	/*private class SyncData extends AsyncTask<String, Void, String> {
-		@Override
-		protected void onPreExecute() {
-			// set the progress bar view
-			refreshMenuItem.setActionView(R.layout.action_progressbar);
-			refreshMenuItem.expandActionView();
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			refreshMenuItem.collapseActionView();
-			refreshMenuItem.setActionView(null);
-			
-			originalList.addAll(buildDummyData());
-			adapter = new ListAdapter(originalList);
-			taskList.setAdapter(adapter);
-		}
-	}*/
-
 }

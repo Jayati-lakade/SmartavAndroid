@@ -3,10 +3,10 @@ package woxi.cvs.activities;
 import woxi.cvs.R;
 import woxi.cvs.constants.ConstantSmartAV;
 import woxi.cvs.model.BulkTask;
+import woxi.cvs.model.DataLoader;
 import woxi.cvs.model.FreshTask;
 import woxi.cvs.model.Task;
 import woxi.cvs.model.WLTask;
-import woxi.cvs.util.Util;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,18 +29,26 @@ public class TaskDetailActivity extends Activity implements OnClickListener {
 	
 	Button btnAttend,btnHistory,btnCancel;
 	
+	String custName ;
+
+	
+	public TaskDetailActivity (){
+	
+	} 
+	
+	public TaskDetailActivity (String custName ){
+		this.custName = custName ;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
+		super.onCreate(savedInstanceState);		
 		getActionBar().setDisplayHomeAsUpEnabled(false);
 		getActionBar().setTitle("SmartAV - "+ConstantSmartAV.CURRENTCUSTOMER);
-		getActionBar().setLogo(null);
+		getActionBar().setLogo(null);		
 		
-		setContentView(R.layout.activity_taskdetail);
+		setContentView(R.layout.activity_taskdetail);	
 		
-//		acctDesc = (TextView) this.findViewById(R.id.acctDesc); 
-//		delsAccount = (TextView) this.findViewById(R.id.delsAccount); 
 		customerName = (TextView) this.findViewById(R.id.customerName); 
 		cafNumber = (TextView) this.findViewById(R.id.cafNumber); 
 		address = (TextView) this.findViewById(R.id.address); 
@@ -60,17 +68,19 @@ public class TaskDetailActivity extends Activity implements OnClickListener {
 		btnAttend = (Button) this.findViewById(R.id.btnAttend);
 		btnCancel = (Button) this.findViewById(R.id.btnCancel);
 		btnHistory = (Button) this.findViewById(R.id.btnHistory);
-		//btnHistory.setVisibility(View.INVISIBLE);
-		obj = getIntent().getExtras().get("task");
+	
+		/*To get the taskType*/
+		StringBuilder taskType=new StringBuilder(""+(String)getIntent().getExtras().get("taskType"));
 		
-		if(obj instanceof FreshTask){
-			freshTask = (FreshTask) obj;
+		int taskPosition = (Integer) getIntent().getExtras().get("taskPosition");
+	    if(taskType.toString().equals(ConstantSmartAV.FRESH)){
+			freshTask = DataLoader.freshTaskList.get(taskPosition);
 			populateFreshTaskFields(freshTask);
-		} else if(obj instanceof WLTask){
-			wlTask = (WLTask) obj;
+			
+		} else if(taskType.toString().equals(ConstantSmartAV.WLTASK)){
+			wlTask = DataLoader.wlTaskList.get(taskPosition);
 			populateWLTaskFields(wlTask);
 		}	
-
 		btnAttend.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
 		btnHistory.setOnClickListener(this);
@@ -81,57 +91,46 @@ public class TaskDetailActivity extends Activity implements OnClickListener {
 	Version:1.1
 */
 	private void populateWLTaskFields(WLTask task) {
-//		acctDesc.setText(task.getAcct_category_desc()); 
-		customerName.setText(task.getCust_name()); 
-		cafNumber.setText(task.getCaf_no()); 
-		address.setText(task.getAddress()); 
-		landmark.setText(task.getLandmark()); 
-		telephoneNumber.setText(task.getTelephone_no());
-		altNumber.setText(task.getAlternate_contact_no()); 
-		statusAv.setText(task.getStatus_av()); 
-		priority.setText(task.getPriority()); 
-		billPlan.setText(task.getBill_plan()); 
-		dealerName.setText(task.getDealer_name());
-		cafType.setText(task.getCaf_type());
-		dealerCode.setText(task.getDealerCode());
-		productType.setText(task.getProduct_type());//Not available for WL TASK
-		csm.setText(task.getCsm());
-		noOfLines.setText(task.getNo_of_dels_under_account());
-	}
-
-	private void populateFreshTaskFields(FreshTask task) {
-		customerName.setText(task.getCust_name()); 
-		cafNumber.setText(task.getCaf_no()); 
-		address.setText(task.getAddress()); 
+		customerName.setText(task.getCust_name());
+		cafNumber.setText(task.getCaf_no());
+		address.setText(task.getAddress());
 		landmark.setText(task.getLandmark()); 
 		telephoneNumber.setText("" + task.getTelephone_no());
 		altNumber.setText("" + task.getAlternate_contact_no()); 
-		statusAv.setText(task.getStatus_av()); 
-		priority.setText(task.getPriority()); 
+		statusAv.setText(task.getStatus_av());
+		priority.setText(task.getPriority());
 		billPlan.setText(task.getBill_plan()); 
+		dealerName.setText(task.getDealer_name());
 		cafType.setText(task.getCaf_type());
 		dealerCode.setText(task.getDealerCode());
 		productType.setText(task.getProduct_type());
 		csm.setText(task.getCsm());
 		noOfLines.setText(task.getNo_of_dels_under_account());
-		dealerName.setText(task.getDealer_name());
 	}
-	private void populateBulkTaskFields(BulkTask task) {
-		customerName.setText(task.getCust_name()); 
-//		cafNumber.setText(task.getCaf_no()); 
-		address.setText(task.getAddress()); 
-//		landmark.setText(task.getLandmark()); 
+
+	private void populateFreshTaskFields(FreshTask task) {
+		customerName.setText(task.getCust_name());
+		cafNumber.setText(task.getCaf_no());
+		address.setText(task.getAddress());
+		landmark.setText(task.getLandmark()); 
 		telephoneNumber.setText("" + task.getTelephone_no());
 		altNumber.setText("" + task.getAlternate_contact_no()); 
-//		statusAv.setText(task.getStatus_av()); 
-//		priority.setText(task.getPriority()); 
-//		billPlan.setText(task.getPlan()); 
-//		cafType.setText(task.getCaf_type());
-//		dealerCode.setText(task.getDealerCode());
-//		productType.setText(task.getProduct_type());
-//		csm.setText(task.getCsm());
-//		noOfLines.setText(task.getNo_of_dels_under_account());
-//		dealerName.setText(task.getDealer_name());
+		statusAv.setText(task.getStatus_av());
+		priority.setText(task.getPriority());
+		billPlan.setText(task.getBill_plan()); 
+		dealerName.setText(task.getDealer_name());
+		cafType.setText(task.getCaf_type());
+		dealerCode.setText(task.getDealerCode());
+		productType.setText(task.getProduct_type());
+		csm.setText(task.getCsm());
+		noOfLines.setText(task.getNo_of_dels_under_account());
+	}
+	
+	private void populateBulkTaskFields(BulkTask task) {
+		customerName.setText(task.getCust_name()); 
+		address.setText(task.getAddress()); 
+		telephoneNumber.setText("" + task.getTelephone_no());
+		altNumber.setText("" + task.getAlternate_contact_no()); 
 	}
 
 	@Override
@@ -163,8 +162,6 @@ public class TaskDetailActivity extends Activity implements OnClickListener {
 			Intent intent2 = new Intent(TaskDetailActivity.this, VisitHistoryActivity.class);
 			intent2.putExtra("task", (freshTask != null) ? freshTask : wlTask);
 			startActivity(intent2);
-//			startActivity(new Intent(TaskDetailActivity.this, VisitHistoryActivity.class));
-
 			break;
 	
 		case R.id.btnCancel:

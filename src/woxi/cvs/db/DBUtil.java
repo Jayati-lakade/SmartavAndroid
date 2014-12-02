@@ -370,17 +370,14 @@ public class DBUtil {
 		for (int i = 0; i < count; i++) {
 
 			record.setLength(0);// Resetting record for each record.
-			record = record.append(cursor.getString(cursor
-					.getColumnIndex(DBContract.COLUMN_RECORD)));
+			record = record.append(cursor.getString(cursor.getColumnIndex(DBContract.COLUMN_RECORD)));
+	
 			if(!taskType.equalsIgnoreCase(ConstantSmartAV.BulkCUSTOMER)){			
 			priority.setLength(0);// Resetting priority for each record.			
-			priority = priority.append(cursor.getString(cursor
-					.getColumnIndex(DBContract.COLUMN_PRIORITY)));
-			}
-			
+			priority = priority.append(cursor.getString(cursor.getColumnIndex(DBContract.COLUMN_PRIORITY)));
+			}			
 			if (taskType.equalsIgnoreCase(ConstantSmartAV.FRESHTASK)) {
-				FreshTask freshTask = gson.fromJson(record.toString(),
-						FreshTask.class);
+				FreshTask freshTask = gson.fromJson(record.toString(),FreshTask.class);
 				freshTask.setPriority(priority.toString());
 				freshTasksLists.add(freshTask);
 			} else if (taskType.equalsIgnoreCase(ConstantSmartAV.WLTASK)) {
@@ -388,15 +385,13 @@ public class DBUtil {
 				wlTask.setPriority(priority.toString());
 				wlTasksLists.add(wlTask);
 			} else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkTASK)) {
-				BulkTask bulkTask = gson.fromJson(record.toString(),
-						BulkTask.class);
-				// bulkTask.setPriority(priority.toString());
+				BulkTask bulkTask = gson.fromJson(record.toString(),BulkTask.class);
 				bulkTasksLists.add(bulkTask);
 			}else if (taskType.equalsIgnoreCase(ConstantSmartAV.BulkCUSTOMER)) {			
 						Type typeToken3 = new TypeToken<LinkedHashSet<BulkCustomer>>(){}.getType();
 						return gson.fromJson(record.toString(), typeToken3);				
 			}
-
+			
 			cursor.moveToNext();
 		}
 		if (taskType.equalsIgnoreCase(ConstantSmartAV.FRESHTASK)) {

@@ -57,10 +57,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		actionBar = getActionBar();
-		/*actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setLogo(getResources().getDrawable(R.drawable.docomo));*/
 		actionBar.hide();
-		
 		SharedPreferences preferences = this.getSharedPreferences(ConstantSmartAV.PREFERENCES, Context.MODE_PRIVATE);
 		editor = preferences.edit();
 		String username = preferences.getString(ConstantSmartAV.USERNAME_STR, ConstantSmartAV.ERROR_STRING);
@@ -69,14 +66,14 @@ public class LoginActivity extends Activity {
 		if(!(username.equals(ConstantSmartAV.ERROR_STRING) || password.equals(ConstantSmartAV.ERROR_STRING))){
 			isUserAvailable = true;
 		}
-		
+
 		setContentView(R.layout.activity_login);
-		
+
 		etUsername = (EditText) this.findViewById(R.id.etUsername);
 		etPassword = (EditText) this.findViewById(R.id.etPassword);
 		btnLogin = (Button) this.findViewById(R.id.btnLogin);
-		
-		if(isUserAvailable){
+
+		if (isUserAvailable) {
 			etUsername.setVisibility(View.GONE);
 			etPassword.setVisibility(View.GONE);
 			btnLogin.setVisibility(View.GONE);
@@ -86,108 +83,108 @@ public class LoginActivity extends Activity {
 			new FecthDataFromDB().execute(new String[]{});
 		}
 		btnLogin.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				if(etUsername.getText().toString().trim().length() <= 0){
-					Toast.makeText(LoginActivity.this, "Please enter Username", Toast.LENGTH_SHORT).show();
-				} else if(etPassword.getText().toString().trim().length() <= 0){
-					Toast.makeText(LoginActivity.this, "Please enter Password", Toast.LENGTH_SHORT).show();
+				if (etUsername.getText().toString().trim().length() <= 0) {
+					Toast.makeText(LoginActivity.this, "Please enter Username",
+							Toast.LENGTH_SHORT).show();
+				} else if (etPassword.getText().toString().trim().length() <= 0) {
+					Toast.makeText(LoginActivity.this, "Please enter Password",
+							Toast.LENGTH_SHORT).show();
 				} else {
-					if(Util.isConnectingToInternet(getApplicationContext())){
-						//new LoginTask().execute(new String[]{"http://ubuntuone.com/2LI5GfYAOfRZLd9t7SGiIV"});
-						//new LoginTask().execute(new String[]{"http://www.woxiprogrammers.com/CVSONE/ajax/tablet/getInputTasklist.php?username=ofr&password=ofr"});
-						new LoginTask().execute(new String[]{ConstantSmartAV.INPUT_JSON_URL + "username="+etUsername.getText().toString()+"&password="+etPassword.getText().toString()+"&version="+ConstantSmartAV.VERSION_ID});
-					}else{
-						Util.showToast(getString(R.string.internetUnavailable), getApplicationContext(),true);
+					if (Util.isConnectingToInternet(getApplicationContext())) {
+						new LoginTask()
+								.execute(new String[] { ConstantSmartAV.INPUT_JSON_URL
+										+ "username="
+										+ etUsername.getText().toString()
+										+ "&password="
+										+ etPassword.getText().toString()
+										+ "&version="
+										+ ConstantSmartAV.VERSION_ID });
+					} else {
+						Util.showToast(getString(R.string.internetUnavailable),
+								getApplicationContext(), true);
 					}
 				}
 			}
 		});
 	}
+
 	/*
 	 * Desc:fetch the data from inout table according to drwaer selection
-	 * Developed By:Sourabh shah
-	 * version:1.1
+	 * Developed By:Sourabh shah version:1.1
 	 */
-	private class FecthDataFromDB extends AsyncTask<String, Integer, String>{
+	private class FecthDataFromDB extends AsyncTask<String, Integer, String> {
 
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
-			
-			if(!result.equals(ConstantSmartAV.ERROR_STRING)){
+
+			if (!result.equals(ConstantSmartAV.ERROR_STRING)) {
 				startActivity(new Intent(LoginActivity.this,
 						MainActivityNew.class));
 				finish();
-			}else{
-				Util.showToast(getString(R.string.errorDB), getApplicationContext(), true);
+			} else {
+				Util.showToast(getString(R.string.errorDB),
+						getApplicationContext(), true);
 			}
 		}
-		
+
 		@Override
 		protected String doInBackground(String... params) {
-			
+
 			try {
 				DBUtil dbUtil = new DBUtil(getApplicationContext());
-				
 				ArrayList<FreshTask> freshList = (ArrayList<FreshTask>) dbUtil.fetchInputData(ConstantSmartAV.FRESHTASK);
 				ArrayList<WLTask> wlList = (ArrayList<WLTask>) dbUtil.fetchInputData(ConstantSmartAV.WLTASK);
 				ArrayList<BulkTask> bulkList = (ArrayList<BulkTask>) dbUtil.fetchInputData(ConstantSmartAV.BulkTASK);
-				
-				if(freshList != null){
-					DataLoader.freshTaskList = freshList;
-					
-					
-			//		 taskFlag = visit.setTaskFlag(0);
 
-				}
-				if(wlList != null){
+				if (freshList != null) {
+					DataLoader.freshTaskList = freshList;					
+					}
+				if (wlList != null) {
 					DataLoader.wlTaskList = wlList;
-				//	 taskFlag = visit.setTaskFlag(0);
-				}	if(bulkList != null){
-					DataLoader.bulkTaskList = bulkList;
-				//	 taskFlag = visit.setTaskFlag(1);
 				}
-				
+				if (bulkList != null) {
+					DataLoader.bulkTaskList = bulkList;
+				}
 				return "";
-			}catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				return ConstantSmartAV.ERROR_STRING;
 			}
 		}
 
 	}
-	
-	
-	
+
 	private class LoginTask extends AsyncTask<String, Void, String> {
 		ProgressDialog progressDialog;
-		
+
 		@Override
 		protected void onPreExecute() {
 			progressDialog = new ProgressDialog(LoginActivity.this);
-			//progressDialog = ProgressDialog.show(LoginActivity.this, "", "Loading...", false);
+			// progressDialog = ProgressDialog.show(LoginActivity.this, "",
+			// "Loading...", false);
 			progressDialog.setMessage("Logging...");
 			progressDialog.show();
 		}
 
 		@Override
 		protected String doInBackground(String... params) {
-				
-			try{
+
+			try {
 				String jsonStr = callWS(params[0]);
-				if((jsonStr.trim()).equalsIgnoreCase(ConstantSmartAV.FALSE)){
+				if ((jsonStr.trim()).equalsIgnoreCase(ConstantSmartAV.FALSE)) {
 					return ConstantSmartAV.FALSE;
-				}
-				else if(jsonStr != ConstantSmartAV.ERROR_STRING){
+				} else if (jsonStr != ConstantSmartAV.ERROR_STRING) {
 					processJSON(jsonStr);
-				}else{
-	
+				} else {
+
 					progressDialog.dismiss();
-				}				
+				}
 				return jsonStr;
-			}catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				return ConstantSmartAV.ERROR_STRING;
 			}
@@ -210,7 +207,7 @@ public class LoginActivity extends Activity {
 				editor.putString(ConstantSmartAV.USERNAME_STR, etUsername.getText().toString());
 				editor.putString(ConstantSmartAV.PASSWORD_STR, etPassword.getText().toString());
 				editor.commit();
-	
+
 				startActivity(new Intent(LoginActivity.this,
 						MainActivityNew.class));
 				finish();
@@ -221,17 +218,14 @@ public class LoginActivity extends Activity {
 			}
 		}
 	};
-	
-	
-	
+
 	public String callWS(String urlStr) {
 
 		URL url = null;
 		HttpURLConnection connection = null;
 		try {
 			url = new URL(urlStr);
-			connection = (HttpURLConnection) url
-					.openConnection();
+			connection = (HttpURLConnection) url.openConnection();
 			connection.setReadTimeout(ConstantSmartAV.TIMEOUT);
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/xml");
@@ -242,191 +236,142 @@ public class LoginActivity extends Activity {
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
-			
+
 			StringBuilder builder = new StringBuilder();
 			String line = reader.readLine();
 			while (line != null) {
 				builder.append(line);
 				line = reader.readLine();
 			}
-			
+
 			return builder.toString();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-			
+
 			return ConstantSmartAV.ERROR_STRING;
 		} catch (IOException e) {
 			e.printStackTrace();
-			
+
 			return ConstantSmartAV.ERROR_STRING;
 		}
-		
-		finally{
+
+		finally {
 			connection.disconnect();
 		}
 
 	}
-		
-		private void processJSON(String jsonStr)
-		{
-			ArrayList<FreshTask> freshList = null;
-			ArrayList<WLTask> wlList = null;
-			ArrayList<BulkTask> bulkList = null;
-			
-			
-			
-			JSONObject jsonObject;
-			try {
-				jsonObject = new JSONObject(jsonStr);
-			
-				
-				JSONArray freshTasksArray = null, wlTasksArray = null,BulkTasksArray = null;
-				Gson gson = new Gson();
-				
-				if(jsonObject.has("Fresh")){
-					freshTasksArray = jsonObject.getJSONArray("Fresh");
-					freshList = getFreshList(freshTasksArray, gson);
-					// taskFlag = visit.setTaskFlag(0);
-				}else if(jsonObject.has("FRESH")){
-					freshTasksArray = jsonObject.getJSONArray("FRESH");
-					freshList = getFreshList(freshTasksArray, gson);
-					// taskFlag = visit.setTaskFlag(0);
-				}
-					
-			
-					DataLoader.freshTaskList = freshList;
-				
-				
-				if(jsonObject.has("WL") ){
-					wlTasksArray = jsonObject.getJSONArray("WL");
-					wlList = getWLList(wlTasksArray, gson);
-				//	 taskFlag = visit.setTaskFlag(0);
-				}else if(jsonObject.has("wl")){
-					wlTasksArray = jsonObject.getJSONArray("wl");
-					wlList = getWLList(wlTasksArray, gson);
-					// taskFlag = visit.setTaskFlag(0);
-				}
-					
-	
-					DataLoader.wlTaskList = wlList;
-					
-					if(jsonObject.has("BULK") ){
-						BulkTasksArray = jsonObject.getJSONArray("BULK");
-						bulkList = getBulkList(BulkTasksArray, gson);
-					//	 taskFlag = visit.setTaskFlag(0);
-					}else if(jsonObject.has("Bulk")){
-						BulkTasksArray = jsonObject.getJSONArray("Bulk");
-						bulkList = getBulkList(BulkTasksArray, gson);
-						// taskFlag = visit.setTaskFlag(0);
-					}
-						
-						
-						DataLoader.bulkTaskList = bulkList;
-				
-				DBUtil dbUtil = new DBUtil(getApplicationContext());
-				dbUtil.deleteData(TABLE_TYPE.INPUT_TABLE);
-				/*
-				 * Desc:To sync the data on Login button click
-				 * DeveLoped By:Jayati Lakade.
-				 * Version:1.6
-				 */
-				/////////////////////
-				//dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
-				String visitJson = dbUtil.fetchOutputData();
-				visitJson = encodeData(visitJson);
-				Boolean output;
-				DBHelper dbhelper;
-				
-				if (visitJson.equals(ConstantSmartAV.NO_RECORDS_FOUND) || (!visitJson.equals((ConstantSmartAV.NO_RECORDS_FOUND)) || (!visitJson.equals((ConstantSmartAV.ERROR_STRING))))){
-					output = Util.synchroniseData(getApplicationContext());
-					System.out.println("In Login------------------------------------------------------------------------------------");
-					//Toast.makeText(getApplicationContext(), "In login sync....", Toast.LENGTH_LONG).show();
-				//	Thread.sleep(12000);
-					if(output){
-					dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);	
-					System.out.println("Deleted from login ************************************************************************");
-					}
-			
-				}
-			
-				/////////////////////
-			
-				
-				long retVal = dbUtil.insertIntoInputTable(freshList, wlList,bulkList);
-				if(retVal == ConstantSmartAV.ERROR_RETURN_VAL){
-					
-				}
-					
-					
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-		private ArrayList<FreshTask> getFreshList(JSONArray freshTasksArray, Gson gson){
-			
-			Type typeToken1 = new TypeToken<ArrayList<FreshTask>>(){}.getType();
-			// taskFlag = visit.setTaskFlag(0);
-			return gson.fromJson(freshTasksArray.toString(), typeToken1);
-		}
-		
-		private ArrayList<WLTask> getWLList(JSONArray wlTasksArray, Gson gson){
-			
-			Type typeToken2 = new TypeToken<ArrayList<WLTask>>(){}.getType();
-		//	 taskFlag = visit.setTaskFlag(0);
-			return gson.fromJson(wlTasksArray.toString(), typeToken2);
-		}
-		private String encodeData(String name) {
 
-			name = name.replace("{", "APPLEATE");
-			name = name.replace("}", "BALLBAT");
-			name = name.replace("\"", "CATCOPY");
-			name = name.replace("/", "DOGDUMP");
-			name = name.replace(":", "EAGLEEGG");
-			name = name.replace("\n", "FROG");
-			name = name.replace("+", "HOUSE");
-			name = name.replace("\\u", "IAMTOPPER");
-			name = name.replace(",", "JACK");
-			return name;
+	private void processJSON(String jsonStr) {
+		ArrayList<FreshTask> freshList = null;
+		ArrayList<WLTask> wlList = null;
+		ArrayList<BulkTask> bulkList = null;
 
-		}
-		
-		
-		private ArrayList<BulkTask> getBulkList(JSONArray BulkTasksArray, Gson gson){
-		
-			Type typeToken3 = new TypeToken<ArrayList<BulkTask>>(){}.getType();
-			// taskFlag = visit.setTaskFlag(0);
-			return gson.fromJson(BulkTasksArray.toString(), typeToken3);
-		}
-		
-		
-		/*private String fetchJson(String urlStr) {
-		URL url;
-		BufferedReader reader = null;
+		JSONObject jsonObject;
 		try {
-			url = new URL(urlStr);
-			reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			StringBuilder builder = new StringBuilder();
-			String line = reader.readLine();
-			while (line != null) {
-				builder.append(line);
-				line = reader.readLine();
+			jsonObject = new JSONObject(jsonStr);
+
+			JSONArray freshTasksArray = null, wlTasksArray = null, BulkTasksArray = null;
+			Gson gson = new Gson();
+
+			if (jsonObject.has("Fresh")) {
+				freshTasksArray = jsonObject.getJSONArray("Fresh");
+				freshList = getFreshList(freshTasksArray, gson);
+			} else if (jsonObject.has("FRESH")) {
+				freshTasksArray = jsonObject.getJSONArray("FRESH");
+				freshList = getFreshList(freshTasksArray, gson);
 			}
-			return builder.toString();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-			return Util.ERROR_STRING;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return Util.ERROR_STRING;
-		} finally {
-			try {
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-				return Util.ERROR_STRING;
+
+			DataLoader.freshTaskList = freshList;
+
+			if (jsonObject.has("WL")) {
+				wlTasksArray = jsonObject.getJSONArray("WL");
+				wlList = getWLList(wlTasksArray, gson);
+			} else if (jsonObject.has("wl")) {
+				wlTasksArray = jsonObject.getJSONArray("wl");
+				wlList = getWLList(wlTasksArray, gson);
 			}
+			DataLoader.wlTaskList = wlList;
+
+			if (jsonObject.has("BULK")) {
+				BulkTasksArray = jsonObject.getJSONArray("BULK");
+				bulkList = getBulkList(BulkTasksArray, gson);
+			} else if (jsonObject.has("Bulk")) {
+				BulkTasksArray = jsonObject.getJSONArray("Bulk");
+				bulkList = getBulkList(BulkTasksArray, gson);
+			}
+			DataLoader.bulkTaskList = bulkList;
+
+			DBUtil dbUtil = new DBUtil(getApplicationContext());
+			dbUtil.deleteData(TABLE_TYPE.INPUT_TABLE);
+			/*
+			 * Desc:To sync the data on Login button click DeveLoped By:Jayati
+			 * Lakade. Version:1.6
+			 */
+			String visitJson = dbUtil.fetchOutputData();
+			visitJson = encodeData(visitJson);
+			Boolean output;
+			DBHelper dbhelper;
+
+			if (visitJson.equals(ConstantSmartAV.NO_RECORDS_FOUND)
+					|| (!visitJson.equals((ConstantSmartAV.NO_RECORDS_FOUND)) || (!visitJson
+							.equals((ConstantSmartAV.ERROR_STRING))))) {
+				output = Util.synchroniseData(getApplicationContext());
+				System.out
+						.println("In Login------------------------------------------------------------------------------------");
+				if (output) {
+					dbUtil.deleteData(TABLE_TYPE.OUTPUT_TABLE);
+					System.out
+							.println("Deleted from login ************************************************************************");
+				}
+
+			}
+			long retVal = dbUtil.insertIntoInputTable(freshList, wlList,
+					bulkList);
+			if (retVal == ConstantSmartAV.ERROR_RETURN_VAL) {
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	}*/
+
+	}
+
+	private ArrayList<FreshTask> getFreshList(JSONArray freshTasksArray,
+			Gson gson) {
+
+		Type typeToken1 = new TypeToken<ArrayList<FreshTask>>() {
+		}.getType();
+		return gson.fromJson(freshTasksArray.toString(), typeToken1);
+	}
+
+	private ArrayList<WLTask> getWLList(JSONArray wlTasksArray, Gson gson) {
+
+		Type typeToken2 = new TypeToken<ArrayList<WLTask>>() {
+		}.getType();
+		return gson.fromJson(wlTasksArray.toString(), typeToken2);
+	}
+
+	private String encodeData(String name) {
+
+		name = name.replace("{", "APPLEATE");
+		name = name.replace("}", "BALLBAT");
+		name = name.replace("\"", "CATCOPY");
+		name = name.replace("/", "DOGDUMP");
+		name = name.replace(":", "EAGLEEGG");
+		name = name.replace("\n", "FROG");
+		name = name.replace("+", "HOUSE");
+		name = name.replace("\\u", "IAMTOPPER");
+		name = name.replace(",", "JACK");
+		return name;
+
+	}
+
+	private ArrayList<BulkTask> getBulkList(JSONArray BulkTasksArray, Gson gson) {
+
+		Type typeToken3 = new TypeToken<ArrayList<BulkTask>>() {
+		}.getType();
+		return gson.fromJson(BulkTasksArray.toString(), typeToken3);
+	}
+
 }
