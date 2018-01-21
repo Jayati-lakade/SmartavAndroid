@@ -1,4 +1,5 @@
 SmartavAndroid
 ==============
 
-android code for smartav
+android code for smart
+newly added
